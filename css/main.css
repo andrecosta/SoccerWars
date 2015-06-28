@@ -1,0 +1,261 @@
+body {
+    margin: 0;
+    font-size: 14px;
+    font-family: monospace;
+    color: #fafafa;
+    background: url('../img/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.background {
+    overflow: hidden;
+    background: #2c2946;
+    background: linear-gradient(45deg, #434164, #33265f);
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    /*box-shadow: inset -20px 0 38px -18px #ff26f9,inset -3px -13px 65px -18px yellow;*/
+}
+
+.background:before, .background:after {
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.background:before {
+    background: #282d52;
+    box-shadow: 0 0 140px 64px #2c253d;
+    z-index:2;
+    top: -96%;
+    left: -72%;
+    opacity: 0;
+}
+.background:after {
+    background: white;
+    z-index: 3;
+    bottom: -96%;
+    right: -72%;
+    box-shadow: 0 0 140px 64px white;
+    opacity: 1;
+    border-radius: 100%;
+}
+
+main {
+    position: absolute;
+    left: 200px;
+    top: 30px;
+    right: 0;
+    bottom: 0;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    position: fixed;
+    left: 200px;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav#top-menu a {
+    display: block;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav#top-menu a:hover {
+    color: cyan;
+}
+nav#top-menu li {
+    display: inline-block;
+    margin: 0 10px;
+    float: right;
+}
+
+nav#main-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.3);
+    padding-top: 50px;
+}
+nav#main-menu a {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #fafafa;
+    padding: 15px 0;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    margin-right: 15px;
+}
+nav#main-menu a:hover {
+    color: cyan;
+}
+nav#main-menu a:hover::after {
+    content: "»";
+    position: absolute;
+    margin-left: 8px;
+}
+
+.page-dashboard a.nav-dashboard { color: cyan; }
+
+section {
+    background: rgba(0, 0, 0, 0.4);
+    margin: 40px;
+    box-sizing: border-box;
+    width: 400px;
+    border: 5px solid rgba(255, 255, 255, 0.85);
+    border-radius: 2px;
+    vertical-align: top;
+}
+section .title {
+    text-transform: uppercase;
+    font-size: 17px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    text-align: center;
+}
+section .content {
+    text-align: center;
+}
+section.wide {
+    width: 90%;
+}
+section.regular {
+    margin: 20px 40px;
+    display: inline-block;
+    width: 442px;
+}
+section.regular:last-child { margin-right: 0; }
+
+.live::before {
+    content: "•";
+    color: red;
+    font-size: 22px;
+    vertical-align: baseline;
+}
+
+.label.pink {
+    color: deeppink;
+}
+.label.cyan {
+    color: cyan;
+}
+.label.red {
+    color: red;
+}
+.label.green {
+    color: lawngreen;
+}
+
+.teams {
+    text-align: left;
+}
+.left-team {
+    display: inline-block;
+    width: 210px;
+    text-align: right;
+}
+section.wide .left-team {
+    width: 47.8%;
+}
+section.regular .left-team {
+    width: 193px;
+}
+
+.score {
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #222;
+    font-weight: bold;
+    background: #eee;
+    display: inline-block;
+    margin: 3px 0;
+}
+
+.vs {
+    color: gold;
+    font-weight: bold;
+}
+
+.match {
+    padding: 10px 0;
+    margin-bottom: 0px;
+    border-bottom: 1px dotted #666;
+}
+.match:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+}
+section .match:last-child {
+    border-bottom: none;
+}
+
+.time {
+    color: #aaa;
+}
+
+form {
+    margin: 60px 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 22px;
+    display: block;
+    width: 400px;
+    border: 1px solid #f0f0f0;
+    margin: 15px auto;
+    text-align: center;
+}
+input[type="submit"] {
+    margin-top: 30px;
+    padding: 8px;
+    width: 300px;
+    font-size: 18px;
+    border: 1px solid cyan;
+    background: cyan;
+    color: black;
+    cursor: pointer;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+input[type="submit"]:hover {
+    background: deepskyblue;
+}
+
+.debug-message {
+    font-size: 34px;
+    background: orangered;
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: darkorange;
+    padding: 30px;
+}
