@@ -15,8 +15,8 @@ function template_header($page) {
         <nav id="top-menu">
             <ul>
                 <?php if (!isset($_SESSION['uid'])) { ?>
-                <li><a href="register.php">Create Account</a></li>
-                <li><a href="login.php">Login</a></li>
+                <li><a href="../register.php">Create Account</a></li>
+                <li><a href="../login.php">Login</a></li>
                 <?php } else { ?>
                 <li><a href="#">My Profile (<?=$_SESSION["username"]?>)</a></li>
                 <li><a href="logout.php">Logout</a></li>
