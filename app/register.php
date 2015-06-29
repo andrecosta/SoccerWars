@@ -6,7 +6,7 @@ if (isset($_POST['email'])) {
     $email = mysqli_real_escape_string($connection, $_POST['email']);
     $password_hash = sha1(mysqli_real_escape_string($connection, $_POST['password']).$email);
 
-    if (mysqli_query($connection, "INSERT INTO User (Email, Password, Username, Status) VALUES ('$email', '$password_hash', '$username', 'active')")) {
+    if (mysqli_query($connection, "INSERT INTO User (email, pw_hash, Username, Status) VALUES ('$email', '$password_hash', '$username', 'active')")) {
         // TODO: Send confirmation email to "activate" account
         //header("Location: index.php");
         echo "<div class='debug-message'>Your Password: <em>$_POST[password]</em> (shown only for test purposes)<br></div>";

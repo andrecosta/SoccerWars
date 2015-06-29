@@ -5,7 +5,7 @@ if (isset($_POST['email'])) {
     $email = mysqli_real_escape_string($connection, $_POST['email']);
     $password_hash = sha1(mysqli_real_escape_string($connection, $_POST['password']).$email);
 
-    if ($user_row = mysqli_query($connection, "SELECT * FROM User WHERE Email = '$email' AND Password = '$password_hash' AND Status = 'active'")) {
+    if ($user_row = mysqli_query($connection, "SELECT * FROM User WHERE email = '$email' AND pw_hash = '$password_hash' AND Status = 'active'")) {
         $user = mysqli_fetch_array($user_row);
         $_SESSION['uid'] = $user['ID'];
         $_SESSION['username'] = $user['UserName'];

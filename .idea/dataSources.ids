@@ -82,21 +82,21 @@
       <foreign-key name="TeamComposition_ibfk_2" columns="PlayerID" ref-table="Player" ref-schema="" ref-catalog="soccerwars" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="User" schema="" catalog="soccerwars" type="TABLE">
-      <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="Email" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
-      <column name="Password" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <column name="UserName" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
-      <column name="FirstName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
-      <column name="LastName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
-      <column name="Avatar" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="Points" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MjAw"/>
-      <column name="Status" sqlType="ENUM" precision="19" scale="0" nullable="false" jdbcType="1" def="J3BlbmRpbmcgYWN0aXZhdGlvbic="/>
-      <primary-key name="PRIMARY" columns="ID"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="email" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="pw_hash" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="userName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="firstName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="avatar" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="points" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="Bet_ibfk_1" table="Bet" schema="" catalog="soccerwars" columns="UserID"/>
       <exported-key name="UserComment_ibfk_1" table="UserComment" schema="" catalog="soccerwars" columns="UserID"/>
       <exported-key name="UserFriend_ibfk_1" table="UserFriend" schema="" catalog="soccerwars" columns="UserID"/>
       <exported-key name="UserFriend_ibfk_2" table="UserFriend" schema="" catalog="soccerwars" columns="FriendID"/>
-      <index name="Email" unique="true" columns="Email"/>
+      <index name="Email" unique="true" columns="email"/>
     </table>
     <table name="UserComment" schema="" catalog="soccerwars" type="TABLE">
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

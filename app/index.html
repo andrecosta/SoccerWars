@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SoccerWars</title>
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script>
+        var API_URL = 'http://localhost:5000';
+        var API_KEY = 'webapp';
+
+        $(function() {
+            $.ajax({
+                url: API_URL + '/users',
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                headers: {'Secret': 'webapp'}
+            })
+                    .done(function(response) {
+                        console.log(response);
+                        alert(response[0].firstName);
+                    })
+                    .fail(function(response) {
+                        var message = response.responseJSON;
+                        alert(message.error);
+                    });
+        });
+    </script>
+</head>
+<body class="page-{{ page_class }}">
+
+test
+
+<!--
+<header>
+    <nav id="top-menu">
+        <ul>
+            <?php if (!isset($_SESSION['uid'])) { ?>
+                <li><a href="/#register">Create Account</a></li>
+                <li><a href="/#login">Login</a></li>
+            <?php } else { ?>
+                <li><a href="#">My Profile (<?=$_SESSION["username"]?>)</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            <?php } ?>
+        </ul>
+    </nav>
+
+</header>
+
+<nav id="main-menu">
+    <ul>
+        <li><a class="nav-dashboard" href="index.php">Dashboard</a></li>
+        <li><a class="nav-teams" href="#">Teams</a></li>
+        <li><a class="nav-matches" href="#">Matches</a></li>
+        <li><a class="nav-bets" href="#">My Bets</a></li>
+    </ul>
+</nav>
+
+<main>
+
+<section class="wide">
+    <div class="title"><span class="live"></span> Live Matches</div>
+    <div class="content">
+        <?php
+        $matches = mysqli_query($connection, "SELECT * FROM `Match` WHERE StartTime < NOW() AND NOW() < EndTime");
+        while ($match = mysqli_fetch_array($matches)) {
+            $teams = mysqli_query($connection, "SELECT * FROM Team, MatchProgress WHERE MatchID = $match[ID] AND Team.ID = MatchProgress.TeamID GROUP BY Name");
+            $team_details = [];
+            while ($team_details[] = mysqli_fetch_array($teams));
+            ?>
+            <div class="match">
+                <div><span class="label green">! IN PROGRESS !</span></div>
+                <span class="score"><?=$team_details[0]["Goals"]?></span>
+                <span class="label cyan">SCORE</span>
+                <span class="score"><?=$team_details[1]["Goals"]?></span>
+                <div class="teams">
+                    <div class="left-team"><?=$team_details[0]["Name"]?></div>
+                    <span class="vs">[VS]</span>
+                    <?=$team_details[1]["Name"]?></div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+
+<section class="regular">
+    <div class="title">Upcoming Matches</div>
+    <div class="content">
+        <?php
+        $matches = mysqli_query($connection, "SELECT * FROM `Match` WHERE StartTime > NOW()");
+        while ($match = mysqli_fetch_array($matches)) {
+            $teams = mysqli_query($connection, "SELECT * FROM Team, MatchProgress WHERE MatchID = $match[ID] AND Team.ID = MatchProgress.TeamID GROUP BY Name");
+            $team_details = [];
+            while ($team_details[] = mysqli_fetch_array($teams));
+            ?>
+            <div class="match">
+                <div><span class="label green">STARTING ON</span> <span class="time"><?=$match["StartTime"]?></span></div>
+                <div class="teams">
+                    <div class="left-team"><?=$team_details[0]["Name"]?></div>
+                    <span class="vs">[VS]</span>
+                    <?=$team_details[1]["Name"]?></div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+
+<section class="regular">
+    <div class="title">Past Matches</div>
+    <div class="content">
+        <?php
+        $matches = mysqli_query($connection, "SELECT * FROM `Match` WHERE EndTime < NOW()");
+        while ($match = mysqli_fetch_array($matches)) {
+            $teams = mysqli_query($connection, "SELECT * FROM Team, MatchProgress WHERE MatchID = $match[ID] AND Team.ID = MatchProgress.TeamID GROUP BY Name");
+            $team_details = [];
+            while ($team_details[] = mysqli_fetch_array($teams));
+            ?>
+            <div class="match">
+                <div><span class="label red">ENDED</span> <span class="time"><?=$match["StartTime"]?></span></div>
+                <span class="score"><?=$team_details[0]["Goals"]?></span>
+                <span class="label cyan">SCORE</span>
+                <span class="score"><?=$team_details[1]["Goals"]?></span>
+                <div class="teams">
+                    <div class="left-team"><?=$team_details[0]["Name"]?></div>
+                    <span class="vs">[VS]</span>
+                    <?=$team_details[1]["Name"]?></div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+
+</main>
+-->
+</body>
+</html>

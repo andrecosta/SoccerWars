@@ -1,0 +1,16 @@
+{
+  "name": "andrecosta/soccer_wars",
+  "description": "Web Project",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Fábio Costa",
+      "email": "fc.andre.costa@gmail.com"
+    }
+  ],
+  "require": {
+    "slim/slim": "2.6.2",
+    "palanik/corsslim": "v0.0.5"
+  }
+}

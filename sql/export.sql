@@ -127,8 +127,8 @@ CREATE TRIGGER `Bet_before_insert` BEFORE INSERT ON `Bet`
 
     -- [IC 06]
     UPDATE User
-    SET Points = Points - bet_amount
-    WHERE ID = user_id;
+    SET points = points - bet_amount
+    WHERE id = user_id;
 
   END
 //
@@ -168,8 +168,8 @@ CREATE TRIGGER `Bet_before_update` BEFORE UPDATE ON `Bet`
     -- [IC 06]
     IF (bet_difference != 0) THEN
       UPDATE User
-      SET Points = Points - bet_difference
-      WHERE ID = user_id;
+      SET points = points - bet_difference
+      WHERE id = user_id;
     END IF;
 
   END
@@ -411,7 +411,7 @@ CREATE TABLE IF NOT EXISTS `User` (
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`ID`, `Email`, `Password`, `UserName`, `FirstName`, `LastName`, `Avatar`, `Points`, `Status`) VALUES
+INSERT INTO `User` (id, email, pw_hash, userName, firstName, lastName, avatar, points, status) VALUES
 (1, 'user1@example.com', '098f6bcd4621d373cade4e832627b4f6', 'User1', 'Sónia', 'Silva', 'image1.jpg', 200, 'active'),
 (2, 'user2@example.com', '098f6bcd4621d373cade4e832627b4f6', 'User2', 'Marta', 'Maria', 'image2.jpg', 100, 'active'),
 (3, 'user3@example.com', '098f6bcd4621d373cade4e832627b4f6', 'User3', 'Orquídea', 'Olga', 'image3.jpg', 100, 'active'),
@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `UserFriend` (
 -- Constraints for table `Bet`
 --
 ALTER TABLE `Bet`
-  ADD CONSTRAINT `Bet_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`),
+  ADD CONSTRAINT `Bet_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (id),
   ADD CONSTRAINT `Bet_ibfk_2` FOREIGN KEY (`MatchID`) REFERENCES `Match` (`ID`);
 
 --
@@ -513,7 +513,7 @@ ALTER TABLE `TeamComposition`
 -- Constraints for table `UserComment`
 --
 ALTER TABLE `UserComment`
-  ADD CONSTRAINT `UserComment_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`),
+  ADD CONSTRAINT `UserComment_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (id),
   ADD CONSTRAINT `UserComment_ibfk_2` FOREIGN KEY (`MatchID`) REFERENCES `Match` (`ID`),
   ADD CONSTRAINT `UserComment_ibfk_3` FOREIGN KEY (`Parent`) REFERENCES `UserComment` (`ID`);
 
@@ -521,8 +521,8 @@ ALTER TABLE `UserComment`
 -- Constraints for table `UserFriend`
 --
 ALTER TABLE `UserFriend`
-  ADD CONSTRAINT `UserFriend_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`),
-  ADD CONSTRAINT `UserFriend_ibfk_2` FOREIGN KEY (`FriendID`) REFERENCES `User` (`ID`);
+  ADD CONSTRAINT `UserFriend_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (id),
+  ADD CONSTRAINT `UserFriend_ibfk_2` FOREIGN KEY (`FriendID`) REFERENCES `User` (id);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
