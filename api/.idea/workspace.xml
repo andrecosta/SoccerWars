@@ -2,52 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f7eb19d-9261-4726-9eba-8dd278e32e4b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/SoccerWars-api.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/SoccerWars-app.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/css/app.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/effects.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/css/effects/glitch.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/css/effects/glitch.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/libraries/jQuery.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/jquery/jquery.lettering.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/js/jquery/jquery.lettering.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/js/jquery/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/jquery/jquery.neon.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/js/jquery/jquery.neon.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/jsLibraryMappings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/js/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/md5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/vue/vue-resource.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/vue/vue.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/vue/vue.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js\application.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\login.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\register.php" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\img\bg.jpg" afterPath="$PROJECT_DIR$/../app/game/img/bg.jpg" />
-      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js\jquery.min.js" afterPath="$PROJECT_DIR$/../app/game/js/jquery/jquery.min.js" />
-      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\sql\export.sql" afterPath="$PROJECT_DIR$/sql/export.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/SoccerWars.iml" afterPath="$PROJECT_DIR$/../.idea/SoccerWars.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/index.html" afterPath="$PROJECT_DIR$/../app/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/../.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/css/main.css" afterPath="$PROJECT_DIR$/../app/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../app/.idea/workspace.xml" />
     </list>
     <ignored path="api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -285,8 +242,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -296,7 +253,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13180515" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19761273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19761273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
