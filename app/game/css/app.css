@@ -1,7 +1,6 @@
 /* Imports
 *******************************************************************************/
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
-@import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
 @import 'effects/glitch.css';
 
 
@@ -21,9 +20,21 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(#553f5e, #310337);
+    #background: radial-gradient(#553f5e, #1e0222);
     font-family: 'Source Code Pro', monospace;
     font-weight: 400;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -31,9 +42,7 @@ body {
 *******************************************************************************/
 .screen {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    align-items: stretch;
     background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 50%);
     background-size: 1000px 2px;
     content: '';
@@ -47,10 +56,10 @@ body {
 .hologram {
     filter: blur(5px);
     background: -webkit-repeating-linear-gradient(top,
-    rgba(0, 255, 255, 0.4) 0px,
-    rgba(0, 0, 0, 0.2) 1px,
-    rgba(0, 0, 0, 0.2) 1px,
-    rgba(0, 0, 0, 0.2) 2px);
+        rgba(0, 255, 255, 0.4) 0px,
+        rgba(0, 0, 0, 0.2) 1px,
+        rgba(0, 0, 0, 0.2) 1px,
+        rgba(0, 0, 0, 0.2) 2px);
     -webkit-background-size: 100% 2px;
     box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
 }
@@ -72,18 +81,68 @@ body {
 }
 
 
+/* Layout
+*******************************************************************************/
+nav {
+    flex-shrink: 0;
+    width: 200px;
+}
+
+aside {
+    flex-shrink: 0;
+    width: 200px;
+}
+
+main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+
 /* Interface elements
 *******************************************************************************/
-#title {
-    font-family: 'Share Tech Mono', monospace;
-    font-weight: bold;
-    line-height: 90px;
-    font-size: 100px;
-    text-transform: uppercase;
+
+#profile_picture {
+    cursor: pointer;
+}
+
+.menu-item {
+    display: flex;
+    cursor: pointer;
+    padding: 15px 10px;
+}
+
+
+
+
+
+
+/*
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 22px;
+    display: block;
+    border: 1px solid #f0f0f0;
+    margin: 15px auto;
     text-align: center;
-    color: #eee;
-    transform: perspective(300px);
 }
-#title > span:last-child {
-    
+input[type="submit"] {
+    margin-top: 30px;
+    padding: 8px;
+    width: 300px;
+    font-size: 18px;
+    border: 1px solid cyan;
+    background: cyan;
+    color: black;
+    cursor: pointer;
+    border-radius: 2px;
+    text-transform: uppercase;
 }
+input[type="submit"]:hover {
+    background: deepskyblue;
+}
+*/
