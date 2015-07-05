@@ -25,9 +25,8 @@ class DB
     public function fetch($query, $params = null, $object_type = null)
     {
         try {
-            //var_dump($query);
-            // Prepare and execute the statement with the bound parameters
             $statement = $this->connection->prepare($query);
+            //$statement->debugDumpParams();
             $statement->execute($params);
 
             // Fetch the results
@@ -40,6 +39,21 @@ class DB
                 return $data[0];
             else
                 return $data;
+
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function modify($query, $params = null)
+    {
+        try {
+            $statement = $this->connection->prepare($query);
+            //$statement->debugDumpParams();
+            $statement->execute($params);
+
+            return $this->lastId();
+
         } catch (PDOException $e) {
             die($e->getMessage());
         }

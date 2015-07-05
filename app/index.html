@@ -6,8 +6,8 @@
     <title>[ SoccerWars ] > Welcome</title>
 
     <!-- Styles -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,34 +21,36 @@
         <div id="actions">
             <button id="play-button">Play</button>
             <button id="login-button">Login</button>
-            <button id="signup-button">Signup</button>
+            <button id="signup-button">Sign up</button>
         </div>
 
         <div id="info">
             <a href="#">More information</a>
         </div>
 
-    </div> <!-- .screen -->
+    </div><!-- .screen -->
 
     <template id="login-form">
-        <div><input id="login-email" type="text" title="Email" placeholder="Email address" required></div>
-        <div><input id="login-password" type="password" title="Password" placeholder="Password"></div><br>
+        <div><input id="login-email" type="text" title="Email" placeholder="Email" tabindex="1" required autofocus></div>
+        <div><input id="login-password" type="password" title="Password" placeholder="Password" tabindex="2" required></div>
     </template>
 
     <template id="signup-form">
-        <div><input id="signup-email" type="email" title="Email" placeholder="Email address"></div>
+        <div><input id="signup-email" type="email" title="Email" placeholder="Your email address" tabindex="1" required autofocus></div>
+        <div><input id="signup-name" type="text" title="Character's Name" placeholder="Your character's name" tabindex="2" required></div>
         <div id="captcha" align="center"></div><br>
     </template>
 
     <!-- Plugins & Frameworks -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script>
-    <script src="js/jquery/jquery.neon.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>-->
+    <script src="/js/sweetalert-dev.js"></script>
+    <script src='//www.google.com/recaptcha/api.js?render=explicit' async defer></script>
+    <script src="/js/jquery/jquery.neon.min.js"></script>
 
     <!-- Application scripts -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
 
 </body>
 </html>

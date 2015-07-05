@@ -5,65 +5,33 @@ require 'DB.php';
  * @SWG\Definition(definition="user")
  */
 class User {
-    /**
-     * @SWG\Property()
-     * @var int
-     */
     public $id;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
     public $email;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
-    public $userName;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
-    public $firstName;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
-    public $lastName;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
+    public $name;
     public $avatar;
-    /**
-     * @SWG\Property()
-     * @var int
-     */
     public $points;
-    /**
-     * @SWG\Property()
-     * @var string
-     */
     public $status;
+
+    private $pw_hash;
 
     /**
      * Check login credentials and get authenticated User instance, if successful
      * @param string $email
-     * @param string $pw_hash
+     * @param string $password
      * @return User|bool
      */
-    static function Login($email, $pw_hash) {
+    static function Login($email, $password) {
         $db = new DB();
+
         $data = array(
             "email" => $email,
-            "pw_hash" => $pw_hash
+            "pw_hash" => sha1($password)
         );
 
-        if ($user = $db->fetch("SELECT * FROM User WHERE email = :email AND pw_hash = :pw_hash", $data)) {
+        if ($user = $db->fetch("SELECT * FROM User WHERE email = :email AND pw_hash = :pw_hash", $data, 'User'))
             return $user;
-        } else {
+        else
             return false;
-        }
     }
 
     /**
@@ -73,7 +41,10 @@ class User {
      */
     static function Get($id) {
         $db = new DB();
-        $data = array("id" => $id);
+
+        $data = array(
+            "id" => $id
+        );
 
         if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User'))
             return $user;
@@ -95,6 +66,48 @@ class User {
     }
 
     /**
+     * Creates a new User and returns its ID
+     * @return int|bool
+     */
+    function Create() {
+        $db = new DB();
+
+        $data = array(
+            "email" => $this->email,
+            "pw_hash" => $this->pw_hash,
+            "name" => $this->name,
+            "avatar" => $this->avatar
+        );
+
+        if ($user_id = $db->modify("INSERT INTO User (email, pw_hash, name, avatar)
+                                    VALUES (:email, :pw_hash, :name, :avatar)", $data))
+            return $user_id;
+        else
+            return false;
+    }
+
+    /**
+     * Creates a new User and returns its ID
+     * @return int|bool
+     */
+    function Update() {
+        $db = new DB();
+
+        $data = array(
+            "email" => $this->email,
+            "pw_hash" => $this->pw_hash,
+            "name" => $this->name,
+            "avatar" => $this->avatar
+        );
+
+        if ($user_id = $db->modify("INSERT INTO User (email, pw_hash, name, avatar)
+                                    VALUES (:email, :pw_hash, :name, :avatar)", $data))
+            return $user_id;
+        else
+            return false;
+    }
+
+    /**
      * Get the User instance properties as an array
      * @return array
      */
@@ -108,5 +121,28 @@ class User {
      */
     function toJson() {
         return json_encode($this->toArray($this));
+    }
+
+
+    function createRandomPassword($length) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $password = substr(str_shuffle($chars), 0, $length);
+
+        $this->pw_hash = sha1($password);
+
+        return $password;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
+        $db = new DB();
+        $data = array(
+            "id" => $this->id,
+            "status" => $this->status
+        );
+        if ($db->modify("UPDATE User SET status = :status WHERE id = :id", $data))
+            return true;
+        else
+            return false;
     }
 }

@@ -1,28 +1,20 @@
+/* Defaults
+ ******************************************************************************/
+var API_URL = 'http://localhost:5000/api';
+
 // Set popup window default options
 swal.setDefaults({
     showCancelButton: false,
     closeOnConfirm: false,
     animation: false,
-    customClass: 'popup',
-    confirmButtonColor: 'transparent'
+    customClass: 'popup'
 });
 
-
-/* Text neon effect
- ******************************************************************************/
-$(".neon > span").novacancy({
-    'reblinkProbability': 0.5,
-    'blinkMin': 0.1,
-    'blinkMax': 0.5,
-    'loopMin': 10,
-    'loopMax': 20,
-    'color': 'white',
-    'glow': ['0 0 100px deeppink', '0 0 50px cyan', '0 0 10px cyan'],
-    'off': 0,
-    'blink': 0,
-    'classOn': 'on',
-    'classOff': 'off',
-    'autoOn': true
+// Set default headers to be sent with every request
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    }
 });
 
 
@@ -37,11 +29,44 @@ $("#login-button").click(function(){
             confirmButtonText: 'Submit'
         },
         function(isConfirm){
-            //swal.showInputError("You need to write something!");
-            //swal("Nice!", "Login success");
+            if (isConfirm) {
+                var email = $.trim($("#login-email").val());
+                var password = $.trim($("#login-password").val());
+
+                if (email == '' || password == '') {
+                    swal.showInputError("You need to enter your credentials");
+                } else {
+                    $.ajax(API_URL + '/login', {
+                        type: 'POST',
+                        data: JSON.stringify({
+                            "email": email,
+                            "password": password
+                        })
+                    })
+                        .done(function(response) {
+                            swal({
+                                title: "Greetings, " + response.name + "!",
+                                text: "Redirecting you do your Dashboard...",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function(){
+                                window.location.href = '/game/';
+                            }, 3000);
+                        })
+                        .fail(function(response) {
+                            var message = response.responseJSON;
+                            swal.showInputError(message.error);
+                        })
+                        .always(function(response){
+                            console.log(response)
+                        });
+                }
+            }
         }
     );
     scrambleText('h2');
+    $(':input[autofocus]').focus();
 });
 
 $("#signup-button").click(function(){
@@ -54,26 +79,70 @@ $("#signup-button").click(function(){
         },
         function(isConfirm){
             if (isConfirm) {
-                var input = $("#signup-email");
-                if ($.trim(input.val()) == '' && input.is(":valid")) {
+                var email = $.trim($("#signup-email").val());
+                var name = $.trim($("#signup-name").val());
+                var captcha = grecaptcha.getResponse();
+
+                if (email == '') {
                     swal.showInputError("You need to enter an email address, human!");
+                } else if (!isValidEmailAddress(email)) {
+                    swal.showInputError("That's not a valid email address, human!");
+                } else if (name == '') {
+                    swal.showInputError("Please enter a name for your character");
+                } else if (captcha == null) {
+                    swal.showInputError("Are you not a human?");
                 } else {
-                    // check captcha api!! + send email
-                    swal("Your account created!", "Check your email for your password");
+                    $.ajax(API_URL + '/users', {
+                        type: 'POST',
+                        data: JSON.stringify({
+                            "email": email,
+                            "name": name,
+                            "captcha": captcha
+                        })
+                    })
+                        .done(function() {
+                            swal("Account created!", "Check your email for your password", "success");
+                        })
+                        .fail(function(response) {
+                            var message = response.responseJSON;
+                            swal.showInputError(message.error);
+                        })
+                        .always(function(response){
+                            console.log(response)
+                        });
                 }
             }
         }
     );
     scrambleText('h2');
+    $(':input[autofocus]').focus();
 
     // Load Captcha widget for human validation
     grecaptcha.render('captcha', {
-        'sitekey' : '6Lf1UQkTAAAAAH3BPkgcwn7yzxm_RAn_Neklgz_V',
+        'sitekey': '6Lf1UQkTAAAAAH3BPkgcwn7yzxm_RAn_Neklgz_V',
         'theme': 'dark',
-        'callback' : function(response) {
+        'callback': function (response) {
             console.log(response);
         }
     });
+});
+
+
+/* Text neon effect
+ ******************************************************************************/
+$(".neon > span").novacancy({
+    'reblinkProbability': 0.5,
+    'blinkMin': 0.1,
+    'blinkMax': 0.5,
+    'loopMin': 10,
+    'loopMax': 20,
+    'color': 'white',
+    'glow': ['0 0 100px rgb(234, 105, 255)', '0 0 50px cyan', '0 0 10px cyan'],
+    'off': 0,
+    'blink': 0,
+    'classOn': 'on',
+    'classOff': 'off',
+    'autoOn': true
 });
 
 
@@ -150,6 +219,9 @@ Ticker.prototype.loop = function () {
     }
 };
 
+
+/* Functions
+ ******************************************************************************/
 function scrambleText(selector) {
     $(selector).each(function () {
         var $this = $(this), ticker = new Ticker($this).reset();
@@ -157,3 +229,8 @@ function scrambleText(selector) {
     });
 
 }
+
+function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
+    return pattern.test(emailAddress);
+};

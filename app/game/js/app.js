@@ -1,4 +1,4 @@
-var API_URL = 'http://localhost:5000';
+var API_URL = 'http://localhost:5000/api';
 var API_KEY = 'webapp';
 
 // Set default headers to be sent with every request

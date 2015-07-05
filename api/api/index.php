@@ -1,9 +1,9 @@
 <?php
-// Define authorized application keys which can make requests to this API
-define('APP_KEYS', serialize(['webapp', 'cron', 'mobile']));
-
 require '../classes/User.php';
 require '../vendor/autoload.php';
+
+// Google Recaptcha private key
+define('RECAPTCHA_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
 
 // Extend Slim class to provide a general method to return a json encoded response
 class API extends \Slim\Slim {
@@ -49,11 +49,11 @@ $app->add(new \CorsSlim\CorsSlim(array()));
 
 $app->hook('slim.before.dispatch', function() use ($app) {
     // Check if the request was performed with the json content type header
-    /*if ($app->request->getContentType() != 'application/json')
+    if ($app->request->getContentType() != 'application/json')
         throw new Exception("Invalid content type", 400);
 
     // Check if an authorized app key is present in the request header
-    if (!in_array($app->request->headers->get('Secret'), unserialize(APP_KEYS)))
+    /*if (!in_array($app->request->headers->get('Secret'), unserialize(APP_KEYS)))
         throw new Exception("Invalid app token", 400);*/
 });
 
@@ -89,54 +89,30 @@ $app->get('/', function() use ($app) {
 // Check login credentials
 $app->post('/login', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
-    $user = User::Login($data['email'], $data['pw_hash']);
 
-    if ($user)
-        $response = $user;
-    else
-        throw new Exception("Invalid credentials", 403);
+    if ($user = User::Login($data['email'], $data['password'])) {
+        if ($user->status == 'pending') {
+            $user->setStatus('active');
+        } else if ($user->status != 'active')
+            throw new Exception("This account is not active", 401);
 
-    $app->render_json($response);
+        $app->render_json([
+            'name' => $user->name,
+            'token' => ""
+        ]);
+    } else
+        throw new Exception("Invalid credentials", 401);
 });
 
-/**
- * @SWG\Get(
- *     path="/users/{id}",
- *     description="Returns a user based on a single ID",
- *     @SWG\Parameter(
- *         description="ID of user",
- *         in="path",
- *         name="id",
- *         required=true,
- *         type="integer"
- *     ),
- *     @SWG\Response(
- *         response=200,
- *         description="User info successfully fetched",
- *         @SWG\Schema(ref="#/definitions/User")
- *     ),
- *     @SWG\Response(
- *         response="404",
- *         description="User does not exist",
- *         @SWG\Schema(ref="#/definitions/Error")
- *     )
- * )
- */
+// Get User by ID
 $app->get('/users/:id', function($id) use ($app) {
     if ($user = User::Get($id))
-        $response = $user;
+        $app->render_json($user);
     else
         throw new Exception("User not found", 404);
-
-    $app->render_json($response);
 });
 
-/**
- * @SWG\Get(
- *     path="/users",
- *     description="Returns all the users at once",
- * )
- */
+// Get all users
 $app->get('/users', function() use ($app) {
     $response = User::GetAll();
 
@@ -145,8 +121,38 @@ $app->get('/users', function() use ($app) {
 
 // Create User
 $app->post('/users', function() use ($app) {
-    // $data = json_decode($app->request->getBody());
-    // return id or false
+    $data = json_decode($app->request->getBody(), true);
+    $email = $data['email'];
+    $name = $data['name'];
+    $captcha = $data['captcha'];
+
+    if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception("No valid email address was supplied", 400);
+    } else if (!$name /* +other restrictions */) {
+        throw new Exception("Invalid character name", 400);
+    } elseif (!$captcha) {
+        throw new Exception("Captcha was not provided", 400);
+    } else {
+        // Validate Captcha
+        $recaptcha = new \ReCaptcha\ReCaptcha(RECAPTCHA_KEY);
+        $verify = $recaptcha->verify($captcha, $app->request->getIp());
+        if (!$verify->isSuccess())
+            throw new Exception("Humanity not confirmed", 400);
+
+        // Create user
+        $user = new User();
+        $user->email = $email;
+        $user->name = $name;
+        $user->avatar = '';
+        $password = $user->createRandomPassword(6);
+        if ($user_id = $user->Create()) {
+            //if (@mail($email, "SoccerWars Account", "Password: " . $password))
+            //    throw new Exception("Error sending email", 500);
+            $app->render_json(["id" => $user_id]);
+        } else {
+            throw new Exception("Something went wrong!", 500);
+        }
+    }
 });
 
 // Update User

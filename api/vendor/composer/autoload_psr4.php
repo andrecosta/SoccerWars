@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'Swagger\\' => array($vendorDir . '/zircote/swagger-php/src'),
+    'ReCaptcha\\' => array($vendorDir . '/google/recaptcha/src/ReCaptcha'),
     'CorsSlim\\' => array($vendorDir . '/palanik/corsslim'),
 );

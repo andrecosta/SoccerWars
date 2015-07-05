@@ -1,6 +1,5 @@
 /* Imports
 *******************************************************************************/
-@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
 @import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
 @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
 @import url(http://fonts.googleapis.com/css?family=Orbitron:400,700|Audiowide);
@@ -23,18 +22,16 @@ body {
     bottom: 0;
     #background: radial-gradient(#553f5e, #310337);
     background: radial-gradient(#5AB4FF, #2A004C);
-    font-family: 'Orbitron', monospace;
+    font-family: Orbitron, monospace;
     font-weight: 400;
 }
 
 a {
     color: cyan;
     text-decoration: none;
-    transition: color .2s;
 }
 a:hover {
     color: deeppink;
-    transition: color .2s;
 
 }
 
@@ -45,27 +42,27 @@ input[type="password"]
     border-radius: 5px;
     background: rgba(0, 0, 0, 0.8);
     color: white;
-    font-family: "Orbitron", monospace;
+    font-family: Orbitron, monospace;
     letter-spacing: 2px;
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(200, 255, 255, 0.9);
 }
 
 button {
-    font-size: 30px;
+    font-size: 28px;
     border-radius: 5px;
-    padding: 10px 20px;
-    text-shadow: 0 0 10px cyan;
-    color: white;
-    font-weight: bold;
+    padding: 8px 20px;
+    color: #005A74;
     border: none;
-    background: transparent;
     cursor: pointer;
-    transition: text-shadow .2s;
+    background-color: rgba(0, 255, 255, 0.9);
+    font-family: Orbitron, monospace;
+    box-shadow: 0 0 10px cyan;
+    margin: 0 20px;
 }
 button:hover {
-    text-shadow: 0 0 30px deeppink;
-    transition: text-shadow .2s;
+    text-shadow: 0 0 2px deeppink;
     color: deeppink;
+    box-shadow: 0 0 20px cyan;
 }
 
 
@@ -75,7 +72,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
     background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 80%);
     background-size: 100% 3px;
     content: '';
@@ -104,35 +100,43 @@ button:hover {
 
 .scramble span {
     display: inline-block;
-    /*transform: translateY(-10%);
-    transition: transform 500ms;*/
 }
 
 .scramble .done {
     color: white;
-    /*transform: translateX(0);*/
 }
 
 
-/* Interface elements
+/* Layout & Interface elements
 *******************************************************************************/
 #title {
-    font-family: 'Audiowide', monospace;
+    font-family: Audiowide, monospace;
     font-weight: bold;
     line-height: 90px;
     font-size: 100px;
     text-transform: uppercase;
-    text-align: center;
     color: #eee;
     transform: perspective(10px) rotateX(1deg);
-    margin-bottom: 100px;
-}
-#title > span {
-
+    margin-top: -100px;
+    margin-bottom: 80px;
+    align-self: center;
+    padding-left: 16px;
 }
 #title > span:last-child {
     letter-spacing: 44px;
-    margin-left: 56px;
+}
+
+#actions {
+    align-self: center;
+    transform: perspective(200px) rotateX(10deg);
+}
+
+#info {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 #play-button {
@@ -144,7 +148,7 @@ button:hover {
 *******************************************************************************/
 .popup {
     font-family: "Orbitron", monospace;
-    background-color: rgba(10, 10, 40, 0.98);
+    background-color: rgba(10, 10, 40, 0.96);
     background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 70%);
     background-size: 100% 3px;
     /*box-shadow: 0 0 14px rgba(255, 20, 147, 0.95), 0 14px 28px rgba(0, 255, 255, 0.5);*/
@@ -162,33 +166,44 @@ button:hover {
     margin-top: 10px;
 }
 .popup button {
-    color: white;
-    font-weight: bold;
-    font-family: "Orbitron", monospace;
+    font-family: Orbitron, monospace;
     font-size: 22px;
     padding: 2px 24px;
     border: none;
+    border-radius: 5px;
+    color: #005A74;
+    cursor: pointer;
+    box-shadow: 0 0 5px cyan;
+    margin: 20px 10px;
+}
+.popup button:hover,
+.popup button:focus {
+    box-shadow: 0 0 8px cyan;
+    text-shadow: none;
+    color: rgb(0, 0, 50);
 }
 .popup button.confirm {
-    background: transparent;
-    text-shadow: 0 0 10px cyan;
+    background-color: #AEDEF4;
 }
-.popup button.confirm:hover {
-    background-color: transparent;
-    text-shadow: 0 0 2px white;
-    color: #000;
+.popup button.confirm:hover,
+.popup button.confirm:focus {
+    background-color: rgba(0, 255, 255, 0.9);
 }
 .popup button.cancel {
-    background: transparent;
-    text-shadow: 0 0 10px gray;
+    background-color: #AEDEF4;
 }
-.popup button.cancel:hover {
-    text-shadow: 0 0 2px white;
-    color: #333;
+.popup button.cancel:hover,
+.popup button.cancel:focus {
+    background-color: rgba(0, 255, 255, 0.9);
 }
 .popup .sa-error-container {
-    background-color: rgba(100, 0, 0, 0.6);
+    background-color: rgba(150, 0, 0, 0.5);
 }
 .popup p {
     color: white;
+}
+.popup .sa-icon.sa-success::before,
+.popup .sa-icon.sa-success::after,
+.popup .sa-icon.sa-success .sa-fix {
+    background-color: rgba(10, 10, 40, 0.6);
 }
