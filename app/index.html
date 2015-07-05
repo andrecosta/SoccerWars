@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>[SoccerWars] Welcome</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>[ SoccerWars ] > Welcome</title>
 
     <!-- Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -18,9 +19,9 @@
         </div>
 
         <div id="actions">
-            <button id="play">Play</button>
-            <button id="login">Login</button>
-            <button id="register">Register</button>
+            <button id="play-button">Play</button>
+            <button id="login-button">Login</button>
+            <button id="signup-button">Signup</button>
         </div>
 
         <div id="info">
@@ -29,10 +30,22 @@
 
     </div> <!-- .screen -->
 
+    <template id="login-form">
+        <div><input id="login-email" type="text" title="Email" placeholder="Email address" required></div>
+        <div><input id="login-password" type="password" title="Password" placeholder="Password"></div><br>
+    </template>
+
+    <template id="signup-form">
+        <div><input id="signup-email" type="email" title="Email" placeholder="Email address"></div>
+        <div id="captcha" align="center"></div><br>
+    </template>
+
     <!-- Plugins & Frameworks -->
-    <script src="js/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script>
     <script src="js/jquery/jquery.neon.min.js"></script>
-    <script src="js/jquery/jquery.lettering.min.js"></script>
 
     <!-- Application scripts -->
     <script src="js/main.js"></script>

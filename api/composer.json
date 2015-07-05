@@ -11,6 +11,7 @@
   ],
   "require": {
     "slim/slim": "2.6.2",
-    "palanik/corsslim": "v0.0.5"
+    "palanik/corsslim": "v0.0.5",
+    "zircote/swagger-php": "2.0.0"
   }
 }

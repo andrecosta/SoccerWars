@@ -1,14 +1,49 @@
 <?php
 require 'DB.php';
 
+/**
+ * @SWG\Definition(definition="user")
+ */
 class User {
+    /**
+     * @SWG\Property()
+     * @var int
+     */
     public $id;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $email;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $userName;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $firstName;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $lastName;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $avatar;
+    /**
+     * @SWG\Property()
+     * @var int
+     */
     public $points;
+    /**
+     * @SWG\Property()
+     * @var string
+     */
     public $status;
 
     /**

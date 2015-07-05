@@ -7,5 +7,9 @@
     <orderEntry type="library" name="jquery-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="vue-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="jQuery" level="project" />
+    <orderEntry type="library" name="sweetalert" level="application" />
+    <orderEntry type="library" name="jquery.lettering" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="api" level="application" />
   </component>
 </module>

@@ -2,28 +2,70 @@
 *******************************************************************************/
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
 @import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
-@import 'effects/glitch.css';
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+@import url(http://fonts.googleapis.com/css?family=Orbitron:400,700|Audiowide);
 
 
 /* Base & Defaults
 *******************************************************************************/
-* { box-sizing: border-box; }
+* { box-sizing: border-box; outline: 0; }
 html { height: 100%; }
 
 body {
     margin: 0;
     color: #fafafa;
     height: 100%;
-    background: url('../img/bg.jpg') no-repeat top center fixed;
     background-size: cover;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(#553f5e, #310337);
-    font-family: 'Source Code Pro', monospace;
+    #background: radial-gradient(#553f5e, #310337);
+    background: radial-gradient(#5AB4FF, #2A004C);
+    font-family: 'Orbitron', monospace;
     font-weight: 400;
+}
+
+a {
+    color: cyan;
+    text-decoration: none;
+    transition: color .2s;
+}
+a:hover {
+    color: deeppink;
+    transition: color .2s;
+
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"]
+{
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-family: "Orbitron", monospace;
+    letter-spacing: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+button {
+    font-size: 30px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-shadow: 0 0 10px cyan;
+    color: white;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: text-shadow .2s;
+}
+button:hover {
+    text-shadow: 0 0 30px deeppink;
+    transition: text-shadow .2s;
+    color: deeppink;
 }
 
 
@@ -34,10 +76,10 @@ body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 50%);
-    background-size: 1000px 2px;
+    background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 80%);
+    background-size: 100% 3px;
     content: '';
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -75,15 +117,78 @@ body {
 /* Interface elements
 *******************************************************************************/
 #title {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Audiowide', monospace;
     font-weight: bold;
     line-height: 90px;
     font-size: 100px;
     text-transform: uppercase;
     text-align: center;
     color: #eee;
-    transform: perspective(300px);
+    transform: perspective(10px) rotateX(1deg);
+    margin-bottom: 100px;
+}
+#title > span {
+
 }
 #title > span:last-child {
+    letter-spacing: 44px;
+    margin-left: 56px;
+}
 
+#play-button {
+    display: none;
+}
+
+
+/* Popup window custom styles
+*******************************************************************************/
+.popup {
+    font-family: "Orbitron", monospace;
+    background-color: rgba(10, 10, 40, 0.98);
+    background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.5) 70%);
+    background-size: 100% 3px;
+    /*box-shadow: 0 0 14px rgba(255, 20, 147, 0.95), 0 14px 28px rgba(0, 255, 255, 0.5);*/
+    box-shadow: 0px -1px 5px rgba(255, 20, 147, 0.8), 0px 1px 5px rgba(0, 255, 255, 0.8);
+}
+.popup input {
+    display: block;
+}
+.popup fieldset {
+    display: none;
+}
+.popup h2 {
+    color: white;
+    text-shadow: 0 0 20px cyan;
+    margin-top: 10px;
+}
+.popup button {
+    color: white;
+    font-weight: bold;
+    font-family: "Orbitron", monospace;
+    font-size: 22px;
+    padding: 2px 24px;
+    border: none;
+}
+.popup button.confirm {
+    background: transparent;
+    text-shadow: 0 0 10px cyan;
+}
+.popup button.confirm:hover {
+    background-color: transparent;
+    text-shadow: 0 0 2px white;
+    color: #000;
+}
+.popup button.cancel {
+    background: transparent;
+    text-shadow: 0 0 10px gray;
+}
+.popup button.cancel:hover {
+    text-shadow: 0 0 2px white;
+    color: #333;
+}
+.popup .sa-error-container {
+    background-color: rgba(100, 0, 0, 0.6);
+}
+.popup p {
+    color: white;
 }

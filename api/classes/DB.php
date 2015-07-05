@@ -12,7 +12,6 @@ class DB
     {
         try {
             $this->connection = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
-            //$this->set_charset('utf8');
         } catch (PDOException $e) {
             die($e->getMessage());
         }

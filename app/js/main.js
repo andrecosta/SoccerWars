@@ -1,3 +1,13 @@
+// Set popup window default options
+swal.setDefaults({
+    showCancelButton: false,
+    closeOnConfirm: false,
+    animation: false,
+    customClass: 'popup',
+    confirmButtonColor: 'transparent'
+});
+
+
 /* Text neon effect
  ******************************************************************************/
 $(".neon > span").novacancy({
@@ -13,6 +23,57 @@ $(".neon > span").novacancy({
     'classOn': 'on',
     'classOff': 'off',
     'autoOn': true
+});
+
+
+/* Modal windows
+ ******************************************************************************/
+$("#login-button").click(function(){
+    swal({
+            title: "Login",
+            text: $('#login-form').html(),
+            html: true,
+            showCancelButton: true,
+            confirmButtonText: 'Submit'
+        },
+        function(isConfirm){
+            //swal.showInputError("You need to write something!");
+            //swal("Nice!", "Login success");
+        }
+    );
+    scrambleText('h2');
+});
+
+$("#signup-button").click(function(){
+    swal({
+            title: "Sign Up",
+            text: $("#signup-form").html(),
+            html: true,
+            showCancelButton: true,
+            confirmButtonText: 'Create account'
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                var input = $("#signup-email");
+                if ($.trim(input.val()) == '' && input.is(":valid")) {
+                    swal.showInputError("You need to enter an email address, human!");
+                } else {
+                    // check captcha api!! + send email
+                    swal("Your account created!", "Check your email for your password");
+                }
+            }
+        }
+    );
+    scrambleText('h2');
+
+    // Load Captcha widget for human validation
+    grecaptcha.render('captcha', {
+        'sitekey' : '6Lf1UQkTAAAAAH3BPkgcwn7yzxm_RAn_Neklgz_V',
+        'theme': 'dark',
+        'callback' : function(response) {
+            console.log(response);
+        }
+    });
 });
 
 
@@ -89,9 +150,10 @@ Ticker.prototype.loop = function () {
     }
 };
 
-$words = $('.scramble');
+function scrambleText(selector) {
+    $(selector).each(function () {
+        var $this = $(this), ticker = new Ticker($this).reset();
+        $this.data('ticker', ticker);
+    });
 
-$words.each(function () {
-    var $this = $(this), ticker = new Ticker($this).reset();
-    $this.data('ticker', ticker);
-});
+}
