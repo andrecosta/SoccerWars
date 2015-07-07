@@ -1,9 +1,5 @@
 <?php
-require 'DB.php';
 
-/**
- * @SWG\Definition(definition="user")
- */
 class User {
     public $id;
     public $email;
@@ -11,49 +7,70 @@ class User {
     public $avatar;
     public $points;
     public $status;
+    public $created_at;
 
+    private $token;
     private $pw_hash;
 
     /**
-     * Check login credentials and get authenticated User instance, if successful
+     * Check login credentials and return the user ID
      * @param string $email
      * @param string $password
-     * @return User|bool
+     * @return int|bool
      */
     static function Login($email, $password) {
         $db = new DB();
 
-        $data = array(
+        $data = [
             "email" => $email,
             "pw_hash" => sha1($password)
-        );
+        ];
 
-        if ($user = $db->fetch("SELECT * FROM User WHERE email = :email AND pw_hash = :pw_hash", $data, 'User'))
-            return $user;
+        if ($id = $db->fetch("SELECT id FROM User WHERE email = :email AND pw_hash = :pw_hash", $data)) {
+            // Create or renew the user token upon login
+            Token::Create($id);
+            return $id;
+        }
         else
             return false;
     }
 
     /**
-     * Get a User instance from an ID
+     * Get a user instance from an ID
      * @param int $id
      * @return User|bool
      */
     static function Get($id) {
         $db = new DB();
 
-        $data = array(
-            "id" => $id
-        );
+        $data = ["id" => $id];
 
-        if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User'))
+        if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User')) {
+            $user->token = Token::Get($id);
             return $user;
-        else
+        } else
             return false;
     }
 
     /**
-     * Get all Users
+     * Get a user instance from a token
+     * @param int $token
+     * @return User|bool
+     */
+    static function GetByToken($token) {
+        $db = new DB();
+
+        $data = ["token" => $token];
+
+        if ($user_id = $db->fetch("SELECT user_id FROM Token WHERE token = :token", $data)) {
+            $user = User::Get($user_id);
+            return $user;
+        } else
+            return false;
+    }
+
+    /**
+     * Get all users
      * @return User[]|bool
      */
     static function GetAll() {
@@ -66,49 +83,58 @@ class User {
     }
 
     /**
-     * Creates a new User and returns its ID
+     * Create a new user and returns its ID
      * @return int|bool
      */
     function Create() {
         $db = new DB();
 
-        $data = array(
+        // Create avatar
+        $avatar = uniqid();
+        $genders = ['male', 'female'];
+        $gender = $genders[array_rand($genders)];
+        $image = file_get_contents("'http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=150");
+        file_put_contents("../static/avatars/${avatar}_150.jpg", $image);
+        $image = file_get_contents("'http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=32");
+        file_put_contents("../static/avatars/${avatar}_32.jpg", $image);
+
+        $data = [
             "email" => $this->email,
             "pw_hash" => $this->pw_hash,
             "name" => $this->name,
-            "avatar" => $this->avatar
-        );
+            "avatar" => $avatar
+        ];
 
         if ($user_id = $db->modify("INSERT INTO User (email, pw_hash, name, avatar)
-                                    VALUES (:email, :pw_hash, :name, :avatar)", $data))
+                                    VALUES (:email, :pw_hash, :name, :avatar)", $data)) {
             return $user_id;
-        else
+        } else
             return false;
     }
 
     /**
-     * Creates a new User and returns its ID
+     * Create a new user and returns its ID
      * @return int|bool
      */
-    function Update() {
+    /*function Update() {
         $db = new DB();
 
-        $data = array(
+        $data = [
             "email" => $this->email,
             "pw_hash" => $this->pw_hash,
             "name" => $this->name,
             "avatar" => $this->avatar
-        );
+        ];
 
         if ($user_id = $db->modify("INSERT INTO User (email, pw_hash, name, avatar)
                                     VALUES (:email, :pw_hash, :name, :avatar)", $data))
             return $user_id;
         else
             return false;
-    }
+    }*/
 
     /**
-     * Get the User instance properties as an array
+     * Get the user instance properties as an array
      * @return array
      */
     function toArray() {
@@ -116,7 +142,7 @@ class User {
     }
 
     /**
-     * Get the User instance as a JSON encoded string
+     * Get the user instance as a JSON encoded string
      * @return string
      */
     function toJson() {
@@ -136,13 +162,17 @@ class User {
     function setStatus($status) {
         $this->status = $status;
         $db = new DB();
-        $data = array(
+        $data = [
             "id" => $this->id,
             "status" => $this->status
-        );
+        ];
         if ($db->modify("UPDATE User SET status = :status WHERE id = :id", $data))
             return true;
         else
             return false;
+    }
+
+    function getToken() {
+        return $this->token;
     }
 }

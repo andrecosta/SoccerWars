@@ -22,6 +22,13 @@ class DB
         $this->connection = null;
     }
 
+    /**
+     * Fetch data from the database either as an object or an array
+     * @param string $query
+     * @param array $params
+     * @param string $object_type
+     * @return object|array|int|string
+     */
     public function fetch($query, $params = null, $object_type = null)
     {
         try {
@@ -35,9 +42,12 @@ class DB
             else
                 $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            if (count($data) == 1)
-                return $data[0];
-            else
+            if (count($data) == 1) {
+                if (is_array($data[0]) && count($data[0]) == 1)
+                    return $data[0][array_keys($data[0])[0]];
+                else
+                    return $data[0];
+            } else
                 return $data;
 
         } catch (PDOException $e) {

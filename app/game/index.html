@@ -2,54 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>[SoccerWars] Game</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>[ SoccerWars ] Game</title>
 
     <!-- Styles -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
-
 </head>
 <body id="app">
 
-    <div class="screen">
+    <section id="left" class="hologram">
 
-        <nav class="hologram">
-            <img id="profile_picture" width="200" height="200" alt
-                 v-attr="src: profile_picture"
-                 v-on="click: alert">
+        <div id="profile-picture">
+            <img width="150" height="150" v-attr="src: user.avatar">
+        </div>
+
+        <div id="points">
+            <span v-text="user.points">0</span>
+        </div>
+
+        <nav id="main-menu">
             <ul>
                 <li class="menu-item glitch neon">
-                    <span class="menu-title" data-text="Dashboard">Dashboard</span><div class="menu-icon"></div>
+                    <span data-text="Dashboard">Dashboard</span><span class="menu-icon"></span>
                 </li>
                 <li class="menu-item glitch neon">
-                    <span class="menu-title" data-text="Teams">Teams</span><div class="menu-icon"></div>
+                    <span data-text="Teams">Teams</span><span class="menu-icon"></span>
                 </li>
                 <li class="menu-item glitch neon">
-                    <span class="menu-title" data-text="Matches">Matches</span><div class="menu-icon"></div>
+                    <span data-text="Matches">Matches</span><span class="menu-icon"></span>
                 </li>
                 <li class="menu-item glitch neon">
-                    <span class="menu-title" data-text="Corporations">Corporations</span><div class="menu-icon"></div>
+                    <span data-text="Corporations">Corporations</span><span class="menu-icon"></span>
                 </li>
                 <li class="menu-item glitch neon">
-                    <span class="menu-title" data-text="Market">Market</span><div class="menu-icon"></div>
+                    <span data-text="Market">Market</span><span class="menu-icon"></span>
+                </li>
+                <li class="menu-item glitch neon">
+                    <span data-text="Players">Players</span><span class="menu-icon"></span>
                 </li>
             </ul>
         </nav>
 
-        <main>
+        <button id="#logout" v-on="click: logout">Logout</button>
+
+    </section><!-- #left -->
+
+    <section id="middle" class="hologram">
+
+        <header id="frame">
             <h1 class="scramble">Dashboard</h1>
+            <div class="buttons">
+                <div v-on="click: maximize" v-show="!isMaximized">+</div>
+                <div v-on="click: minimize" v-show="isMaximized">-</div>
+            </div>
+        </header>
+
+        <main>
 
         </main>
 
-        <aside class="hologram">
-            next matches
-        </aside>
+    </section><!-- #middle -->
 
-    </div> <!-- .screen -->
+    <section id="right" class="hologram">
+
+        next matches
+
+    </section><!-- #right -->
 
     <!-- Plugins & Frameworks -->
-    <script src="js/jquery/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/1.2.1/cookies.min.js"></script>
     <script src="js/jquery/jquery.neon.min.js"></script>
-    <script src="js/jquery/jquery.lettering.min.js"></script>
+    <script src="js/sweetalert-dev.js"></script>
     <script src="js/md5.js"></script>
     <script src="js/vue/vue.js"></script>
     <script src="js/vue/vue-resource.min.js"></script>
@@ -73,15 +100,6 @@
         </nav>
 
     </header>
-
-    <nav id="main-menu">
-        <ul>
-            <li><a class="nav-dashboard" href="index.php">Dashboard</a></li>
-            <li><a class="nav-teams" href="#">Teams</a></li>
-            <li><a class="nav-matches" href="#">Matches</a></li>
-            <li><a class="nav-bets" href="#">My Bets</a></li>
-        </ul>
-    </nav>
 
     <main>
 

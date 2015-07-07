@@ -6,6 +6,7 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/game/js/jquery/jquery.min.js" />
+      <root url="file://$PROJECT_DIR$/game/js/jquery/jquery.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

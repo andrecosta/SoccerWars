@@ -89,9 +89,10 @@ Ticker.prototype.loop = function () {
     }
 };
 
-$words = $('.scramble');
-
-$words.each(function () {
-    var $this = $(this), ticker = new Ticker($this).reset();
-    $this.data('ticker', ticker);
-});
+function scrambleText(selector) {
+    $(selector).each(function () {
+        var $this = $(this), ticker = new Ticker($this).reset();
+        $this.data('ticker', ticker);
+    });
+}
+scrambleText('.scramble');

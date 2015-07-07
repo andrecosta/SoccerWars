@@ -81,16 +81,22 @@
       <foreign-key name="TeamComposition_ibfk_1" columns="TeamID" ref-table="Team" ref-schema="" ref-catalog="soccerwars" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="TeamComposition_ibfk_2" columns="PlayerID" ref-table="Player" ref-schema="" ref-catalog="soccerwars" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
+    <table name="Token" schema="" catalog="soccerwars" type="TABLE">
+      <column name="token" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="token"/>
+      <index name="token_UNIQUE" unique="true" columns="token"/>
+    </table>
     <table name="User" schema="" catalog="soccerwars" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
-      <column name="email" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
-      <column name="pw_hash" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="userName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
-      <column name="firstName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
-      <column name="lastName" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
-      <column name="avatar" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="points" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="status" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pw_hash" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="avatar" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="points" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MjAw"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3BlbmRpbmcn"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="Bet_ibfk_1" table="Bet" schema="" catalog="soccerwars" columns="UserID"/>
       <exported-key name="UserComment_ibfk_1" table="UserComment" schema="" catalog="soccerwars" columns="UserID"/>

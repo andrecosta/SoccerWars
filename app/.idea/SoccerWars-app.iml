@@ -11,5 +11,7 @@
     <orderEntry type="library" name="jquery.lettering" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="api" level="application" />
+    <orderEntry type="library" name="velocity" level="application" />
+    <orderEntry type="library" name="cookies" level="application" />
   </component>
 </module>

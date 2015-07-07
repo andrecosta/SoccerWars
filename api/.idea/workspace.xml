@@ -2,26 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f7eb19d-9261-4726-9eba-8dd278e32e4b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/js/sweetalert-dev.js" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\api\sql\export.sql" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\facebook\facebook.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\facebook\facebook.scss" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\google\google.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\google\google.scss" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\twitter\twitter.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\themes\twitter\twitter.scss" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/Token.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/css/popup.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/css/popup.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../app/game/js/sweetalert-dev.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/webResources.xml" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.eot" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.svg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.ttf" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.woff" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\license.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\jquery\jquery.lettering.min.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\jquery\jquery.min.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/DB.php" afterPath="$PROJECT_DIR$/classes/DB.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/../app/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/SoccerWars-api.iml" afterPath="$PROJECT_DIR$/.idea/SoccerWars-api.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/.idea/SoccerWars-app.iml" afterPath="$PROJECT_DIR$/../app/.idea/SoccerWars-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/User.php" afterPath="$PROJECT_DIR$/classes/User.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/game/css/app.css" afterPath="$PROJECT_DIR$/../app/game/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/game/js/app.js" afterPath="$PROJECT_DIR$/../app/game/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/game/js/effects.js" afterPath="$PROJECT_DIR$/../app/game/js/effects.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/index.html" afterPath="$PROJECT_DIR$/../app/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/game/index.html" afterPath="$PROJECT_DIR$/../app/game/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/index.php" afterPath="$PROJECT_DIR$/api/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/.idea/libraries/jQuery.xml" afterPath="$PROJECT_DIR$/../app/.idea/libraries/jQuery.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/../app/.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/css/main.css" afterPath="$PROJECT_DIR$/../app/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../app/js/main.js" afterPath="$PROJECT_DIR$/../app/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -67,24 +76,6 @@
         <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
       </PATH_ELEMENT>
     </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - soccerwars@db.drymartini.eu" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="soccerwars" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="User" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -92,11 +83,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.522686" vertical-offset="290" max-vertical-offset="3060">
-              <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+            <state vertical-scroll-proportion="-25.654545" vertical-offset="425" max-vertical-offset="3621">
+              <caret line="108" column="40" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -105,18 +96,29 @@
       <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.846154" vertical-offset="108" max-vertical-offset="2601">
-              <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
+            <state vertical-scroll-proportion="-8.192307" vertical-offset="1385" max-vertical-offset="3111">
+              <caret line="94" column="48" selection-start-line="94" selection-start-column="48" selection-end-line="94" selection-end-column="48" />
               <folding>
-                <marker date="1436120900354" expanded="true" signature="614:676" placeholder="SELECT * FRO..User..." />
-                <marker date="1436120900354" expanded="true" signature="1015:1048" placeholder="SELECT * FRO..User..." />
-                <marker date="1436120900354" expanded="true" signature="1292:1310" placeholder="SELECT * FRO..User..." />
-                <marker date="1436120900354" expanded="true" signature="1757:1882" placeholder="INSERT INTO ..." />
-                <marker date="1436120900354" expanded="true" signature="1768:1882" placeholder="SELECT * FRO..User..." />
-                <marker date="1436120900354" expanded="true" signature="2324:2449" placeholder="INSERT INTO ..." />
-                <marker date="1436120900354" expanded="true" signature="3355:3402" placeholder="UPDATE User ..." />
-                <marker date="1436120900354" expanded="true" signature="3361:3387" placeholder="INSERT INTO ..." />
+                <marker date="1436271111970" expanded="true" signature="558:621" placeholder="SELECT * FRO..User..." />
+                <marker date="1436271111970" expanded="true" signature="1024:1057" placeholder="SELECT * FRO..User..." />
+                <marker date="1436271111970" expanded="true" signature="1441:1487" placeholder="SELECT user_..Token..." />
+                <marker date="1436271111970" expanded="true" signature="1768:1786" placeholder="SELECT * FRO..User..." />
+                <marker date="1436271111970" expanded="true" signature="2734:2859" placeholder="INSERT INTO ..." />
+                <marker date="1436271111970" expanded="true" signature="2745:2859" placeholder="SELECT * FRO..User..." />
+                <marker date="1436271111970" expanded="true" signature="3301:3426" placeholder="INSERT INTO ..." />
+                <marker date="1436271111970" expanded="true" signature="4329:4376" placeholder="UPDATE User ..." />
+                <marker date="1436271111970" expanded="true" signature="4335:4361" placeholder="INSERT INTO ..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="577">
+              <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,9 +126,26 @@
       <file leaf-file-name="DB.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/DB.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.384615" vertical-offset="384" max-vertical-offset="1496">
-              <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+            <state vertical-scroll-proportion="-34.923077" vertical-offset="350" max-vertical-offset="1666">
+              <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Token.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/Token.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.5" vertical-offset="510" max-vertical-offset="1377">
+              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+              <folding>
+                <marker date="1436236679455" expanded="true" signature="401:449" placeholder="SELECT * FRO..User..." />
+                <marker date="1436236679455" expanded="true" signature="682:700" placeholder="SELECT * FRO..User..." />
+                <marker date="1436236679455" expanded="true" signature="1116:1176" placeholder="INSERT INTO ..." />
+                <marker date="1436236679455" expanded="true" signature="1116:1258" placeholder="INSERT INTO ..." />
+                <marker date="1436236679455" expanded="true" signature="1554:1594" placeholder="SELECT * FRO..Token..." />
+                <marker date="1436236679455" expanded="true" signature="1554:1643" placeholder="SELECT * FRO..Token..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -158,9 +177,12 @@
         <option value="$PROJECT_DIR$/v1/index.php" />
         <option value="$PROJECT_DIR$/documentation.php" />
         <option value="$PROJECT_DIR$/swagger/index.html" />
-        <option value="$PROJECT_DIR$/classes/DB.php" />
-        <option value="$PROJECT_DIR$/classes/User.php" />
+        <option value="$PROJECT_DIR$/vendor/palanik/corsslim/CorsSlim.php" />
         <option value="$PROJECT_DIR$/api/index.php" />
+        <option value="$PROJECT_DIR$/classes/DB.php" />
+        <option value="$PROJECT_DIR$/classes/Token.php" />
+        <option value="$PROJECT_DIR$/classes/User.php" />
+        <option value="$PROJECT_DIR$/static/.gitignore" />
       </list>
     </option>
   </component>
@@ -256,7 +278,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="swagger" />
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -288,6 +310,9 @@
     <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\api\classes" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\api\v1" />
     </key>
@@ -384,7 +409,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14684814" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -439,14 +464,15 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1989">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1436120900354" expanded="true" signature="614:676" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1015:1048" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1292:1310" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1757:1882" placeholder="INSERT INTO ..." />
-            <marker date="1436120900354" expanded="true" signature="1768:1882" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="2324:2449" placeholder="INSERT INTO ..." />
-            <marker date="1436120900354" expanded="true" signature="3355:3402" placeholder="UPDATE User ..." />
-            <marker date="1436120900354" expanded="true" signature="3361:3387" placeholder="INSERT INTO ..." />
+            <marker date="1436271111970" expanded="true" signature="558:621" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="1024:1057" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="1441:1487" placeholder="SELECT user_..Token..." />
+            <marker date="1436271111970" expanded="true" signature="1768:1786" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="2734:2859" placeholder="INSERT INTO ..." />
+            <marker date="1436271111970" expanded="true" signature="2745:2859" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="3301:3426" placeholder="INSERT INTO ..." />
+            <marker date="1436271111970" expanded="true" signature="4329:4376" placeholder="UPDATE User ..." />
+            <marker date="1436271111970" expanded="true" signature="4335:4361" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -573,35 +599,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/DB.php">
+    <entry file="file://$PROJECT_DIR$/vendor/palanik/corsslim/CorsSlim.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.384615" vertical-offset="384" max-vertical-offset="1496">
-          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.27767694" vertical-offset="0" max-vertical-offset="1989">
+          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.846154" vertical-offset="108" max-vertical-offset="2601">
-          <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
-          <folding>
-            <marker date="1436120900354" expanded="true" signature="614:676" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1015:1048" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1292:1310" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="1757:1882" placeholder="INSERT INTO ..." />
-            <marker date="1436120900354" expanded="true" signature="1768:1882" placeholder="SELECT * FRO..User..." />
-            <marker date="1436120900354" expanded="true" signature="2324:2449" placeholder="INSERT INTO ..." />
-            <marker date="1436120900354" expanded="true" signature="3355:3402" placeholder="UPDATE User ..." />
-            <marker date="1436120900354" expanded="true" signature="3361:3387" placeholder="INSERT INTO ..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.522686" vertical-offset="290" max-vertical-offset="3060">
-          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+        <state vertical-scroll-proportion="-25.654545" vertical-offset="425" max-vertical-offset="3621">
+          <caret line="108" column="40" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/DB.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-34.923077" vertical-offset="350" max-vertical-offset="1666">
+          <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/Token.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5" vertical-offset="510" max-vertical-offset="1377">
+          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+          <folding>
+            <marker date="1436236679455" expanded="true" signature="401:449" placeholder="SELECT * FRO..User..." />
+            <marker date="1436236679455" expanded="true" signature="682:700" placeholder="SELECT * FRO..User..." />
+            <marker date="1436236679455" expanded="true" signature="1116:1176" placeholder="INSERT INTO ..." />
+            <marker date="1436236679455" expanded="true" signature="1116:1258" placeholder="INSERT INTO ..." />
+            <marker date="1436236679455" expanded="true" signature="1554:1594" placeholder="SELECT * FRO..Token..." />
+            <marker date="1436236679455" expanded="true" signature="1554:1643" placeholder="SELECT * FRO..Token..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.192307" vertical-offset="1385" max-vertical-offset="3111">
+          <caret line="94" column="48" selection-start-line="94" selection-start-column="48" selection-end-line="94" selection-end-column="48" />
+          <folding>
+            <marker date="1436271111970" expanded="true" signature="558:621" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="1024:1057" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="1441:1487" placeholder="SELECT user_..Token..." />
+            <marker date="1436271111970" expanded="true" signature="1768:1786" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="2734:2859" placeholder="INSERT INTO ..." />
+            <marker date="1436271111970" expanded="true" signature="2745:2859" placeholder="SELECT * FRO..User..." />
+            <marker date="1436271111970" expanded="true" signature="3301:3426" placeholder="INSERT INTO ..." />
+            <marker date="1436271111970" expanded="true" signature="4329:4376" placeholder="UPDATE User ..." />
+            <marker date="1436271111970" expanded="true" signature="4335:4361" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="577">
+          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
           <folding />
         </state>
       </provider>

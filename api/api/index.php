@@ -1,11 +1,21 @@
 <?php
+/*=============================================================================
+ * INITIALIZATION
+ * Imports, constants and application setup
+ =============================================================================*/
+require '../classes/DB.php';
 require '../classes/User.php';
+require '../classes/Token.php';
 require '../vendor/autoload.php';
 
-// Google Recaptcha private key
-define('RECAPTCHA_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
+date_default_timezone_set('Europe/Lisbon');
 
-// Extend Slim class to provide a general method to return a json encoded response
+/* Constants
+ ******************************************************************************/
+define('GOOGLE_RECAPTCHA_PRIVATE_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
+
+/* Extend Slim class to always return a JSON encoded responses
+ ******************************************************************************/
 class API extends \Slim\Slim {
     function render_json($data) {
         $this->response->headers->set('Content-Type', 'application/json');
@@ -13,56 +23,49 @@ class API extends \Slim\Slim {
     }
 }
 
-// Initialize the application
-$app = new API(['debug' => false]);
-$app->add(new \CorsSlim\CorsSlim(array()));
+/* Initialize the framework and its options
+ ******************************************************************************/
+$app = new API([
+    'debug' => false,
+]);
 
-/**
- * @SWG\Swagger(
- *     basePath="/api",
- *     host="localhost:5000",
- *     schemes={"http", "https"},
- *     produces={"application/json"},
- *     consumes={"application/json"},
- *     @SWG\Info(
- *         version="0.0.1",
- *         title="SoccerWars API",
- *         description="Common API to interface with web and mobile applications and interact with the database",
- *         @SWG\Contact(name="Fabio Costa"),
- *     ),
- *     @SWG\Definition(
- *         definition="Error",
- *         required={"error"},
- *         @SWG\Property(
- *             property="error",
- *             type="string"
- *         )
- *     )
- * )
- */
+$app->add(new \CorsSlim\CorsSlim(/*[
+    'origin' => 'localhost',
+    'allowCredentials' => true
+]*/));
 
 
-/*==============================================================================
+
+/*=============================================================================
  * HOOKS
  * Actions or checks to be performed before each request
- ==============================================================================*/
+ =============================================================================*/
 
 $app->hook('slim.before.dispatch', function() use ($app) {
     // Check if the request was performed with the json content type header
     if ($app->request->getContentType() != 'application/json')
         throw new Exception("Invalid content type", 400);
 
-    // Check if an authorized app key is present in the request header
-    /*if (!in_array($app->request->headers->get('Secret'), unserialize(APP_KEYS)))
-        throw new Exception("Invalid app token", 400);*/
+    // Check the validity of a token sent by the user
+    if ($app->request->getResourceUri() != '/login') {
+        if (!$app->request->headers->get('Token'))
+            throw new Exception("Missing token", 400);
+        else {
+            if (!Token::Validate($app->request->headers->get('Token')))
+                throw new Exception("Invalid token", 400);
+        }
+    }
 });
 
 
-/*==============================================================================
+
+/*=============================================================================
  * ERROR HANDLERS
  * Wraps the response creation of any specified error, includes message and code
- ==============================================================================*/
+ =============================================================================*/
 
+/* Render a custom JSON message whenever any exception is thrown
+ ******************************************************************************/
 $app->error(function(Exception $e) use ($app) {
     if ($e->getCode() !== 0)
         $app->response->setStatus($e->getCode());
@@ -75,22 +78,27 @@ $app->notFound(function() {
 });
 
 
-/*==============================================================================
+
+/*=============================================================================
  * ROUTES
  * Main endpoints of the API
- ==============================================================================*/
+ =============================================================================*/
 
-// API index
+/* API root
+ ******************************************************************************/
 $app->get('/', function() use ($app) {
-    $app->response->setStatus(200);
-    $app->render_json(["message" => "API v1"]);
+    $app->render_json(["message" => "SoccerWars API v0.0.1"]);
 });
 
-// Check login credentials
+/* Check login credentials
+ ******************************************************************************/
 $app->post('/login', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
 
-    if ($user = User::Login($data['email'], $data['password'])) {
+    if ($user_id = User::Login($data['email'], $data['password'])) {
+        $user = User::Get($user_id);
+
+        // Change account status if it's the first login and forbid inactive accounts
         if ($user->status == 'pending') {
             $user->setStatus('active');
         } else if ($user->status != 'active')
@@ -98,13 +106,24 @@ $app->post('/login', function() use ($app) {
 
         $app->render_json([
             'name' => $user->name,
-            'token' => ""
+            'token' => $user->getToken()
         ]);
     } else
         throw new Exception("Invalid credentials", 401);
 });
 
-// Get User by ID
+/* Get current user info via his token
+ ******************************************************************************/
+$app->get('/me', function() use ($app) {
+    $token = $app->request->headers->get('Token');
+    if ($user = User::GetByToken($token))
+        $app->render_json($user);
+    else
+        throw new Exception("Invalid", 404);
+});
+
+/* Get user by ID
+ ******************************************************************************/
 $app->get('/users/:id', function($id) use ($app) {
     if ($user = User::Get($id))
         $app->render_json($user);
@@ -112,14 +131,16 @@ $app->get('/users/:id', function($id) use ($app) {
         throw new Exception("User not found", 404);
 });
 
-// Get all users
+/* Get all users
+ ******************************************************************************/
 $app->get('/users', function() use ($app) {
     $response = User::GetAll();
 
     $app->render_json($response);
 });
 
-// Create User
+/* Create user
+ ******************************************************************************/
 $app->post('/users', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
     $email = $data['email'];
@@ -134,7 +155,7 @@ $app->post('/users', function() use ($app) {
         throw new Exception("Captcha was not provided", 400);
     } else {
         // Validate Captcha
-        $recaptcha = new \ReCaptcha\ReCaptcha(RECAPTCHA_KEY);
+        $recaptcha = new \ReCaptcha\ReCaptcha(GOOGLE_RECAPTCHA_PRIVATE_KEY);
         $verify = $recaptcha->verify($captcha, $app->request->getIp());
         if (!$verify->isSuccess())
             throw new Exception("Humanity not confirmed", 400);
@@ -155,21 +176,33 @@ $app->post('/users', function() use ($app) {
     }
 });
 
-// Update User
-$app->patch('/users/:id', function($id) use ($app) {
+/* Update User
+ ******************************************************************************/
+$app->put('/users/:id', function($id) use ($app) {
     // return bool
 });
 
-// Delete User
+/* Delete User
+ ******************************************************************************/
 $app->delete('/users/:id', function($id) use ($app) {
-    // disable only!
-    // return bool
+    if ($user = User::Get($id)) {
+
+        // Set the user status to disabled instead of deleting it
+        $user->setStatus('disabled');
+
+        $app->render_json(["success" => true]);
+    } else
+        throw new Exception("User not found", 404);
 });
 
-// API Documentation
-$app->get('/swagger', function() use ($app) {
+
+/*$app->get('/swagger', function() use ($app) {
     $swagger = \Swagger\scan(['.', '../classes/']);
     echo $swagger;
-});
+});*/
 
+
+
+/* RUN THE APPLICATION
+ ******************************************************************************/
 $app->run();

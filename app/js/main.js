@@ -17,10 +17,17 @@ $.ajaxSetup({
     }
 });
 
+$(function() {
+    if (Cookies.get('token')) {
+        $("#login-button, #signup-button").hide();
+        $("#play-button").show();
+    }
+});
+
 
 /* Modal windows
  ******************************************************************************/
-$("#login-button").click(function(){
+$("#login-button").click(function() {
     swal({
             title: "Login",
             text: $('#login-form').html(),
@@ -44,6 +51,7 @@ $("#login-button").click(function(){
                         })
                     })
                         .done(function(response) {
+                            Cookies.set('token', response.token, {expires: 3600 * 24 * 7});
                             swal({
                                 title: "Greetings, " + response.name + "!",
                                 text: "Redirecting you do your Dashboard...",
@@ -69,7 +77,7 @@ $("#login-button").click(function(){
     $(':input[autofocus]').focus();
 });
 
-$("#signup-button").click(function(){
+$("#signup-button").click(function() {
     swal({
             title: "Sign Up",
             text: $("#signup-form").html(),
@@ -125,6 +133,18 @@ $("#signup-button").click(function(){
             console.log(response);
         }
     });
+});
+
+$("#play-button").click(function(){
+    swal({
+        title: "Welcome back!",
+        text: "Redirecting you do your Dashboard...",
+        type: "success",
+        showConfirmButton: false
+    });
+    setTimeout(function(){
+        window.location.href = '/game/';
+    }, 2000);
 });
 
 
@@ -227,7 +247,6 @@ function scrambleText(selector) {
         var $this = $(this), ticker = new Ticker($this).reset();
         $this.data('ticker', ticker);
     });
-
 }
 
 function isValidEmailAddress(emailAddress) {
