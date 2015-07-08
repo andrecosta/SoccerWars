@@ -5,6 +5,8 @@
  =============================================================================*/
 require '../classes/DB.php';
 require '../classes/User.php';
+require '../classes/Team.php';
+require '../classes/Match.php';
 require '../classes/Token.php';
 require '../vendor/autoload.php';
 
@@ -13,6 +15,7 @@ date_default_timezone_set('Europe/Lisbon');
 /* Constants
  ******************************************************************************/
 define('GOOGLE_RECAPTCHA_PRIVATE_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
+define('STATIC_URL', 'http://localhost:5000/static');
 
 /* Extend Slim class to always return a JSON encoded responses
  ******************************************************************************/
@@ -25,14 +28,8 @@ class API extends \Slim\Slim {
 
 /* Initialize the framework and its options
  ******************************************************************************/
-$app = new API([
-    'debug' => false,
-]);
-
-$app->add(new \CorsSlim\CorsSlim(/*[
-    'origin' => 'localhost',
-    'allowCredentials' => true
-]*/));
+$app = new API(['debug' => false]);
+$app->add(new \CorsSlim\CorsSlim());
 
 
 
@@ -47,7 +44,7 @@ $app->hook('slim.before.dispatch', function() use ($app) {
         throw new Exception("Invalid content type", 400);
 
     // Check the validity of a token sent by the user
-    if ($app->request->getResourceUri() != '/login') {
+    if (!in_array($app->request->getResourceUri(), ['/login', '/users']) && !$app->request->getMethod() == 'POST') {
         if (!$app->request->headers->get('Token'))
             throw new Exception("Missing token", 400);
         else {
@@ -106,6 +103,7 @@ $app->post('/login', function() use ($app) {
 
         $app->render_json([
             'name' => $user->name,
+            'avatar' => $user->avatar,
             'token' => $user->getToken()
         ]);
     } else
@@ -195,11 +193,21 @@ $app->delete('/users/:id', function($id) use ($app) {
         throw new Exception("User not found", 404);
 });
 
+/* Get all teams
+ ******************************************************************************/
+$app->get('/teams', function() use ($app) {
+    $response = Team::GetAll();
 
-/*$app->get('/swagger', function() use ($app) {
-    $swagger = \Swagger\scan(['.', '../classes/']);
-    echo $swagger;
-});*/
+    $app->render_json($response);
+});
+
+/* Get all matches
+ ******************************************************************************/
+$app->get('/matches', function() use ($app) {
+    $response = Match::GetAll();
+
+    $app->render_json($response);
+});
 
 
 

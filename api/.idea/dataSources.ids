@@ -27,11 +27,12 @@
       <exported-key name="Player_ibfk_1" table="Player" schema="" catalog="soccerwars" columns="Country"/>
     </table>
     <table name="Match" schema="" catalog="soccerwars" type="TABLE">
-      <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="StartTime" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
-      <column name="EndTime" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
-      <column name="Status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1"/>
-      <primary-key name="PRIMARY" columns="ID"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="team_1" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="team_2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="start_time" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="end_time" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="Bet_ibfk_2" table="Bet" schema="" catalog="soccerwars" columns="MatchID"/>
       <exported-key name="MatchProgress_ibfk_2" table="MatchProgress" schema="" catalog="soccerwars" columns="MatchID"/>
       <exported-key name="UserComment_ibfk_2" table="UserComment" schema="" catalog="soccerwars" columns="MatchID"/>
@@ -85,8 +86,9 @@
       <column name="token" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
-      <primary-key name="PRIMARY" columns="token"/>
+      <primary-key name="PRIMARY" columns="user_id"/>
       <index name="token_UNIQUE" unique="true" columns="token"/>
+      <index name="user_id_UNIQUE" unique="true" columns="user_id"/>
     </table>
     <table name="User" schema="" catalog="soccerwars" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

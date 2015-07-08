@@ -2,36 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc0854c3-866f-4929-9f5f-f712ef9a8763" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/static/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/classes/Token.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/popup.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/css/popup.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/.idea/sqldialects.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/sweetalert-dev.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/.idea/webResources.xml" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\codropsicons.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\fonts\codropsicons\license.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\jquery\jquery.lettering.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\jquery\jquery.min.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/classes/Match.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../api/classes/Team.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/components/dashboard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/effects.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/css/effects/loading.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/components/matches.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/routes.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/components/teams.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/components/users.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/js/plugins/vue-route.js" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\md5.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\vue\vue-resource.min.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\vue\vue.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\vue\vue.min.js" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\jquery\jquery.neon.min.js" afterPath="$PROJECT_DIR$/game/js/plugins/jquery.neon.min.js" />
+      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\sweetalert-dev.js" afterPath="$PROJECT_DIR$/game/js/plugins/sweetalert-dev.js" />
+      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js\jquery\jquery.neon.min.js" afterPath="$PROJECT_DIR$/js/plugins/jquery.neon.min.js" />
+      <change type="MOVED" beforePath="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js\sweetalert-dev.js" afterPath="$PROJECT_DIR$/js/plugins/sweetalert-dev.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/../api/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/classes/DB.php" afterPath="$PROJECT_DIR$/../api/classes/DB.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/.idea/SoccerWars-api.iml" afterPath="$PROJECT_DIR$/../api/.idea/SoccerWars-api.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/SoccerWars-app.iml" afterPath="$PROJECT_DIR$/.idea/SoccerWars-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/classes/User.php" afterPath="$PROJECT_DIR$/../api/classes/User.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/css/app.css" afterPath="$PROJECT_DIR$/game/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/js/app.js" afterPath="$PROJECT_DIR$/game/js/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/../api/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/js/effects.js" afterPath="$PROJECT_DIR$/game/js/effects.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/index.html" afterPath="$PROJECT_DIR$/game/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/api/index.php" afterPath="$PROJECT_DIR$/../api/api/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/jQuery.xml" afterPath="$PROJECT_DIR$/.idea/libraries/jQuery.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.css" afterPath="$PROJECT_DIR$/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../api/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../api/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -68,18 +67,28 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.807692" vertical-offset="0" max-vertical-offset="3128">
-              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            <state vertical-scroll-proportion="-9.346154" vertical-offset="182" max-vertical-offset="4454">
+              <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/game/js/app.js">
+      <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/components/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.97893256" vertical-offset="357" max-vertical-offset="1377">
-              <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -87,11 +96,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="matches.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/components/matches.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="teams.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/components/teams.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+              <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/css/app.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="988" max-vertical-offset="3281">
-              <caret line="75" column="11" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="11" />
+            <state vertical-scroll-proportion="-0.6360544" vertical-offset="1768" max-vertical-offset="4216">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="534" max-vertical-offset="1479">
+              <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/js/components/dashboard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -114,7 +165,6 @@
         <option value="$PROJECT_DIR$/css/app.css" />
         <option value="$PROJECT_DIR$/css/glitch.css" />
         <option value="$PROJECT_DIR$/game/css/effects/glitch.css" />
-        <option value="$PROJECT_DIR$/js/effects.js" />
         <option value="$PROJECT_DIR$/css/effects/glitch.css" />
         <option value="$PROJECT_DIR$/ButtonComponentMorph/index.html" />
         <option value="$PROJECT_DIR$/css/content.css" />
@@ -123,13 +173,25 @@
         <option value="$PROJECT_DIR$/css/sweetalert2.css" />
         <option value="$PROJECT_DIR$/js/sweetalert-dev.js" />
         <option value="$PROJECT_DIR$/css/popup.css" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/game/js/effects.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/main.css" />
+        <option value="$PROJECT_DIR$/game/js/vue-route.min.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/js/effects.js" />
+        <option value="$PROJECT_DIR$/game/js/plugins/vue-route.min.js" />
+        <option value="$PROJECT_DIR$/game/js/dashboard.js" />
+        <option value="$PROJECT_DIR$/game/templates/dashboard.tpl" />
+        <option value="$PROJECT_DIR$/game/templates/dashboard.html" />
+        <option value="$PROJECT_DIR$/game/css/effects/loading.css" />
+        <option value="$PROJECT_DIR$/game/js/components/matches.js" />
+        <option value="$PROJECT_DIR$/game/js/components/teams.js" />
+        <option value="$PROJECT_DIR$/game/js/components/users.js" />
+        <option value="$PROJECT_DIR$/game/js/routes.js" />
+        <option value="$PROJECT_DIR$/game/js/app.js" />
+        <option value="$PROJECT_DIR$/game/js/components/dashboard.js" />
         <option value="$PROJECT_DIR$/game/index.html" />
         <option value="$PROJECT_DIR$/game/css/app.css" />
-        <option value="$PROJECT_DIR$/game/js/app.js" />
       </list>
     </option>
   </component>
@@ -138,10 +200,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="NANOPEN PHP 5.4" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1432" />
-    <option name="y" value="-132" />
-    <option name="width" value="1296" />
-    <option name="height" value="1010" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1456" />
+    <option name="height" value="886" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -248,7 +310,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoccerWars-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoccerWars-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="effects" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -269,21 +379,22 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\components" />
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js" />
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css" />
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js" />
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app" />
-      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\components" />
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js\plugins" />
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js\plugins" />
+      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\js" />
       <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\game\css" />
-      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\js" />
-      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css" />
-      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app" />
-      <recent name="C:\Users\Andre\Documents\GitHub\SoccerWars\app\css\effects" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Built-in Web Server.APP">
@@ -362,7 +473,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1432" y="-132" width="1296" height="1010" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -371,9 +482,9 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18051577" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15291262" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13538682" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15717539" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18302387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -499,28 +610,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/js/vue/vue-resource.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/js/jquery/jquery.neon.min.js">
+    <entry file="file://$PROJECT_DIR$/game/js/plugins/jquery.neon.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.023842918" vertical-offset="0" max-vertical-offset="713">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/js/md5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45301542" vertical-offset="0" max-vertical-offset="713">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -539,7 +633,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/sweetalert-dev.js">
+    <entry file="file://$PROJECT_DIR$/js/plugins/sweetalert-dev.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="6108" max-vertical-offset="21182">
           <caret line="370" column="63" selection-start-line="370" selection-start-column="63" selection-end-line="370" selection-end-column="63" />
@@ -555,63 +649,133 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
+    <entry file="file://$PROJECT_DIR$/game/js/effects.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6179775" vertical-offset="3708" max-vertical-offset="4420">
-          <caret line="244" column="0" selection-start-line="244" selection-start-column="0" selection-end-line="249" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.8328652" vertical-offset="1039" max-vertical-offset="1751">
+          <caret line="96" column="1" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="1" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32215744" vertical-offset="0" max-vertical-offset="1037">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        <state vertical-scroll-proportion="-20.5" vertical-offset="351" max-vertical-offset="1054">
+          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/effects.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9421769" vertical-offset="1078" max-vertical-offset="1734">
+          <caret line="96" column="1" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5952381" vertical-offset="2149" max-vertical-offset="2737">
+          <caret line="147" column="3" selection-start-line="147" selection-start-column="3" selection-end-line="147" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5252809" vertical-offset="0" max-vertical-offset="2278">
+        <state vertical-scroll-proportion="0.6360544" vertical-offset="0" max-vertical-offset="2278">
           <caret line="22" column="50" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/plugins/vue-route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="19723" max-vertical-offset="20366">
+          <caret line="1192" column="0" selection-start-line="1192" selection-start-column="0" selection-end-line="1192" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/css/effects/loading.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/components/teams.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="534" max-vertical-offset="1479">
+          <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/components/matches.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/components/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/js/components/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.807692" vertical-offset="0" max-vertical-offset="3128">
-          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        <state vertical-scroll-proportion="-9.346154" vertical-offset="182" max-vertical-offset="4454">
+          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="988" max-vertical-offset="3281">
-          <caret line="75" column="11" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="11" />
+        <state vertical-scroll-proportion="-0.6360544" vertical-offset="1768" max-vertical-offset="4216">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/js/effects.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2682583" vertical-offset="0" max-vertical-offset="1734">
-          <caret line="96" column="1" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.97893256" vertical-offset="357" max-vertical-offset="1377">
-          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

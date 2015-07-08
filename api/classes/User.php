@@ -47,7 +47,25 @@ class User {
 
         if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User')) {
             $user->token = Token::Get($id);
+            $user->setAvatars();
+
             return $user;
+        } else
+            return false;
+    }
+
+    /**
+     * Get all users
+     * @return User[]|bool
+     */
+    static function GetAll() {
+        $db = new DB();
+
+        if ($users = $db->fetch("SELECT * FROM User", null, 'User')) {
+            foreach ($users as &$user)
+                $user->setAvatars();
+
+            return $users;
         } else
             return false;
     }
@@ -70,19 +88,6 @@ class User {
     }
 
     /**
-     * Get all users
-     * @return User[]|bool
-     */
-    static function GetAll() {
-        $db = new DB();
-
-        if ($users = $db->fetch("SELECT * FROM User", null, 'User'))
-            return $users;
-        else
-            return false;
-    }
-
-    /**
      * Create a new user and returns its ID
      * @return int|bool
      */
@@ -93,9 +98,9 @@ class User {
         $avatar = uniqid();
         $genders = ['male', 'female'];
         $gender = $genders[array_rand($genders)];
-        $image = file_get_contents("'http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=150");
+        $image = file_get_contents("http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=150");
         file_put_contents("../static/avatars/${avatar}_150.jpg", $image);
-        $image = file_get_contents("'http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=32");
+        $image = file_get_contents("http://eightbitavatar.herokuapp.com/?id=$this->email&s=$gender&size=32");
         file_put_contents("../static/avatars/${avatar}_32.jpg", $image);
 
         $data = [
@@ -111,27 +116,6 @@ class User {
         } else
             return false;
     }
-
-    /**
-     * Create a new user and returns its ID
-     * @return int|bool
-     */
-    /*function Update() {
-        $db = new DB();
-
-        $data = [
-            "email" => $this->email,
-            "pw_hash" => $this->pw_hash,
-            "name" => $this->name,
-            "avatar" => $this->avatar
-        ];
-
-        if ($user_id = $db->modify("INSERT INTO User (email, pw_hash, name, avatar)
-                                    VALUES (:email, :pw_hash, :name, :avatar)", $data))
-            return $user_id;
-        else
-            return false;
-    }*/
 
     /**
      * Get the user instance properties as an array
@@ -154,7 +138,8 @@ class User {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $password = substr(str_shuffle($chars), 0, $length);
 
-        $this->pw_hash = sha1($password);
+        //$this->pw_hash = sha1($password);
+        $this->pw_hash = sha1("teste");
 
         return $password;
     }
@@ -174,5 +159,13 @@ class User {
 
     function getToken() {
         return $this->token;
+    }
+
+    function setAvatars() {
+        $avatar = $this->avatar;
+        $this->avatar = [
+            'big' => STATIC_URL . "/avatars/${avatar}_150.jpg",
+            'small' => STATIC_URL . "/avatars/${avatar}_32.jpg"
+        ];
     }
 }

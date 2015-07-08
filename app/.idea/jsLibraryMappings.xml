@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{api, cookies, jQuery, jquery, jquery-DefinitelyTyped, jquery.lettering, sweetalert, velocity, vue-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{api, cookies, jQuery, jquery, jquery-DefinitelyTyped, jquery.lettering, sweetalert, velocity, vue, vue-DefinitelyTyped, webcomponents}" />
   </component>
 </project>

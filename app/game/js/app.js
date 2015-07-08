@@ -1,6 +1,7 @@
 /* Global variables
  ******************************************************************************/
 var API_URL = 'http://localhost:5000/api';
+var STATIC_URL = 'http://localhost:5000/static';
 var TOKEN = null;
 
 /* Check if user has obtained a token from the login page
@@ -16,43 +17,46 @@ if (Cookies.get('token')) {
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Token', TOKEN);
     }
 });
 
-// Application
+
+/* Main application
+ ******************************************************************************/
+Vue.use(VueRouter);
+
 var app = new Vue({
-    el: '#app',
+    el: 'body',
 
     data: {
-        user: {
-            avatar: '',
-            points: 0
-        },
+        user: null,
+        title: null,
         isMaximized: false
     },
 
     ready: function() {
 
-        $.ajax(API_URL + '/me', {
-            type: 'GET',
-            headers: {'Token': TOKEN}
-        })
+        $.get(API_URL + '/me')
             .done(function(response) {
-                /* GRAVATAR IMAGE
-                var hash = CryptoJS.MD5(response.email);
-                app.profile_picture = "https://www.gravatar.com/avatar/" + hash + "?s=150";*/
-                app.$data.user = response.user
+                console.log(response);
+                app.user = response;
             })
             .fail(function(response) {
                 var message = response.responseJSON;
-            })
-            .always(function(response) {
-                console.log(response);
+                // notification error
             });
     },
 
     methods: {
 
+        // Set title
+        set_title: function(title) {
+            app.title = title;
+            scrambleText("#frame h1");
+        },
+
+        // Maximize the central section
         maximize: function(e) {
             app.isMaximized = true;
             $("#left").velocity({marginLeft: -150});
@@ -60,6 +64,7 @@ var app = new Vue({
             $("#middle").css("border-radius", "50% / 2%");
         },
 
+        // Restore the central section
         minimize: function(e) {
             app.isMaximized = false;
             $("#left").velocity({marginLeft: 0});
@@ -67,9 +72,11 @@ var app = new Vue({
             $("#middle").css("border-radius", "50% / 3%");
         },
 
+        // Logout and expire the token cookie
         logout: function() {
             Cookies.expire('token');
             window.location.href = '/';
         }
+
     }
 });

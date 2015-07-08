@@ -4,6 +4,7 @@
 @import url(http://fonts.googleapis.com/css?family=Orbitron:400,700);
 @import 'popup.css';
 @import 'effects/glitch.css';
+@import 'effects/loading.css';
 
 
 /* Base & Defaults
@@ -24,6 +25,7 @@ body {
     font-family: Orbitron, monospace;
     font-weight: 400;
     min-width: 1024px;
+    min-height: 700px;
     display: flex;
     align-items: stretch;
     overflow: hidden;
@@ -60,6 +62,23 @@ button:hover {
     text-shadow: 0 0 2px deeppink;
     color: deeppink;
     box-shadow: 0 0 20px cyan;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.50);
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: rgba(0, 225, 255, 0.80);
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.80);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 144, 173, 0.74);
 }
 
 
@@ -172,6 +191,7 @@ button:hover {
     text-align: center;
     margin-top: -44px;
     font-size: 32px;
+    line-height: 34px;
 }
 #frame .buttons {
     position: absolute;
@@ -181,6 +201,41 @@ button:hover {
 #frame .buttons > div:hover {
     cursor: pointer;
     text-shadow: 0 0 3px cyan;
+}
+
+main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: inherit;
+}
+main .content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+}
+.loading {
+    align-self: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin-top: -50px;
+}
+.columns {
+    display: flex;
+}
+.columns .column {
+    flex-grow: 1;
+}
+.top {
+    /**** TEMP ***/
+    max-height: 200px;
+    overflow: hidden;
 }
 
 /* Right sidebar elements

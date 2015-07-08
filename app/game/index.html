@@ -8,82 +8,160 @@
     <!-- Styles -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
+
+    <!-- Vue Framework components -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.12.6/vue.min.js"></script>
+    <script src="js/plugins/vue-route.js"></script>
+
 </head>
 <body id="app">
 
     <section id="left" class="hologram">
 
-        <div id="profile-picture">
-            <img width="150" height="150" v-attr="src: user.avatar">
+        <div id="profile-picture" v-link="/profile">
+            <img width="150" height="150" v-attr="src: user.avatar.big">
         </div>
 
         <div id="points">
-            <span v-text="user.points">0</span>
+            <span v-text="user.points" v-cloak></span>
         </div>
 
         <nav id="main-menu">
             <ul>
-                <li class="menu-item glitch neon">
+                <li v-link="/dashboard" class="menu-item glitch neon">
                     <span data-text="Dashboard">Dashboard</span><span class="menu-icon"></span>
                 </li>
-                <li class="menu-item glitch neon">
-                    <span data-text="Teams">Teams</span><span class="menu-icon"></span>
-                </li>
-                <li class="menu-item glitch neon">
+                <li v-link="/matches" class="menu-item glitch neon">
                     <span data-text="Matches">Matches</span><span class="menu-icon"></span>
                 </li>
-                <li class="menu-item glitch neon">
+                <li v-link="/teams" class="menu-item glitch neon">
+                    <span data-text="Teams">Teams</span><span class="menu-icon"></span>
+                </li>
+                <li v-link="/users" class="menu-item glitch neon">
+                    <span data-text="Users">Users</span><span class="menu-icon"></span>
+                </li>
+                <li v-link="/corporations" class="menu-item glitch neon">
                     <span data-text="Corporations">Corporations</span><span class="menu-icon"></span>
                 </li>
-                <li class="menu-item glitch neon">
+                <li v-link="/market" class="menu-item glitch neon">
                     <span data-text="Market">Market</span><span class="menu-icon"></span>
-                </li>
-                <li class="menu-item glitch neon">
-                    <span data-text="Players">Players</span><span class="menu-icon"></span>
                 </li>
             </ul>
         </nav>
 
         <button id="#logout" v-on="click: logout">Logout</button>
 
-    </section><!-- #left -->
+    </section><!-- /#left -->
 
     <section id="middle" class="hologram">
 
         <header id="frame">
-            <h1 class="scramble">Dashboard</h1>
+            <h1 class="scramble" v-text="title"></h1>
             <div class="buttons">
                 <div v-on="click: maximize" v-show="!isMaximized">+</div>
                 <div v-on="click: minimize" v-show="isMaximized">-</div>
             </div>
         </header>
 
-        <main>
-
+        <main id="main">
+            <router-view></router-view>
         </main>
 
-    </section><!-- #middle -->
+    </section><!-- /#middle -->
 
     <section id="right" class="hologram">
 
-        next matches
+        My bets
 
-    </section><!-- #right -->
+    </section><!-- /#right -->
 
-    <!-- Plugins & Frameworks -->
+    <!-- Dashboard template -->
+    <template id="dashboard">
+        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
+        <div class="content" v-show="loaded">
+            <h2>Recent activity and stuff</h2>
+        </div>
+    </template>
+
+    <!-- Matches template -->
+    <template id="matches">
+        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
+        <div class="content" v-show="loaded">
+            <div class="top">
+                <h2>Live matches</h2>
+                <div v-repeat="matches">
+                    <span v-text="team_1.name"></span>
+                    <div v-text="team_2.name"></div>
+                    <div v-text="start_time"></div>
+                    <div v-text="end_time"></div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <h2>Upcoming matches</h2>
+                    <div v-repeat="matches">
+                        Team 1:<div v-text="team_1.name"></div>
+                        Team 2: <div v-text="team_2.name"></div>
+                        Start: <div v-text="start_time"></div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <h2>Past matches</h2>
+                    <div v-repeat="matches">
+                        Team 1: <div v-text="team_1.name"></div>
+                        Team 2: <div v-text="team_2.name"></div>
+                        End: <div v-text="end_time"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Teams template -->
+    <template id="teams">
+        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
+        <div class="content" v-show="loaded">
+            <div class="top">
+                <h2>Teams list</h2>
+                <div v-repeat="teams">
+                    <span v-text="name"></span>
+                    <div v-text="rank"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Users template -->
+    <template id="users">
+        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
+        <div class="content" v-show="loaded">
+            <div class="top">
+                <h2>User list</h2>
+                <div v-repeat="users">
+                    <img v-attr="src: avatar.small"><span v-text="name"></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Extra plugins -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/1.2.1/cookies.min.js"></script>
-    <script src="js/jquery/jquery.neon.min.js"></script>
-    <script src="js/sweetalert-dev.js"></script>
-    <script src="js/md5.js"></script>
-    <script src="js/vue/vue.js"></script>
-    <script src="js/vue/vue-resource.min.js"></script>
+    <script src="js/plugins/jquery.neon.min.js"></script>
+    <script src="js/plugins/sweetalert-dev.js"></script>
 
-    <!-- Application scripts -->
+    <!-- Main application scripts & components -->
     <script src="js/effects.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/components/dashboard.js"></script>
+    <script src="js/components/matches.js"></script>
+    <script src="js/components/teams.js"></script>
+    <script src="js/components/users.js"></script>
+    <script src="js/routes.js"></script>
 
     <!--
     <header>
