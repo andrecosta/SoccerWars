@@ -1,22 +1,22 @@
-Vue.component('teams', {
-    template: '#teams',
+Vue.component('profile', {
+    template: '#profile',
 
     data: function() {
         return {
             loaded: false,
-            teams: null
+            user: null
         }
     },
 
     ready: function(){
         var self = this;
-        app.setTitle("Teams");
+        app.setTitle("My Profile");
 
-        $.get(API_URL + '/teams')
+        $.get(API_URL + '/me')
             .done(function(response) {
                 console.log(response);
                 self.loaded = true;
-                self.teams = response;
+                self.user = response;
             })
             .fail(function(response) {
                 var message = response.responseJSON;

@@ -1,4 +1,4 @@
-Vue.component('dashboard', {
+var dashboard = Vue.extend({
     template: '#dashboard',
 
     data: function() {
@@ -8,7 +8,9 @@ Vue.component('dashboard', {
     },
 
     ready: function() {
-        app.set_title("Dashboard");
+        app.setTitle("Dashboard");
         this.loaded = true;
     }
 });
+
+Vue.component('dashboard', dashboard);

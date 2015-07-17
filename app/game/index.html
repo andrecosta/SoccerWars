@@ -23,7 +23,7 @@
         </div>
 
         <div id="points">
-            <span v-text="user.points" v-cloak></span>
+            <span v-text="user.points"></span>
         </div>
 
         <nav id="main-menu">
@@ -77,72 +77,130 @@
 
     <!-- Dashboard template -->
     <template id="dashboard">
-        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
-        <div class="content" v-show="loaded">
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content" v-if="loaded">
             <h2>Recent activity and stuff</h2>
         </div>
     </template>
 
     <!-- Matches template -->
     <template id="matches">
-        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
-        <div class="content" v-show="loaded">
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content page-matches" v-if="loaded">
             <div class="top">
                 <h2>Live matches</h2>
-                <div v-repeat="matches">
-                    <span v-text="team_1.name"></span>
-                    <div v-text="team_2.name"></div>
-                    <div v-text="start_time"></div>
-                    <div v-text="end_time"></div>
+                <div v-repeat="matches | live | orderBy 'start_time'" v-on="click: go(id)" class="item">
+                    <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
+                    <div class="time">Started: <span v-text="start_time"></span></div>
                 </div>
             </div>
 
             <div class="columns">
-                <div class="column">
+                <div class="column grow">
                     <h2>Upcoming matches</h2>
-                    <div v-repeat="matches">
-                        Team 1:<div v-text="team_1.name"></div>
-                        Team 2: <div v-text="team_2.name"></div>
-                        Start: <div v-text="start_time"></div>
+                    <div v-repeat="matches | future | orderBy 'start_time'" v-on="click: go(id)" class="item">
+                        <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
+                        <div class="time">Starts on: <span v-text="start_time"></span></div>
                     </div>
                 </div>
 
-                <div class="column">
+                <div class="column grow">
                     <h2>Past matches</h2>
-                    <div v-repeat="matches">
-                        Team 1: <div v-text="team_1.name"></div>
-                        Team 2: <div v-text="team_2.name"></div>
-                        End: <div v-text="end_time"></div>
+                    <div v-repeat="matches | past | orderBy 'end_time'" class="item">
+                        <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
+                        <div class="time">Ended on: <span v-text="end_time"></span></div>
                     </div>
                 </div>
             </div>
         </div>
     </template>
 
+    <!-- Match details template -->
+    <template id="match-details">
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content page-match-details" v-if="loaded">
+            <h2>Match progress</h2>
+            <div class="time">Start time: <span v-text="match.start_time"></span></div>
+            <div class="columns">
+                <div class="column grow" style="text-align: right">
+                    <h2 v-text="match.team_1.name"></h2>
+                    <div v-text="match.progress[0].goals"></div>
+                    <div v-text="match.progress[0].yellow_cards"></div>
+                    <div v-text="match.progress[0].red_cards"></div>
+                    <div v-text="match.progress[0].defenses"></div>
+                </div>
+                <div class="column shrink labels">
+                    <h2>VS</h2>
+                    <div>GOALS</div>
+                    <div>Yellow Cards</div>
+                    <div>Red Cards</div>
+                    <div>Defenses</div>
+                </div>
+                <div class="column grow" style="text-align: left">
+                    <h2 v-text="match.team_2.name"></h2>
+                    <div v-text="match.progress[1].goals"></div>
+                    <div v-text="match.progress[1].yellow_cards"></div>
+                    <div v-text="match.progress[1].red_cards"></div>
+                    <div v-text="match.progress[1].defenses"></div>
+                </div>
+            </div>
+            <h2>Bet</h2>
+            <div></div>
+            <h2>Comments</h2>
+            <div></div>
+        </div>
+    </template>
+
     <!-- Teams template -->
     <template id="teams">
-        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
-        <div class="content" v-show="loaded">
-            <div class="top">
-                <h2>Teams list</h2>
-                <div v-repeat="teams">
-                    <span v-text="name"></span>
-                    <div v-text="rank"></div>
-                </div>
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content" v-if="loaded">
+            <h2>Teams list</h2>
+            <div v-repeat="teams">
+                <span v-text="name"></span>
+                <div v-text="rank"></div>
             </div>
         </div>
     </template>
 
     <!-- Users template -->
     <template id="users">
-        <div class="loading" v-show="!loaded"><span>Loading...</span></div>
-        <div class="content" v-show="loaded">
-            <div class="top">
-                <h2>User list</h2>
-                <div v-repeat="users">
-                    <img v-attr="src: avatar.small"><span v-text="name"></span>
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content page-users" v-if="loaded">
+            <h2>Leaderboard</h2>
+            <div v-repeat="users | orderBy 'points' -1" class="item columns" v-on="click: go(id)">
+                <div class="column shrink">
+                    {{$index+1}}. &nbsp;&nbsp;<img v-attr="src: avatar.small" width="32" height="32" class="avatar"><span v-text="name"></span>
+                </div>
+                <div class="column grow badges">
+                    <div>
+                        <div v-repeat="badge: badges" v-style="background-image: 'url(' + badge.image + ')',
+                                      background-position: badge.unlocked*24 + 'px 0'" v-attr="title: badge.name" class="badge"></div>
+                    </div>
+                </div>
+                <div class="column shrink points">
+                    <span v-text="points"></span>
                 </div>
             </div>
+        </div>
+    </template>
+
+    <!-- User details template DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+    <template id="user-details">
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content" v-if="loaded">
+            <h2>User profile</h2>
+            <img v-attr="src: user.avatar.big" width="150" height="150"><span v-text="user.name"></span>
+        </div>
+    </template>
+
+    <!-- Profile template -->
+    <template id="profile">
+        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+        <div class="content" v-if="loaded">
+            <h2>Profile details</h2>
+            <img v-attr="src: user.avatar.big" width="150" height="150">
+            <span v-text="user.name"></span>
         </div>
     </template>
 
@@ -159,8 +217,11 @@
     <script src="js/app.js"></script>
     <script src="js/components/dashboard.js"></script>
     <script src="js/components/matches.js"></script>
+    <script src="js/components/match-details.js"></script>
     <script src="js/components/teams.js"></script>
     <script src="js/components/users.js"></script>
+    <script src="js/components/user-details.js"></script>
+    <script src="js/components/profile.js"></script>
     <script src="js/routes.js"></script>
 
     <!--

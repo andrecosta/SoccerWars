@@ -1,37 +1,30 @@
-Vue.component('matches', {
-    template: '#matches',
+Vue.component('match-details', {
+    template: '#match-details',
 
     data: function() {
         return {
             loaded: false,
-            matches: null
+            match: null
         }
     },
 
     ready: function(){
         var self = this;
-        app.setTitle("Matches");
+        app.setTitle("Match details");
 
         function cycle() {
-            $.get(API_URL + '/matches')
+            $.get(API_URL + '/matches/' + app.route_id)
                 .done(function (response) {
                     console.log(response);
                     self.loaded = true;
-                    self.matches = response;
+                    self.match = response;
                 })
                 .fail(function (response) {
                     var message = response.responseJSON;
                     // notification error
                 });
-            setTimeout(cycle, 10000);
+            setTimeout(cycle, 3000);
         }
         cycle();
-    },
-
-    methods: {
-        go: function(id) {
-            app.route_id = id;
-            window.location.hash = '/match/' + id;
-        }
     }
 });

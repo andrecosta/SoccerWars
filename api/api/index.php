@@ -15,7 +15,7 @@ date_default_timezone_set('Europe/Lisbon');
 /* Constants
  ******************************************************************************/
 define('GOOGLE_RECAPTCHA_PRIVATE_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
-define('STATIC_URL', 'http://localhost:5000/static');
+define('STATIC_URL', 'http://static.drymartini.eu');
 
 /* Extend Slim class to always return a JSON encoded responses
  ******************************************************************************/
@@ -201,6 +201,15 @@ $app->get('/teams', function() use ($app) {
     $app->render_json($response);
 });
 
+/* Get match by ID
+ ******************************************************************************/
+$app->get('/matches/:id', function($id) use ($app) {
+    if ($match = Match::Get($id))
+        $app->render_json($match);
+    else
+        throw new Exception("Match not found", 404);
+});
+
 /* Get all matches
  ******************************************************************************/
 $app->get('/matches', function() use ($app) {
@@ -209,6 +218,21 @@ $app->get('/matches', function() use ($app) {
     $app->render_json($response);
 });
 
+/* Insert comment
+ ******************************************************************************/
+$app->post('/matches/:id/comment', function($id) use ($app) {
+    $data = json_decode($app->request->getBody(), true);
+    $user_id = $data['user_id'];
+    $text = $data['text'];
+
+    if (!$text) {
+        throw new Exception("No text in comment", 400);
+    } else {
+        // Create comment
+        $match = Match::Get($id);
+        $match->addComment($user_id, $text);
+    }
+});
 
 
 /* RUN THE APPLICATION

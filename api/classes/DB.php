@@ -1,5 +1,5 @@
 <?php
-define("DB_HOST", "db.drymartini.eu");
+define("DB_HOST", "192.168.50.20");
 define("DB_USER", "soccerwars");
 define("DB_PASS", "mikas4ever");
 define("DB_NAME", "soccerwars");
@@ -42,6 +42,7 @@ class DB
             else
                 $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+            // Return a single value or an array depending on the result set
             if (count($data) == 1) {
                 if (is_array($data[0]) && count($data[0]) == 1)
                     return $data[0][array_keys($data[0])[0]];

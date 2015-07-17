@@ -64,6 +64,11 @@ button:hover {
     box-shadow: 0 0 20px cyan;
 }
 
+h2 {
+    text-shadow: 0 1px 10px rgba(255, 0, 255, 0.8);
+    color: rgb(244, 229, 255);
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -219,6 +224,7 @@ main .content {
     overflow-x: hidden;
     text-align: center;
 }
+
 .loading {
     align-self: center;
     flex-grow: 1;
@@ -226,17 +232,92 @@ main .content {
     align-items: center;
     margin-top: -50px;
 }
+
 .columns {
     display: flex;
 }
-.columns .column {
-    flex-grow: 1;
+.columns .column {  }
+.columns .column.grow { flex-grow: 1; }
+.columns .column.shrink { flex-shrink: 1; }
+
+.item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 2px 0;
+    box-shadow: 0 0 5px rgb(0, 100, 118);
+    font-size: 13px;
+    position: relative;
 }
-.top {
-    /**** TEMP ***/
-    max-height: 200px;
-    overflow: hidden;
+.item:hover {
+    box-shadow: 0 0 10px cyan;
+    cursor: pointer;
+    background: rgba(0, 50, 50, 0.5);
 }
 
 /* Right sidebar elements
 *******************************************************************************/
+
+
+/* Matches
+*******************************************************************************/
+.page-matches .teams > span {
+    color: cyan;
+    font-weight: bold;
+}
+.page-matches .time > span {
+    color: gold;
+}
+
+/* Match details
+*******************************************************************************/
+.page-match-details .time > span {
+    color: gold;
+}
+.page-match-details .column.grow h2 {
+    color: cyan;
+}
+.page-match-details .column > div {
+    margin-bottom: 10px;
+}
+.page-match-details .labels {
+    width: 240px;
+}
+
+/* Users
+*******************************************************************************/
+.page-users .item {
+    text-align: left;
+    padding: 5px 10px;
+    display: flex;
+}
+.page-users img { vertical-align: middle; }
+.page-users img.avatar {
+    margin-right: 15px;
+}
+.page-users .points { align-self: center; }
+.page-users .points > span {
+    color: gold;
+}
+.page-users .points > span::before {
+    content: '$ ';
+    color: darkgoldenrod;
+}
+.page-users .badges {
+    text-align: center;
+}
+.page-users .badges > div {
+    position: absolute;
+    right: 230px;
+    top: 10px;
+}
+.page-users .badges .badge {
+    display: inline-block;
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    background-size: 200%;
+    border-radius: 3px;
+}

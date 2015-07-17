@@ -19,6 +19,12 @@ class Match {
         $data = ["id" => $id];
 
         if ($match = $db->fetch("SELECT * FROM `Match` WHERE id = :id", $data, 'Match')) {
+            $match->progress = [
+                $match->getProgress($match->team_1),
+                $match->getProgress($match->team_2)
+            ];
+            $match->team_1 = Team::Get($match->team_1);
+            $match->team_2 = Team::Get($match->team_2);
             return $match;
         } else
             return false;

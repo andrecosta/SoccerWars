@@ -1,13 +1,14 @@
 /* Global variables
  ******************************************************************************/
-var API_URL = 'http://localhost:5000/api';
-var STATIC_URL = 'http://localhost:5000/static';
+var API_URL = 'http://api.drymartini.eu/api';
 var TOKEN = null;
 
 /* Check if user has obtained a token from the login page
  ******************************************************************************/
 if (Cookies.get('token')) {
     TOKEN = Cookies.get('token');
+    if (!window.location.hash)
+        window.location.hash = '#!/dashboard';
 } else {
     window.location.href = '/';
 }
@@ -27,12 +28,13 @@ $.ajaxSetup({
 Vue.use(VueRouter);
 
 var app = new Vue({
-    el: 'body',
+    el: '#app',
 
     data: {
         user: null,
         title: null,
-        isMaximized: false
+        isMaximized: false,
+        route_id: null
     },
 
     ready: function() {
@@ -51,7 +53,7 @@ var app = new Vue({
     methods: {
 
         // Set title
-        set_title: function(title) {
+        setTitle: function(title) {
             app.title = title;
             scrambleText("#frame h1");
         },
@@ -79,4 +81,31 @@ var app = new Vue({
         }
 
     }
+});
+
+Vue.filter('future', function(value) {
+    var newValues = [];
+    $.each(value, function(){
+        if (Date.parse(this.start_time) > Date.now())
+            newValues.push(this);
+    });
+    return newValues;
+});
+
+Vue.filter('past', function(value) {
+    var newValues = [];
+    $.each(value, function(){
+        if (Date.parse(this.start_time) < Date.now())
+            newValues.push(this);
+    });
+    return newValues;
+});
+
+Vue.filter('live', function(value) {
+    var newValues = [];
+    $.each(value, function(){
+        if (Date.parse(this.start_time) > Date.now() && Date.now() < Date.parse(this.end_time))
+            newValues.push(this);
+    });
+    return newValues;
 });

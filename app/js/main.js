@@ -1,6 +1,6 @@
 /* Defaults
  ******************************************************************************/
-var API_URL = 'http://localhost:5000/api';
+var API_URL = 'http://api.drymartini.eu/api';
 
 // Set popup window default options
 swal.setDefaults({

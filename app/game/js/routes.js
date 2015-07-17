@@ -1,6 +1,8 @@
 /* Routes
  ******************************************************************************/
-var router = new VueRouter();
+var router = new VueRouter({
+    history: true
+});
 
 router.map({
     '/dashboard': {
@@ -9,11 +11,23 @@ router.map({
     '/matches': {
         component: 'matches'
     },
+    '/match/:id': {
+        component: 'match-details'
+    },
     '/teams': {
         component: 'teams'
     },
     '/users': {
         component: 'users'
+    },
+    '/user/:id': {
+        component: 'user-details'
+    },
+    '/profile': {
+        component: 'profile'
+    },
+    '*': {
+        component: 'dashboard'
     }
 });
 

@@ -6,6 +6,7 @@ class User {
     public $name;
     public $avatar;
     public $points;
+    public $badges;
     public $status;
     public $created_at;
 
@@ -47,7 +48,8 @@ class User {
 
         if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User')) {
             $user->token = Token::Get($id);
-            $user->setAvatars();
+            $user->getAvatars();
+            $user->getBadges();
 
             return $user;
         } else
@@ -62,9 +64,10 @@ class User {
         $db = new DB();
 
         if ($users = $db->fetch("SELECT * FROM User", null, 'User')) {
-            foreach ($users as &$user)
-                $user->setAvatars();
-
+            foreach ($users as &$user) {
+                $user->getAvatars();
+                $user->getBadges();
+            }
             return $users;
         } else
             return false;
@@ -138,6 +141,7 @@ class User {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $password = substr(str_shuffle($chars), 0, $length);
 
+        // Temporary password while emails are not implemented
         //$this->pw_hash = sha1($password);
         $this->pw_hash = sha1("teste");
 
@@ -161,11 +165,37 @@ class User {
         return $this->token;
     }
 
-    function setAvatars() {
+    function getAvatars() {
         $avatar = $this->avatar;
         $this->avatar = [
             'big' => STATIC_URL . "/avatars/${avatar}_150.jpg",
             'small' => STATIC_URL . "/avatars/${avatar}_32.jpg"
         ];
+    }
+
+    function getBadges() {
+        $db = new DB();
+
+        $data = ["user_id" => $this->id];
+
+        $badges = $db->fetch("SELECT * FROM Badge");
+        $user_badges = $db->fetch("SELECT id, name, points FROM UserBadge, Badge WHERE Badge.id = UserBadge.badge_id AND user_id = :user_id", $data);
+
+        foreach ($badges as &$badge) {
+            $badge['image'] = STATIC_URL . '/badges/' . $badge['id'] . '.png';
+
+            if ($user_badges) {
+                if (isset($user_badges[0])) {
+                    foreach ($user_badges as &$user_badge)
+                        if ($user_badge['id'] == $badge['id'])
+                            $badge['unlocked'] = 1;
+                } else {
+                    if ($user_badges['id'] == $badge['id'])
+                        $badge['unlocked'] = 1;
+                }
+            }
+        }
+
+        $this->badges = $badges;
     }
 }
