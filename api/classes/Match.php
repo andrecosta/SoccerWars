@@ -93,21 +93,15 @@ class Match {
 
         if ($match_id = $db->modify("INSERT INTO `Match` (team_1, team_2, start_time, end_time)
                                     VALUES (:team_1, :team_2, :start_time, :end_time)", $data)) {
+            
+            // Create match progress
+            $db->modify("INSERT INTO MatchProgress (team_id, match_id) VALUES (:team_id, :match_id)",
+                ["team_id" => $this->team_1, "match_id" => $this->id]);
+            $db->modify("INSERT INTO MatchProgress (team_id, match_id) VALUES (:team_id, :match_id)",
+                ["team_id" => $this->team_2, "match_id" => $this->id]);
+
             return $match_id;
         } else
             return false;
     }
-
-    /*function setStatus($status) {
-        $this->status = $status;
-        $db = new DB();
-        $data = [
-            "id" => $this->id,
-            "status" => $this->status
-        ];
-        if ($db->modify("UPDATE User SET status = :status WHERE id = :id", $data))
-            return true;
-        else
-            return false;
-    }*/
 }

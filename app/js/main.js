@@ -1,6 +1,6 @@
 /* Defaults
  ******************************************************************************/
-var API_URL = 'http://api.drymartini.eu/api';
+var API_URL = 'https://api.soccerwars.xyz';
 
 // Set popup window default options
 swal.setDefaults({
@@ -17,12 +17,11 @@ $.ajaxSetup({
     }
 });
 
-$(function() {
-    if (Cookies.get('token')) {
-        $("#login-button, #signup-button").hide();
-        $("#play-button").show();
-    }
-});
+// Show 'Play' button if the user has already logged in
+if (Cookies.get('token')) {
+    $("#login-button, #signup-button").hide();
+    $("#play-button").show();
+}
 
 
 /* Modal windows
@@ -51,9 +50,10 @@ $("#login-button").click(function() {
                         })
                     })
                         .done(function(response) {
-                            Cookies.set('token', response.token, {expires: 3600 * 24 * 7});
+                            Cookies.set('token', response.token, {expires: 3600 * 24 * 7, secure: true});
                             swal({
-                                title: "Greetings, " + response.name + "!",
+                                title: "Greetings, " + "<img src='"+ response.avatar.small + "'> " + response.name + "!",
+                                html: true,
                                 text: "Redirecting you do your Dashboard...",
                                 type: "success",
                                 showConfirmButton: false
@@ -67,7 +67,7 @@ $("#login-button").click(function() {
                             swal.showInputError(message.error);
                         })
                         .always(function(response){
-                            console.log(response)
+                            console.log(response);
                         });
                 }
             }
@@ -100,6 +100,7 @@ $("#signup-button").click(function() {
                 } else if (captcha == null) {
                     swal.showInputError("Are you not a human?");
                 } else {
+                    $("button.confirm").html("Creating...");
                     $.ajax(API_URL + '/users', {
                         type: 'POST',
                         data: JSON.stringify({
@@ -116,7 +117,8 @@ $("#signup-button").click(function() {
                             swal.showInputError(message.error);
                         })
                         .always(function(response){
-                            console.log(response)
+                            console.log(response);
+                            $("button.confirm").html("Create account");
                         });
                 }
             }
@@ -148,7 +150,7 @@ $("#play-button").click(function(){
 });
 
 
-/* Functions
+/* Helper functions
  ******************************************************************************/
 function isValidEmailAddress(emailAddress) {
     var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);

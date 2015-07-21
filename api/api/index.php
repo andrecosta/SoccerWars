@@ -3,26 +3,34 @@
  * INITIALIZATION
  * Imports, constants and application setup
  =============================================================================*/
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
+// Import libraries (Slim framework, PHPMailer, etc)
+require '../vendor/autoload.php';
+
+// Import models
 require '../classes/DB.php';
 require '../classes/User.php';
 require '../classes/Team.php';
 require '../classes/Match.php';
 require '../classes/Token.php';
-require '../vendor/autoload.php';
+require '../classes/Mail.php';
 
 date_default_timezone_set('Europe/Lisbon');
 
 /* Constants
  ******************************************************************************/
 define('GOOGLE_RECAPTCHA_PRIVATE_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
-define('STATIC_URL', 'http://static.drymartini.eu');
+define('STATIC_URL', 'https://static.soccerwars.xyz');
+define('ADMIN_TOKEN', 'superadmin');
 
-/* Extend Slim class to always return a JSON encoded responses
+/* Extend Slim class to always return JSON encoded responses
  ******************************************************************************/
 class API extends \Slim\Slim {
     function render_json($data) {
         $this->response->headers->set('Content-Type', 'application/json');
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }
 
@@ -48,7 +56,8 @@ $app->hook('slim.before.dispatch', function() use ($app) {
         if (!$app->request->headers->get('Token'))
             throw new Exception("Missing token", 400);
         else {
-            if (!Token::Validate($app->request->headers->get('Token')))
+            $token = $app->request->headers->get('Token');
+            if (!Token::Validate($token) && $token != ADMIN_TOKEN)
                 throw new Exception("Invalid token", 400);
         }
     }
@@ -84,7 +93,7 @@ $app->notFound(function() {
 /* API root
  ******************************************************************************/
 $app->get('/', function() use ($app) {
-    $app->render_json(["message" => "SoccerWars API v0.0.1"]);
+    $app->render_json(["message" => "SoccerWars API v0.1"]);
 });
 
 /* Check login credentials
@@ -95,12 +104,13 @@ $app->post('/login', function() use ($app) {
     if ($user_id = User::Login($data['email'], $data['password'])) {
         $user = User::Get($user_id);
 
-        // Change account status if it's the first login and forbid inactive accounts
+        // Activate account if it's the first login and forbid inactive accounts
         if ($user->status == 'pending') {
             $user->setStatus('active');
         } else if ($user->status != 'active')
             throw new Exception("This account is not active", 401);
 
+        // Return data
         $app->render_json([
             'name' => $user->name,
             'avatar' => $user->avatar,
@@ -165,8 +175,9 @@ $app->post('/users', function() use ($app) {
         $user->avatar = '';
         $password = $user->createRandomPassword(6);
         if ($user_id = $user->Create()) {
-            //if (@mail($email, "SoccerWars Account", "Password: " . $password))
-            //    throw new Exception("Error sending email", 500);
+            $message = "Greetings $name!\n\nYour password:\n\n" . $password;
+            if (!Mail::send($email, $name, "Account created", $message))
+                throw new Exception("Error sending email", 500);
             $app->render_json(["id" => $user_id]);
         } else {
             throw new Exception("Something went wrong!", 500);
@@ -216,6 +227,27 @@ $app->get('/matches', function() use ($app) {
     $response = Match::GetAll();
 
     $app->render_json($response);
+});
+
+/* Create match
+ ******************************************************************************/
+$app->post('/matches', function() use ($app) {
+    $data = json_decode($app->request->getBody(), true);
+    $team_1 = $data['team_1'];
+    $team_2 = $data['team_2'];
+    $start_time = $data['start_time'];
+    $end_time = $data['end_time'];
+
+    $match = new Match();
+    $match->team_1 = $team_1;
+    $match->team_2 = $team_2;
+    $match->start_time = $start_time;
+    $match->end_time = $end_time;
+
+    if ($match_id = $match->Create())
+        $app->render_json(["id" => $match_id]);
+    else
+        return false;
 });
 
 /* Insert comment

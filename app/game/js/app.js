@@ -1,15 +1,17 @@
 /* Global variables
  ******************************************************************************/
-var API_URL = 'http://api.drymartini.eu/api';
+var API_URL = 'https://api.soccerwars.xyz';
 var TOKEN = null;
 
 /* Check if user has obtained a token from the login page
  ******************************************************************************/
 if (Cookies.get('token')) {
+    // If the cookie is set, login was successful and the user is redirected
     TOKEN = Cookies.get('token');
     if (!window.location.hash)
         window.location.hash = '#!/dashboard';
 } else {
+    // If not, redirect him back to login page
     window.location.href = '/';
 }
 
@@ -52,7 +54,7 @@ var app = new Vue({
 
     methods: {
 
-        // Set title
+        // Set new title with animation
         setTitle: function(title) {
             app.title = title;
             scrambleText("#frame h1");
@@ -83,6 +85,8 @@ var app = new Vue({
     }
 });
 
+/* Custom filters
+ ******************************************************************************/
 Vue.filter('future', function(value) {
     var newValues = [];
     $.each(value, function(){

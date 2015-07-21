@@ -1,6 +1,6 @@
 {
   "name": "andrecosta/soccer_wars",
-  "description": "Web Project",
+  "description": "Soccer Wars",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
@@ -12,7 +12,7 @@
   "require": {
     "slim/slim": "2.6.2",
     "palanik/corsslim": "v0.0.5",
-    "zircote/swagger-php": "2.0.0",
-    "google/recaptcha": "1.1.1"
+    "google/recaptcha": "1.1.1",
+    "phpmailer/phpmailer": "v5.2.10"
   }
 }
