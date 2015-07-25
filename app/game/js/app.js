@@ -3,6 +3,7 @@
 var API_URL = 'https://api.soccerwars.xyz';
 var TOKEN = null;
 
+
 /* Check if user has obtained a token from the login page
  ******************************************************************************/
 if (Cookies.get('token')) {
@@ -14,6 +15,7 @@ if (Cookies.get('token')) {
     // If not, redirect him back to login page
     window.location.href = '/';
 }
+
 
 /* Set default headers to be sent with every request
  ******************************************************************************/
@@ -42,29 +44,28 @@ var app = new Vue({
         isMaximized: false,
     },
 
-    ready: function() {
+    ready: function () {
 
         $.get(API_URL + '/me')
-            .done(function(response) {
+            .done(function (response) {
                 console.log(response);
                 app.user = response;
             })
-            .fail(function(response) {
-                var message = response.responseJSON;
-                // notification error
+            .fail(function (response) {
+                console.log(response.responseJSON);
             });
     },
 
     methods: {
 
         // Set new title with animation
-        setTitle: function(title) {
+        setTitle: function (title) {
             app.title = title;
             scrambleText("#frame h1");
         },
 
         // Maximize the central section
-        maximize: function() {
+        maximize: function () {
             app.isMaximized = true;
             $("#left").velocity({marginLeft: -150});
             $("#right").velocity({marginRight: -150});
@@ -72,7 +73,7 @@ var app = new Vue({
         },
 
         // Restore the central section
-        minimize: function() {
+        minimize: function () {
             app.isMaximized = false;
             $("#left").velocity({marginLeft: 0});
             $("#right").velocity({marginRight: 0});
@@ -80,7 +81,7 @@ var app = new Vue({
         },
 
         // Logout and expire the token cookie
-        logout: function() {
+        logout: function () {
             Cookies.expire('token');
             window.location.href = '/';
         }
@@ -88,34 +89,51 @@ var app = new Vue({
     }
 });
 
+
 /* Custom filters
  ******************************************************************************/
 // Filters a list of objects which have a date span in the future
-Vue.filter('future', function(value) {
+Vue.filter('future', function (value) {
     var newValues = [];
-    $.each(value, function(){
-        if (Date.parse(this.start_time) > Date.now())
+    $.each(value, function () {
+        if (moment().isBefore(this.start_time))
             newValues.push(this);
     });
     return newValues;
 });
 
 // Filters a list of objects which have a date span in the past
-Vue.filter('past', function(value) {
+Vue.filter('past', function (value) {
     var newValues = [];
-    $.each(value, function(){
-        if (Date.parse(this.end_time) < Date.now())
+    $.each(value, function () {
+        if (moment().isAfter(this.end_time))
             newValues.push(this);
     });
     return newValues;
 });
 
 // Filters a list of objects which have a date span in the present
-Vue.filter('present', function(value) {
+Vue.filter('present', function (value) {
     var newValues = [];
-    $.each(value, function(){
-        if (Date.parse(this.start_time) < Date.now() && Date.now() < Date.parse(this.end_time))
+    $.each(value, function () {
+        if (moment().isBetween(this.start_time, this.end_time))
             newValues.push(this);
     });
     return newValues;
 });
+
+// Filters a date to show relative time remaining or elapsed
+Vue.filter('from_now', function (value) {
+    value = moment(value).fromNow();
+    return value;
+});
+
+
+/* Custom functions
+ ******************************************************************************/
+// Override setInterval function to use seconds and an option to run immediately
+var originalSetInterval = window.setInterval;
+window.setInterval = function(fn, delay, runImmediately) {
+    if(runImmediately) fn();
+    return originalSetInterval(fn, delay);
+};

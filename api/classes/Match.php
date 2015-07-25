@@ -37,7 +37,7 @@ class Match {
     static function GetAll() {
         $db = new DB();
 
-        if ($matches = $db->fetch("SELECT * FROM `Match` LIMIT 100", null, 'Match')) {
+        if ($matches = $db->fetch("SELECT * FROM `Match` ORDER BY start_time DESC LIMIT 100", null, 'Match')) {
             foreach ($matches as &$match) {
                 $match->progress = [
                     $match->getProgress($match->team_1),
@@ -96,9 +96,9 @@ class Match {
 
             // Initialize match progress for the 2 teams
             $db->modify("INSERT INTO MatchProgress (team_id, match_id) VALUES (:team_id, :match_id)",
-                ["team_id" => $this->team_1, "match_id" => $this->id]);
+                ["team_id" => $this->team_1, "match_id" => $match_id]);
             $db->modify("INSERT INTO MatchProgress (team_id, match_id) VALUES (:team_id, :match_id)",
-                ["team_id" => $this->team_2, "match_id" => $this->id]);
+                ["team_id" => $this->team_2, "match_id" => $match_id]);
 
             $this->progress = [
                 $this->getProgress($this->team_1),

@@ -12,20 +12,19 @@ Vue.component('matches', {
         var self = this;
         app.setTitle("Matches");
 
-        function cycle() {
+        // Fetch data every 10 seconds
+        var timer = setInterval(function() {
             $.get(API_URL + '/matches')
                 .done(function (response) {
-                    //console.log(response);
+                    console.log(response);
                     self.loaded = true;
                     self.matches = response;
                 })
                 .fail(function (response) {
-                    var message = response.responseJSON;
-                    // notification error
+                    console.log(response.responseJSON);
                 });
-            setTimeout(cycle, 10000);
-        }
-        cycle();
+        }, 10000, true);
+        this.$add('timer', timer);
     },
 
     methods: {
@@ -39,5 +38,9 @@ Vue.component('matches', {
             $(".content").hide();
             $(this.$$[value]).show();
         }
+    },
+
+    beforeDestroy: function() {
+        clearInterval(this.$get('timer'));
     }
 });

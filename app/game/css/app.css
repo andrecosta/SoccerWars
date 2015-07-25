@@ -1,17 +1,16 @@
 /* Imports
-*******************************************************************************/
-@import url(//fonts.googleapis.com/css?family=Source+Code+Pro:400);
+***********************************************************************************************************************/
+/*@import url(//fonts.googleapis.com/css?family=Source+Code+Pro:400);*/
 @import url(//fonts.googleapis.com/css?family=Orbitron:400,700);
 @import 'popup.css';
 @import 'effects/glitch.css';
 @import 'effects/loading.css';
 
 
-/* Base & Defaults
-*******************************************************************************/
+/* Base styles & defaults
+***********************************************************************************************************************/
 * { box-sizing: border-box; }
 html { height: 100%; }
-
 body {
     margin: 0;
     color: #fafafa;
@@ -26,14 +25,15 @@ body {
     font-weight: 400;
     min-width: 1024px;
     min-height: 700px;
+    overflow: hidden;
     display: flex;
     align-items: stretch;
-    overflow: hidden;
 }
 @media (max-width: 1024px) {
     body {background-size: 1024px 100%;}
 }
 
+/* Forms */
 input[type="text"],
 input[type="email"],
 input[type="password"]
@@ -46,33 +46,28 @@ input[type="password"]
     border: 2px solid rgba(200, 255, 255, 0.9);
 }
 
+/* Buttons */
 button {
-    font-size: 28px;
+    font-size: 18px;
     border-radius: 5px;
-    padding: 8px 20px;
+    padding: 6px 20px;
     color: #005A74;
     border: none;
     cursor: pointer;
     background-color: rgba(0, 255, 255, 0.9);
     font-family: Orbitron, monospace;
-    box-shadow: 0 0 10px cyan;
-    margin: 0 20px;
+    box-shadow: 0 0 5px cyan;
 }
 button:hover {
     text-shadow: 0 0 2px deeppink;
     color: deeppink;
-    box-shadow: 0 0 20px cyan;
+    box-shadow: 0 0 10px cyan;
 }
 
-h2 {
-    text-shadow: 0 1px 10px rgba(255, 0, 255, 0.8);
-    color: rgb(244, 229, 255);
-}
-
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
-/* Track */
 ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.50);
     border-radius: 8px;
@@ -88,7 +83,8 @@ h2 {
 
 
 /* Cosmetic effects
-*******************************************************************************/
+***********************************************************************************************************************/
+/* Blue tinted hologram screen effect */
 .hologram {
     filter: blur(5px);
     #background-image: linear-gradient(transparent 0%, rgba(10, 20, 20, 0.5) 100%);
@@ -96,6 +92,7 @@ h2 {
     background-size: 100% 3px;
 }
 
+/* Text scrambling effect */
 .scramble {
     color: cyan;
     text-shadow: 0 0 10px cyan;
@@ -110,21 +107,26 @@ h2 {
 
 
 /* Layout
-*******************************************************************************/
+***********************************************************************************************************************/
+/* Left navigation section */
 #left {
     flex-shrink: 0;
     width: 200px;
     box-shadow: 2px 0 4px rgba(0, 150, 200, 0.2);
     border-right: 2px solid rgba(0, 40, 80, 0.3);
+    position: relative;
 }
 
+/* Right sidebar */
 #right {
     flex-shrink: 0;
     width: 200px;
     box-shadow: -2px 0 4px rgba(0, 150, 200, 0.2);
     border-left: 2px solid rgba(0, 40, 80, 0.3);
+    position: relative;
 }
 
+/* Main screen */
 #middle {
     flex-grow: 1;
     position: relative;
@@ -137,8 +139,10 @@ h2 {
     background-size: 100% 3px;
 }
 
+
 /* Left navigation section elements
-*******************************************************************************/
+***********************************************************************************************************************/
+/* Profile picture */
 #profile-picture {
     cursor: pointer;
     width: 150px;
@@ -158,6 +162,7 @@ h2 {
     transition: box-shadow .2s;
 }
 
+/* Points label */
 #points {
     text-align: right;
     margin-right: 20px;
@@ -169,6 +174,7 @@ h2 {
     color: darkgoldenrod;
 }
 
+/* Main menu */
 #main-menu {
     margin-top: 20px;
 }
@@ -189,8 +195,18 @@ h2 {
     letter-spacing: 1px;
 }
 
+/* Logout button */
+#logout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 160px;
+}
+
+
 /* Main screen elements
-*******************************************************************************/
+***********************************************************************************************************************/
+/* Top frame of the central blue box */
 #frame h1 {
     text-transform: uppercase;
     text-align: center;
@@ -208,6 +224,7 @@ h2 {
     text-shadow: 0 0 3px cyan;
 }
 
+/* Main content section in the central box */
 main {
     position: absolute;
     top: 0;
@@ -226,6 +243,7 @@ main .content {
     padding-top: 50px;
 }
 
+/* Loading circle */
 .loading {
     align-self: center;
     flex-grow: 1;
@@ -234,13 +252,14 @@ main .content {
     margin-top: -50px;
 }
 
+/* Submenu below frame title */
 .submenu {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     padding: 6px 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 10;
     text-align: center;
     border-bottom: 2px solid #000;
@@ -258,47 +277,54 @@ main .content {
     color: rgb(130, 250, 255);
 }
 
-.columns {
-    display: flex;
-}
-.columns .column {  }
+/* Styling for column alignment */
+.columns { display: flex; }
+.columns .column { position: relative; }
 .columns .column.grow { flex-grow: 1; flex-basis: 0; }
 .columns .column.shrink { flex-shrink: 1; }
 
-.item {
-    background: rgba(0, 0, 0, 0.4);
+/* Styling for a list of items */
+.list-item {
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     margin-bottom: 4px;
     margin-left: 5px;
     margin-right: 5px;
-    padding: 2px 0;
+    padding: 10px 0;
     box-shadow: 0 0 5px rgb(0, 100, 118);
     font-size: 13px;
     position: relative;
 }
-.item:hover {
+.list-item:hover {
     box-shadow: 0 0 5px cyan;
     cursor: pointer;
     background: rgba(0, 50, 50, 0.5);
 }
 
+
 /* Right sidebar elements
-*******************************************************************************/
+***********************************************************************************************************************/
+
 
 
 /* Matches
-*******************************************************************************/
-.page-matches .teams > span {
+***********************************************************************************************************************/
+.page-matches .team {
     color: cyan;
     font-weight: bold;
 }
-.page-matches .teams img { vertical-align: middle; }
-.page-matches .time > span {
+.page-matches .time {
     color: gold;
+    font-size: 12px;
+}
+.page-matches .scores {
+    font-size: 20px;
+    margin-top: 10px;
+
 }
 
 /* Match details
-*******************************************************************************/
+***********************************************************************************************************************/
 .page-match-details .time > span {
     color: gold;
 }
@@ -313,8 +339,8 @@ main .content {
 }
 
 /* Users
-*******************************************************************************/
-.page-users .item {
+***********************************************************************************************************************/
+.page-users .list-item {
     text-align: left;
     padding: 5px 10px;
     display: flex;

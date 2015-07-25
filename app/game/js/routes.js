@@ -10,6 +10,7 @@ router.map({
     },
     '/matches': {
         component: 'matches',
+        alwaysRefresh: true
     },
     '/matches/:id': {
         component: 'match-details',
@@ -19,7 +20,8 @@ router.map({
                     id: route.params.id
                 })
             })
-        }
+        },
+        alwaysRefresh: true
     },
     '/teams': {
         component: 'teams'
@@ -28,7 +30,7 @@ router.map({
         component: 'users'
     },
     '/users/:id': {
-        component: 'user-details',
+        component: 'profile',
         data: function (route, resolve, reject) {
             return new Promise(function (resolve, reject) {
                 resolve({

@@ -4,7 +4,8 @@ Vue.component('match-details', {
     data: function() {
         return {
             loaded: false,
-            match: null
+            match: null,
+            in_progress: false
         }
     },
 
@@ -12,7 +13,8 @@ Vue.component('match-details', {
         var self = this;
         app.setTitle("Match details");
 
-        function cycle() {
+        // Fetch data every second
+        var timer = setInterval(function() {
             $.get(API_URL + '/matches/' + self.route.params.id)
                 .done(function (response) {
                     console.log(response);
@@ -20,11 +22,13 @@ Vue.component('match-details', {
                     self.match = response;
                 })
                 .fail(function (response) {
-                    var message = response.responseJSON;
-                    // notification error
+                    console.log(response.responseJSON);
                 });
-            setTimeout(cycle, 1000);
-        }
-        cycle();
+        }, 1000, true);
+        this.$add('timer', timer);
+    },
+
+    beforeDestroy: function() {
+        clearInterval(this.$get('timer'));
     }
 });
