@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    font-size: 15px;
+    color: #222;
+    font-family: monospace;
+}
+
+header {
+    background: #222;
+    border-bottom: 1px solid black;
+    padding: 15px;
+    color: #eee;
+}
+
+nav a {
+    color: cyan;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 20px;
+}
+nav a:hover {
+    color: deeppink;
+}
+
+section {
+    margin: 20px 15px;
+}
+
+#message {
+    border-radius: 5px;
+    padding: 10px;
+    color: midnightblue;
+    background: skyblue;
+    margin: 15px;
+    display: none;
+}
+
+input {
+    margin: 10px 0;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+}

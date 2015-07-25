@@ -17,10 +17,11 @@ $.ajaxSetup({
     }
 });
 
-// Show 'Play' button if the user has already logged in
+// Show appropriate buttons depending on whether the user has already logged in
 if (Cookies.get('token')) {
-    $("#login-button, #signup-button").hide();
     $("#play-button").show();
+} else {
+    $("#login-button, #signup-button").show();
 }
 
 

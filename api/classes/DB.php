@@ -33,7 +33,6 @@ class DB
     {
         try {
             $statement = $this->connection->prepare($query);
-            //$statement->debugDumpParams();
             $statement->execute($params);
 
             // Fetch the results
@@ -60,10 +59,22 @@ class DB
     {
         try {
             $statement = $this->connection->prepare($query);
-            //$statement->debugDumpParams();
             $statement->execute($params);
 
             return $this->lastId();
+
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function truncate($table)
+    {
+        try {
+            $statement = $this->connection->prepare("TRUNCATE :table");
+            $statement->execute(['table' => $table]);
+
+            return true;
 
         } catch (PDOException $e) {
             die($e->getMessage());

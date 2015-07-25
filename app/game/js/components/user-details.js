@@ -12,7 +12,7 @@ Vue.component('user-details', {
         var self = this;
         app.setTitle("User details");
 
-        $.get(API_URL + '/users/' + app.route_id)
+        $.get(API_URL + '/users/' + self.route.params.id)
             .done(function(response) {
                 console.log(response);
                 self.loaded = true;

@@ -10,8 +10,8 @@
     <link href="css/app.css" rel="stylesheet">
 
     <!-- Vue Framework components -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.12.6/vue.min.js"></script>
-    <script src="js/plugins/vue-route.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js"></script>
+    <script src="js/plugins/vue-router.js"></script>
 
 </head>
 <body id="app">
@@ -64,7 +64,7 @@
         </header>
 
         <main id="main">
-            <router-view></router-view>
+            <router-view v-transition="fade" transition-mode="out-in"></router-view>
         </main>
 
     </section><!-- /#middle -->
@@ -88,26 +88,42 @@
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
         <div class="content page-matches" v-if="loaded">
             <div class="top">
-                <h2>Live matches</h2>
-                <div v-repeat="matches | live | orderBy 'start_time'" v-on="click: go(id)" class="item">
-                    <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
-                    <div class="time">Started: <span v-text="start_time"></span></div>
+                <h2>In progress</h2>
+                <div v-repeat="matches | present | orderBy 'end_time'" v-on="click: go(id)" class="item">
+                    <div class="teams">
+                        <span v-text="team_1.name"></span>
+                        <img v-attr="src: team_1.crest" width="16" height="16">
+                        vs
+                        <img v-attr="src: team_2.crest" width="16" height="16">
+                        <span v-text="team_2.name"></span></div>
+                    <div class="time">Ends on: <span v-text="end_time"></span></div>
                 </div>
             </div>
 
             <div class="columns">
                 <div class="column grow">
-                    <h2>Upcoming matches</h2>
+                    <h2>Upcoming</h2>
                     <div v-repeat="matches | future | orderBy 'start_time'" v-on="click: go(id)" class="item">
-                        <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
+                        <div class="teams">
+                            <span v-text="team_1.name"></span>
+                            <img v-attr="src: team_1.crest" width="16" height="16">
+                            vs
+                            <img v-attr="src: team_2.crest" width="16" height="16">
+                            <span v-text="team_2.name"></span></div>
                         <div class="time">Starts on: <span v-text="start_time"></span></div>
                     </div>
                 </div>
 
                 <div class="column grow">
-                    <h2>Past matches</h2>
-                    <div v-repeat="matches | past | orderBy 'end_time'" class="item">
-                        <div class="teams"><span v-text="team_1.name"></span> vs <span v-text="team_2.name"></span></div>
+                    <h2>Terminated</h2>
+                    <div v-repeat="matches | past | orderBy 'end_time' -1" v-on="click: go(id)" class="item">
+                        <div class="teams">
+                            <span v-text="team_1.name"></span>
+                            <img v-attr="src: team_1.crest" width="16" height="16">
+                            vs
+                            <img v-attr="src: team_2.crest" width="16" height="16">
+                            <span v-text="team_2.name"></span>
+                        </div>
                         <div class="time">Ended on: <span v-text="end_time"></span></div>
                     </div>
                 </div>

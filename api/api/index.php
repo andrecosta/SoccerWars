@@ -52,7 +52,7 @@ $app->hook('slim.before.dispatch', function() use ($app) {
         throw new Exception("Invalid content type", 400);
 
     // Check the validity of a token sent by the user
-    if (!in_array($app->request->getResourceUri(), ['/login', '/users']) && !$app->request->getMethod() == 'POST') {
+    if (!(in_array($app->request->getResourceUri(), ['/login', '/users']) && $app->request->getMethod() == 'POST')) {
         if (!$app->request->headers->get('Token'))
             throw new Exception("Missing token", 400);
         else {

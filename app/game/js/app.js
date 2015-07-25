@@ -33,10 +33,13 @@ var app = new Vue({
     el: '#app',
 
     data: {
-        user: null,
+        user: {
+            avatar: {
+                big: ''
+            }
+        },
         title: null,
         isMaximized: false,
-        route_id: null
     },
 
     ready: function() {
@@ -87,6 +90,7 @@ var app = new Vue({
 
 /* Custom filters
  ******************************************************************************/
+// Filters a list of objects which have a date span in the future
 Vue.filter('future', function(value) {
     var newValues = [];
     $.each(value, function(){
@@ -96,19 +100,21 @@ Vue.filter('future', function(value) {
     return newValues;
 });
 
+// Filters a list of objects which have a date span in the past
 Vue.filter('past', function(value) {
     var newValues = [];
     $.each(value, function(){
-        if (Date.parse(this.start_time) < Date.now())
+        if (Date.parse(this.end_time) < Date.now())
             newValues.push(this);
     });
     return newValues;
 });
 
-Vue.filter('live', function(value) {
+// Filters a list of objects which have a date span in the present
+Vue.filter('present', function(value) {
     var newValues = [];
     $.each(value, function(){
-        if (Date.parse(this.start_time) > Date.now() && Date.now() < Date.parse(this.end_time))
+        if (Date.parse(this.start_time) < Date.now() && Date.now() < Date.parse(this.end_time))
             newValues.push(this);
     });
     return newValues;

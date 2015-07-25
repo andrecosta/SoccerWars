@@ -15,7 +15,7 @@ Vue.component('users', {
         function cycle() {
             $.get(API_URL + '/users')
                 .done(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     self.loaded = true;
                     self.users = response;
                 })
@@ -30,8 +30,7 @@ Vue.component('users', {
 
     methods: {
         go: function(id) {
-            app.route_id = id;
-            window.location.hash = '/user/' + id;
+            window.location.hash = '/users/' + id;
         }
     }
 });

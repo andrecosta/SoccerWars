@@ -114,6 +114,7 @@ button:hover {
 #actions {
     align-self: center;
     transform: perspective(200px) rotateX(10deg);
+    height: 51px;
 }
 
 #info {
@@ -124,6 +125,6 @@ button:hover {
     text-align: center;
 }
 
-#play-button {
+button {
     display: none;
 }

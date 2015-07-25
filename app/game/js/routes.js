@@ -11,8 +11,15 @@ router.map({
     '/matches': {
         component: 'matches'
     },
-    '/match/:id': {
-        component: 'match-details'
+    '/matches/:id': {
+        component: 'match-details',
+        data: function (route, resolve, reject) {
+            return new Promise(function (resolve, reject) {
+                resolve({
+                    id: route.params.id
+                })
+            })
+        }
     },
     '/teams': {
         component: 'teams'
@@ -20,8 +27,15 @@ router.map({
     '/users': {
         component: 'users'
     },
-    '/user/:id': {
-        component: 'user-details'
+    '/users/:id': {
+        component: 'user-details',
+        data: function (route, resolve, reject) {
+            return new Promise(function (resolve, reject) {
+                resolve({
+                    id: route.params.id
+                })
+            })
+        }
     },
     '/profile': {
         component: 'profile'

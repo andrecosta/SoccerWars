@@ -15,7 +15,7 @@ Vue.component('matches', {
         function cycle() {
             $.get(API_URL + '/matches')
                 .done(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     self.loaded = true;
                     self.matches = response;
                 })
@@ -30,8 +30,7 @@ Vue.component('matches', {
 
     methods: {
         go: function(id) {
-            app.route_id = id;
-            window.location.hash = '/match/' + id;
+            window.location.hash = '/matches/' + id;
         }
     }
 });

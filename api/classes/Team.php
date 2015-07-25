@@ -3,6 +3,7 @@
 class Team {
     public $id;
     public $name;
+    public $crest;
     public $rank;
 
     /**
@@ -42,10 +43,12 @@ class Team {
         $db = new DB();
 
         $data = [
+            "id" => $this->id,
             "name" => $this->name,
+            "crest" => $this->crest,
         ];
 
-        if ($team_id = $db->modify("INSERT INTO Team (name) VALUES (:name)", $data)) {
+        if ($team_id = $db->modify("INSERT INTO Team (id, name, crest) VALUES (:id, :name, :crest)", $data)) {
             return $team_id;
         } else
             return false;

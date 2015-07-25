@@ -237,7 +237,7 @@ main .content {
     display: flex;
 }
 .columns .column {  }
-.columns .column.grow { flex-grow: 1; }
+.columns .column.grow { flex-grow: 1; flex-basis: 0; }
 .columns .column.shrink { flex-shrink: 1; }
 
 .item {
@@ -267,6 +267,7 @@ main .content {
     color: cyan;
     font-weight: bold;
 }
+.page-matches .teams img { vertical-align: middle; }
 .page-matches .time > span {
     color: gold;
 }

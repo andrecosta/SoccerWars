@@ -13,7 +13,7 @@ Vue.component('match-details', {
         app.setTitle("Match details");
 
         function cycle() {
-            $.get(API_URL + '/matches/' + app.route_id)
+            $.get(API_URL + '/matches/' + self.route.params.id)
                 .done(function (response) {
                     console.log(response);
                     self.loaded = true;
@@ -23,7 +23,7 @@ Vue.component('match-details', {
                     var message = response.responseJSON;
                     // notification error
                 });
-            setTimeout(cycle, 3000);
+            setTimeout(cycle, 1000);
         }
         cycle();
     }
