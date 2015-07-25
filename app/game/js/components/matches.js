@@ -31,6 +31,13 @@ Vue.component('matches', {
     methods: {
         go: function(id) {
             window.location.hash = '/matches/' + id;
+        },
+
+        submenu: function(value, e) {
+            $(".submenu span").removeClass("active");
+            $(e.target).addClass("active");
+            $(".content").hide();
+            $(this.$$[value]).show();
         }
     }
 });

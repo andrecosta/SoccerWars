@@ -64,7 +64,7 @@ var app = new Vue({
         },
 
         // Maximize the central section
-        maximize: function(e) {
+        maximize: function() {
             app.isMaximized = true;
             $("#left").velocity({marginLeft: -150});
             $("#right").velocity({marginRight: -150});
@@ -72,7 +72,7 @@ var app = new Vue({
         },
 
         // Restore the central section
-        minimize: function(e) {
+        minimize: function() {
             app.isMaximized = false;
             $("#left").velocity({marginLeft: 0});
             $("#right").velocity({marginRight: 0});

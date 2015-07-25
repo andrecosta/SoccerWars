@@ -16,11 +16,11 @@ body {
     margin: 0;
     color: #fafafa;
     height: 100%;
-    #background: url('../img/bg.jpg') no-repeat top center fixed;
+    /*#background: url('../img/bg.jpg') no-repeat top center fixed;
     #background-size: cover;
     #background: radial-gradient(#66B9DD, #05001B);
     #background: radial-gradient(#3FB9D5, #05001B);
-    #background: radial-gradient(#1B91A0, #1B0038);
+    #background: radial-gradient(#1B91A0, #1B0038);*/
     background: radial-gradient(#4798DB, #10011D);
     font-family: Orbitron, monospace;
     font-weight: 400;
@@ -91,7 +91,7 @@ h2 {
 *******************************************************************************/
 .hologram {
     filter: blur(5px);
-    background-image: linear-gradient(transparent 0%, rgba(10, 20, 20, 0.5) 100%);
+    #background-image: linear-gradient(transparent 0%, rgba(10, 20, 20, 0.5) 100%);
     background-image: linear-gradient(rgba(34, 118, 213, 0.3) 0%, rgba(10, 20, 20, 0.5) 100%);
     background-size: 100% 3px;
 }
@@ -114,14 +114,14 @@ h2 {
 #left {
     flex-shrink: 0;
     width: 200px;
-    box-shadow: 2px 0px 4px rgba(0, 150, 200, 0.2);
+    box-shadow: 2px 0 4px rgba(0, 150, 200, 0.2);
     border-right: 2px solid rgba(0, 40, 80, 0.3);
 }
 
 #right {
     flex-shrink: 0;
     width: 200px;
-    box-shadow: -2px 0px 4px rgba(0, 150, 200, 0.2);
+    box-shadow: -2px 0 4px rgba(0, 150, 200, 0.2);
     border-left: 2px solid rgba(0, 40, 80, 0.3);
 }
 
@@ -132,7 +132,7 @@ h2 {
     border: 2px solid rgba(0, 40, 80, 0.3);
     border-radius: 50% / 3%;
     #border-radius: 500px / 20px;
-    box-shadow: 0 -50px 5px rgba(0, 255, 255, 0.6), 0px 5px 3px rgba(0, 200, 255, 0.4);
+    box-shadow: 0 -50px 5px rgba(0, 255, 255, 0.6), 0 5px 3px rgba(0, 200, 255, 0.4);
     background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
     background-size: 100% 3px;
 }
@@ -223,6 +223,7 @@ main .content {
     overflow-y: auto;
     overflow-x: hidden;
     text-align: center;
+    padding-top: 50px;
 }
 
 .loading {
@@ -233,6 +234,30 @@ main .content {
     margin-top: -50px;
 }
 
+.submenu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 6px 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10;
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+.submenu span {
+    text-shadow: 0 1px 10px rgba(255, 0, 255, 0.8);
+    color: rgb(180, 130, 255);
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.submenu span.active,
+.submenu span:hover {
+    font-weight: bold;
+    color: rgb(130, 250, 255);
+}
+
 .columns {
     display: flex;
 }
@@ -241,7 +266,7 @@ main .content {
 .columns .column.shrink { flex-shrink: 1; }
 
 .item {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
     margin-bottom: 4px;
     margin-left: 5px;
@@ -252,7 +277,7 @@ main .content {
     position: relative;
 }
 .item:hover {
-    box-shadow: 0 0 10px cyan;
+    box-shadow: 0 0 5px cyan;
     cursor: pointer;
     background: rgba(0, 50, 50, 0.5);
 }

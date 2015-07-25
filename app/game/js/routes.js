@@ -9,7 +9,7 @@ router.map({
         component: 'dashboard'
     },
     '/matches': {
-        component: 'matches'
+        component: 'matches',
     },
     '/matches/:id': {
         component: 'match-details',
