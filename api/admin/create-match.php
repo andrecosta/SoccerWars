@@ -21,8 +21,8 @@ for ($i = 0; $i < $number_of_matches; $i++) {
     /* Generate match start dates in the near future and duration
      ******************************************************************************/
     $format = 'Y-m-d H:i:s';
-    $duration = 15; // Duration of the match (in minutes)
-    $start_time = date($format, strtotime("now +10 minutes"));
+    $duration = 10; // Duration of the match (in minutes)
+    $start_time = date($format, strtotime("now +".mt_rand(10, 60)." minutes"));
     $end_time = date($format, strtotime("$start_time +$duration minutes"));
 
     /* Create the match

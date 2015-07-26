@@ -28,8 +28,6 @@ class User {
         ];
 
         if ($id = $db->fetch("SELECT id FROM User WHERE email = :email AND pw_hash = :pw_hash", $data)) {
-            // Create or renew the user token upon login
-            Token::Create($id);
             return $id;
         }
         else
@@ -146,16 +144,14 @@ class User {
     }
 
     function setStatus($status) {
-        $this->status = $status;
         $db = new DB();
+
         $data = [
             "id" => $this->id,
-            "status" => $this->status
+            "status" => $status
         ];
-        if ($db->modify("UPDATE User SET status = :status WHERE id = :id", $data))
-            return true;
-        else
-            return false;
+
+        $db->modify("UPDATE User SET status = :status WHERE id = :id", $data);
     }
 
     function getToken() {
@@ -194,5 +190,32 @@ class User {
         }
 
         $this->badges = $badges;
+    }
+
+    function awardBadge($badge_id) {
+        $db = new DB();
+
+        $data = [
+            "user_id" => $this->id,
+            "badge_id" => $badge_id
+        ];
+
+        $db->modify("INSERT INTO UserBadge (user_id, badge_id) VALUES (:user_id, :badge_id)", $data);
+
+        // Award the badge points to the user
+        foreach ($this->badges as $badge)
+            if ($badge['id'] == $badge_id)
+                $this->givePoints($badge['points']);
+    }
+
+    function givePoints($amount) {
+        $db = new DB();
+
+        $data = [
+            "user_id" => $this->id,
+            "points" => $this->points + $amount
+        ];
+
+        $db->modify("UPDATE User SET points = :points WHERE id = :user_id", $data);
     }
 }

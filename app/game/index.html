@@ -6,7 +6,8 @@
     <title>[ SoccerWars ] Game</title>
 
     <!-- Styles -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
+    <!--<link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.2.2/themes/flatty.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 
     <!-- Vue Framework components -->
@@ -15,12 +16,13 @@
 
     <!-- jQuery & other plugins -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/1.2.1/cookies.min.js" defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js" defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js" defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js" defer></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/1.2.1/cookies.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.2.2/humane.min.js" defer></script>
     <script src="js/plugins/jquery.neon.min.js" defer></script>
-    <script src="js/plugins/sweetalert-dev.js" defer></script>
+    <!--<script src="js/plugins/sweetalert-dev.js" defer></script>-->
 
     <!-- Custom application scripts & components -->
     <script src="js/effects.js" defer></script>
@@ -46,7 +48,7 @@
 
         <!-- Points label -->
         <div id="points">
-            <span v-text="user.points"></span>
+            <span v-text="user.points" class="current"></span>
         </div>
 
         <!-- Main menu -->
@@ -124,39 +126,53 @@
 
         <div class="content page-matches" v-if="loaded" v-el="live">
             <div v-repeat="matches | present | orderBy 'end_time'" v-on="click: go(id)" class="list-item">
-                <div class="teams">
-                    <span v-text="team_1.name"></span>
-                    <img v-attr="src: team_1.crest" width="16" height="16">
-                    vs
-                    <img v-attr="src: team_2.crest" width="16" height="16">
-                    <span v-text="team_2.name"></span>
+                <div class="columns">
+                    <div class="column grow team">
+                        <div><img v-attr="src: team_1.crest" width="32" height="32"></div>
+                        <span v-text="team_1.name"></span>
+                    </div>
+                    <div class="column shrink">
+                        <div class="time">Ends <span v-text="end_time | from_now"></span></div>
+                        <div class="scores">
+                            <span v-text="progress[0].goals"></span>
+                            <span> &dash; </span>
+                            <span v-text="progress[1].goals"></span>
+                        </div>
+                    </div>
+                    <div class="column grow team">
+                        <div><img v-attr="src: team_2.crest" width="32" height="32"></div>
+                        <span v-text="team_2.name"></span>
+                    </div>
                 </div>
-                <div class="time">Ends <span v-text="end_time | from_now"></span></div>
             </div>
         </div>
 
         <div class="content page-matches" v-if="loaded" v-el="upcoming" v-show="false">
             <div v-repeat="matches | future | orderBy 'start_time'" v-on="click: go(id)" class="list-item">
-                <div class="teams">
-                    <span v-text="team_1.name"></span>
-                    <img v-attr="src: team_1.crest" width="16" height="16">
-                    vs
-                    <img v-attr="src: team_2.crest" width="16" height="16">
-                    <span v-text="team_2.name"></span>
+                <div class="columns">
+                    <div class="column grow team">
+                        <div><img v-attr="src: team_1.crest" width="32" height="32"></div>
+                        <span v-text="team_1.name"></span>
+                    </div>
+                    <div class="column shrink">
+                        <div class="time">Starts <span v-text="start_time | from_now"></span></div>
+                        <div class="scores"><span> VS </span></div>
+                    </div>
+                    <div class="column grow team">
+                        <div><img v-attr="src: team_2.crest" width="32" height="32"></div>
+                        <span v-text="team_2.name"></span>
+                    </div>
                 </div>
-                <div class="time">Starts <span v-text="start_time | from_now"></span></div>
             </div>
         </div>
 
         <div class="content page-matches" v-if="loaded" v-el="ended" v-show="false">
             <div v-repeat="matches | past | orderBy 'end_time' -1" v-on="click: go(id)" class="list-item">
                 <div class="columns">
-
                     <div class="column grow team">
                         <div><img v-attr="src: team_1.crest" width="32" height="32"></div>
                         <span v-text="team_1.name"></span>
                     </div>
-
                     <div class="column shrink">
                         <div class="time"><span v-text="end_time | from_now"></span></div>
                         <div class="scores">
@@ -165,12 +181,10 @@
                             <span v-text="progress[1].goals"></span>
                         </div>
                     </div>
-
                     <div class="column grow team">
                         <div><img v-attr="src: team_2.crest" width="32" height="32"></div>
                         <span v-text="team_2.name"></span>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -180,7 +194,7 @@
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
         <div class="content page-match-details" v-if="loaded">
             <h2>Match progress</h2>
-            <div class="time">Start time: <span v-text="match.start_time"></span></div>
+            <div class="time"><span v-text="match.end_time | from_now 1"></span> remaining</div>
             <div class="columns">
 
                 <div class="column grow" style="text-align: right">
@@ -228,25 +242,28 @@
 <!--------------------------------------------------------------------------------------------------- Users template -->
     <template id="users">
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+
+        <div class="submenu" v-if="loaded">
+            <span v-on="click: submenu('global', $event)" class="active">Global leaderboard</span> &diams;
+            <span v-on="click: submenu('shame', $event)">Hall of shame</span>
+        </div>
+
         <div class="content page-users" v-if="loaded">
-            <h2>Leaderboard</h2>
-            <div v-repeat="users | orderBy 'points' -1" class="list-item columns" v-on="click: go(id)">
-
-                <div class="column shrink">
-                    {{$index+1}}. &nbsp;&nbsp;<img v-attr="src: avatar.small" width="32" height="32" class="avatar"><span v-text="name"></span>
-                </div>
-
+            <div v-repeat="users | orderBy 'points' order" class="list-item columns" v-on="click: go(id)">
+                <span class="column shrink">{{$index+1}}</span>
+                <div class="column shrink"><img v-attr="src: avatar.small" width="32" height="32" class="avatar"></div>
+                <span v-text="name" class="column shrink"></span>
                 <div class="column grow badges">
                     <div>
-                        <div v-repeat="badge: badges" v-style="background-image: 'url(' + badge.image + ')',
-                                      background-position: badge.unlocked*24 + 'px 0'" v-attr="title: badge.name" class="badge"></div>
+                        <div v-repeat="badge in badges"
+                             v-style="background-image: 'url(' + badge.image + ')',
+                                      background-position: badge.unlocked*24 + 'px 0'"
+                             v-attr="title: badge.name" class="badge"></div>
                     </div>
                 </div>
-
                 <div class="column shrink points">
                     <span v-text="points"></span>
                 </div>
-
             </div>
         </div>
     </template>

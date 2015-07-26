@@ -18,9 +18,6 @@ Vue.component('teams', {
                 self.loaded = true;
                 self.teams = response;
             })
-            .fail(function(response) {
-                var message = response.responseJSON;
-                // notification error
-            });
+            .fail(function (response) { console.log(response.responseJSON); });
     }
 });

@@ -1,11 +1,13 @@
 /* Global variables
- ******************************************************************************/
+ **********************************************************************************************************************/
 var API_URL = 'https://api.soccerwars.xyz';
 var TOKEN = null;
 
 
-/* Check if user has obtained a token from the login page
- ******************************************************************************/
+
+/* Default options and actions
+ **********************************************************************************************************************/
+// Check if user has successfully obtained a token from the login page
 if (Cookies.get('token')) {
     // If the cookie is set, login was successful and the user is redirected
     TOKEN = Cookies.get('token');
@@ -16,9 +18,7 @@ if (Cookies.get('token')) {
     window.location.href = '/';
 }
 
-
-/* Set default headers to be sent with every request
- ******************************************************************************/
+// Set default headers to be sent with every ajax request
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -26,14 +26,21 @@ $.ajaxSetup({
     }
 });
 
+// Set default options for the humane.js notification plugin
+humane.timeout = 5000;
+humane.addnCls = 'custom';
+
+
 
 /* Main application
- ******************************************************************************/
+ **********************************************************************************************************************/
 Vue.use(VueRouter);
 
 var app = new Vue({
+    // The element where the framework will bind to
     el: '#app',
 
+    // Default data objects
     data: {
         user: {
             avatar: {
@@ -41,32 +48,69 @@ var app = new Vue({
             }
         },
         title: null,
-        isMaximized: false,
+        isMaximized: false
     },
 
+    // Runs when the application is loaded
     ready: function () {
+        var self = this;
 
-        $.get(API_URL + '/me')
-            .done(function (response) {
-                console.log(response);
-                app.user = response;
-            })
-            .fail(function (response) {
-                console.log(response.responseJSON);
-            });
+        var timer = setInterval(function() {
+            $.get(API_URL + '/me')
+                .done(function (response) {
+                    self.user = response;
+                })
+                .fail(function (response) {
+                    console.log(response.responseJSON);
+                });
+        }, 1000, true);
+        this.$add('timer', timer);
     },
 
-    methods: {
+    // Watch for changes in data objects dynamically
+    watch : {
+        // Watch for changes in user points balance
+        'user.points': function(newVal, oldVal) {
+            if (oldVal != undefined && newVal != oldVal) {
+                var change = $("<span />");
+                var diff = newVal - oldVal;
+                if (diff > 0) {
+                    change.addClass('change positive').text('+' + diff);
+                } else if (diff < 0) {
+                    change.addClass('change negative').text('-' + diff);
+                }
+                $("#points").prepend(change.delay(3000).fadeOut());
+            }
+        },
 
+        // Watch for changes in new unlocked badges
+        'user.badges': function(newVal, oldVal) {
+            if (oldVal != undefined) {
+                $.each(oldVal, function () {
+                    var oldBadge = this;
+                    $.each(newVal, function () {
+                        if (this.id == oldBadge.id && this.unlocked && !oldBadge.unlocked) {
+                            humane.log("Badge unlocked<br><br>"
+                                + "<img src='" + this.image + "' width='32' height='32'><br>"
+                                + "<b>" + this.name + "</b>");
+                        }
+                    });
+                });
+            }
+        }
+    },
+
+    // Custom methods for the root application
+    methods: {
         // Set new title with animation
         setTitle: function (title) {
-            app.title = title;
+            this.title = title;
             scrambleText("#frame h1");
         },
 
         // Maximize the central section
         maximize: function () {
-            app.isMaximized = true;
+            this.isMaximized = true;
             $("#left").velocity({marginLeft: -150});
             $("#right").velocity({marginRight: -150});
             $("#middle").css("border-radius", "50% / 2%");
@@ -74,7 +118,7 @@ var app = new Vue({
 
         // Restore the central section
         minimize: function () {
-            app.isMaximized = false;
+            this.isMaximized = false;
             $("#left").velocity({marginLeft: 0});
             $("#right").velocity({marginRight: 0});
             $("#middle").css("border-radius", "50% / 3%");
@@ -85,13 +129,13 @@ var app = new Vue({
             Cookies.expire('token');
             window.location.href = '/';
         }
-
     }
 });
 
 
+
 /* Custom filters
- ******************************************************************************/
+ **********************************************************************************************************************/
 // Filters a list of objects which have a date span in the future
 Vue.filter('future', function (value) {
     var newValues = [];
@@ -122,15 +166,17 @@ Vue.filter('present', function (value) {
     return newValues;
 });
 
-// Filters a date to show relative time remaining or elapsed
-Vue.filter('from_now', function (value) {
-    value = moment(value).fromNow();
+// Formats a date to show it relative to present time
+Vue.filter('from_now', function (value, nosuffix) {
+    nosuffix = nosuffix || false;
+    value = moment(value).fromNow(nosuffix);
     return value;
 });
 
 
+
 /* Custom functions
- ******************************************************************************/
+ **********************************************************************************************************************/
 // Override setInterval function to use seconds and an option to run immediately
 var originalSetInterval = window.setInterval;
 window.setInterval = function(fn, delay, runImmediately) {

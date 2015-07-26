@@ -2,7 +2,7 @@
 ***********************************************************************************************************************/
 /*@import url(//fonts.googleapis.com/css?family=Source+Code+Pro:400);*/
 @import url(//fonts.googleapis.com/css?family=Orbitron:400,700);
-@import 'popup.css';
+/*@import 'popup.css';*/
 @import 'effects/glitch.css';
 @import 'effects/loading.css';
 
@@ -166,13 +166,16 @@ button:hover {
 #points {
     text-align: right;
     margin-right: 20px;
-    color: gold;
     font-size: 14px;
+    color: gold;
 }
-#points::before {
+#points .current::before {
     content: '$ ';
     color: darkgoldenrod;
 }
+#points .change { margin-right: 10px; }
+#points .change.positive { color: limegreen; }
+#points .change.negative { color: red; }
 
 /* Main menu */
 #main-menu {
@@ -258,7 +261,7 @@ main .content {
     left: 0;
     right: 0;
     top: 0;
-    padding: 6px 0;
+    padding: 10px 0 8px;
     background: rgba(0, 0, 0, 0.8);
     z-index: 10;
     text-align: center;
@@ -325,7 +328,7 @@ main .content {
 
 /* Match details
 ***********************************************************************************************************************/
-.page-match-details .time > span {
+.page-match-details .time {
     color: gold;
 }
 .page-match-details .column.grow h2 {

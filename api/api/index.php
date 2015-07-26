@@ -4,7 +4,7 @@
  * Imports, constants and application setup
  =============================================================================*/
 ini_set("display_errors", 1);
-error_reporting(E_ALL);
+error_reporting(E_WARNING);
 
 // Import libraries (Slim framework, PHPMailer, etc)
 require '../vendor/autoload.php';
@@ -124,8 +124,16 @@ $app->post('/login', function() use ($app) {
  ******************************************************************************/
 $app->get('/me', function() use ($app) {
     $token = $app->request->headers->get('Token');
-    if ($user = User::GetByToken($token))
+    if ($user = User::GetByToken($token)) {
+        // Renew or create the user token upon login
+        Token::Update($user->id);
+
+        // Award badge after first login
+        if (!isset($user->badges[0]['unlocked']) && strpos($app->request->getReferrer(), '/game/'))
+            $user->awardBadge(1);
+
         $app->render_json($user);
+    }
     else
         throw new Exception("Invalid", 404);
 });

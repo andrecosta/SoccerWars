@@ -41,7 +41,7 @@ class Token {
      * @param int $user_id
      * @return string|bool
      */
-    static function Create($user_id) {
+    static function Update($user_id) {
         $db = new DB();
 
         $token = uniqid(mt_rand(), true);
