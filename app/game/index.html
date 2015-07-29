@@ -6,8 +6,8 @@
     <title>[ SoccerWars ] Game</title>
 
     <!-- Styles -->
-    <!--<link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">-->
     <link href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.2.2/themes/flatty.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.0.2/nouislider.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 
     <!-- Vue Framework components -->
@@ -21,18 +21,20 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js" defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js" defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.2.2/humane.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.0.2/nouislider.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" defer></script>
     <script src="js/plugins/jquery.neon.min.js" defer></script>
-    <!--<script src="js/plugins/sweetalert-dev.js" defer></script>-->
 
     <!-- Custom application scripts & components -->
     <script src="js/effects.js" defer></script>
     <script src="js/app.js" defer></script>
-    <script src="js/components/dashboard.js" defer></script>
     <script src="js/components/matches.js" defer></script>
     <script src="js/components/match-details.js" defer></script>
     <script src="js/components/teams.js" defer></script>
     <script src="js/components/users.js" defer></script>
     <script src="js/components/profile.js" defer></script>
+    <script src="js/components/statistics.js" defer></script>
+    <script src="js/components/help.js" defer></script>
     <script src="js/routes.js" defer></script>
 </head>
 <body id="app">
@@ -54,8 +56,8 @@
         <!-- Main menu -->
         <nav id="main-menu">
             <ul>
-                <li v-link="/dashboard" class="menu-item glitch neon">
-                    <span data-text="Dashboard">Dashboard</span><span class="menu-icon"></span>
+                <li v-link="/profile" class="menu-item glitch neon">
+                    <span data-text="My Profile">My Profile</span><span class="menu-icon"></span>
                 </li>
                 <li v-link="/matches" class="menu-item glitch neon">
                     <span data-text="Matches">Matches</span><span class="menu-icon"></span>
@@ -63,14 +65,20 @@
                 <li v-link="/teams" class="menu-item glitch neon">
                     <span data-text="Teams">Teams</span><span class="menu-icon"></span>
                 </li>
-                <li v-link="/users" class="menu-item glitch neon">
-                    <span data-text="Users">Users</span><span class="menu-icon"></span>
+                <li v-link="/leaderboards" class="menu-item glitch neon">
+                    <span data-text="Leaderboards">Leaderboards</span><span class="menu-icon"></span>
                 </li>
-                <li v-link="/corporations" class="menu-item glitch neon">
+                <li v-link="/statistics" class="menu-item glitch neon">
+                    <span data-text="Statistics">Statistics</span><span class="menu-icon"></span>
+                </li>
+                <li class="menu-item" style="color:#999">
                     <span data-text="Corporations">Corporations</span><span class="menu-icon"></span>
                 </li>
-                <li v-link="/market" class="menu-item glitch neon">
+                <li class="menu-item" style="color:#999">
                     <span data-text="Market">Market</span><span class="menu-icon"></span>
+                </li>
+                <li v-link="/help" class="menu-item glitch neon">
+                    <span data-text="Help">Help</span><span class="menu-icon"></span>
                 </li>
             </ul>
         </nav>
@@ -86,34 +94,39 @@
         <header id="frame">
             <h1 class="scramble" v-text="title"></h1>
             <div class="buttons">
-                <div v-on="click: maximize" v-show="!isMaximized">+</div>
-                <div v-on="click: minimize" v-show="isMaximized">-</div>
+                <div v-on="click: maximize" v-show="!isMaximized" class="maximize" title="Maximize"></div>
+                <div v-on="click: restore" v-show="isMaximized" class="restore" title="Restore"></div>
             </div>
         </header>
 
         <!-- Main section in the center -->
         <main id="main">
             <!-- Templates will be rendered here -->
-            <router-view v-transition="fade" transition-mode="out-in"></router-view>
+            <router-view></router-view>
         </main>
 
     </section>
 <!---------------------------------------------------------------------------------------------------- Right sidebar -->
     <section id="right" class="hologram">
 
-        My bets
+        <div class="title">My last bets</div>
+
+        <div v-repeat="user.bets" class="bet" v-on="click: bet_click(match_id)">
+            <div class="columns">
+                <div class="points column grow" v-text="points_total"></div>
+                <!--<span class="diff" v-text=""></span>-->
+                <div class="time column shrink" v-text="created_at | from_now"></div>
+            </div>
+            <div class="columns">
+                <div class="payout column grow" v-text="payout(type, points_total)" v-class="won: result==1, lost: result==0"></div>
+                <div class="status column shrink" v-html="result | to_result_string"></div>
+            </div>
+        </div>
 
     </section>
 
 
 <!-- TEMPLATES: These elements are invisible and used by the framework to render the content of the pages ------------->
-<!----------------------------------------------------------------------------------------------- Dashboard template -->
-    <template id="dashboard">
-        <div class="loading" v-if="!loaded"><span>Loading...</span></div>
-        <div class="content" v-if="loaded">
-            <h2>Recent activity and stuff</h2>
-        </div>
-    </template>
 <!------------------------------------------------------------------------------------------------- Matches template -->
     <template id="matches">
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
@@ -133,7 +146,7 @@
                     </div>
                     <div class="column shrink">
                         <div class="time">Ends <span v-text="end_time | from_now"></span></div>
-                        <div class="scores">
+                        <div class="score">
                             <span v-text="progress[0].goals"></span>
                             <span> &dash; </span>
                             <span v-text="progress[1].goals"></span>
@@ -156,7 +169,7 @@
                     </div>
                     <div class="column shrink">
                         <div class="time">Starts <span v-text="start_time | from_now"></span></div>
-                        <div class="scores"><span> VS </span></div>
+                        <div class="score"><span> VS </span></div>
                     </div>
                     <div class="column grow team">
                         <div><img v-attr="src: team_2.crest" width="32" height="32"></div>
@@ -175,7 +188,7 @@
                     </div>
                     <div class="column shrink">
                         <div class="time"><span v-text="end_time | from_now"></span></div>
-                        <div class="scores">
+                        <div class="score">
                             <span v-text="progress[0].goals"></span>
                             <span> &dash; </span>
                             <span v-text="progress[1].goals"></span>
@@ -193,49 +206,133 @@
     <template id="match-details">
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
         <div class="content page-match-details" v-if="loaded">
-            <h2>Match progress</h2>
-            <div class="time"><span v-text="match.end_time | from_now 1"></span> remaining</div>
+            <div class="time-remaining" v-if="!is_started()">Match will start <span v-text="match.start_time | from_now"></span></div>
+            <div class="time-remaining" v-if="is_inprogress()"><span v-text="match.end_time | from_now 1"></span> until match ends</div>
+            <div class="time-remaining" v-if="is_ended()">Match ended <span v-text="match.end_time | from_now"></span></div>
             <div class="columns">
+                <div class="column grow">
+                    <img v-attr="src: match.team_1.crest" width="64" height="64">
+                    <div v-text="match.team_1.name" class="team"></div>
+                </div>
+                <div class="column shrink">
+                    <div class="vs">VS</div>
+                </div>
+                <div class="column grow">
+                    <img v-attr="src: match.team_2.crest" width="64" height="64">
+                    <div v-text="match.team_2.name" class="team"></div>
+                </div>
+            </div>
 
-                <div class="column grow" style="text-align: right">
-                    <h2 v-text="match.team_1.name"></h2>
-                    <div v-text="match.progress[0].goals"></div>
+            <div class="columns section scores">
+                <div class="title">Scores</div>
+                <div class="column grow">
+                    <div v-text="match.progress[0].goals" v-style="font-weight: 'bold'"></div>
                     <div v-text="match.progress[0].yellow_cards"></div>
                     <div v-text="match.progress[0].red_cards"></div>
                     <div v-text="match.progress[0].defenses"></div>
                 </div>
-
-                <div class="column shrink labels">
-                    <h2>VS</h2>
-                    <div>GOALS</div>
-                    <div>Yellow Cards</div>
-                    <div>Red Cards</div>
-                    <div>Defenses</div>
+                <div class="column shrink">
+                    <div class="label"><b>GOALS</b></div>
+                    <div class="label">Yellow Cards</div>
+                    <div class="label">Red Cards</div>
+                    <div class="label">Defenses</div>
                 </div>
-
-                <div class="column grow" style="text-align: left">
-                    <h2 v-text="match.team_2.name"></h2>
-                    <div v-text="match.progress[1].goals"></div>
+                <div class="column grow">
+                    <div v-text="match.progress[1].goals" v-style="font-weight: 'bold'"></div>
                     <div v-text="match.progress[1].yellow_cards"></div>
                     <div v-text="match.progress[1].red_cards"></div>
                     <div v-text="match.progress[1].defenses"></div>
                 </div>
-
             </div>
-            <h2>Bet</h2>
-            <div></div>
-            <h2>Comments</h2>
-            <div></div>
+
+            <div class="bets section" v-if="!is_started() && !bet_placed()">
+                <div class="title">Place your bet</div>
+                <div class="columns">
+                    <div class="column grow rows">
+                        <div class="columns">
+                            <div class="column option">
+                                <input type="radio" name="bet_simple_result" id="bet_simple_team1" value="1">
+                                <label for="bet_simple_team1">Team 1 Wins</label>
+                            </div>
+                            <div class="column option">
+                                <input type="radio" name="bet_simple_result" id="bet_simple_draw" value="0">
+                                <label for="bet_simple_draw">Draw</label>
+                            </div>
+                            <div class="column option">
+                                <input type="radio" name="bet_simple_result" id="bet_simple_team2" value="2">
+                                <label for="bet_simple_team2">Team 2 Wins</label>
+                            </div>
+                        </div>
+                        <div id="bet_simple" class="slider simple"></div>
+                        <button v-on="click: bet_simple">Simple bet</button>
+                    </div>
+                    <div class="column shrink">
+                        <div class="divisor"></div>
+                        <div>OR</div>
+                        <div class="divisor"></div>
+                    </div>
+                    <div class="column grow rows">
+                        <div class="columns">
+                            <div class="column option">
+                                <input type="radio" name="bet_advanced_team" id="bet_advanced_team1" value="1">
+                                <label for="bet_advanced_team1">Team 1 scores</label>
+                            </div>
+                            <div class="column option">
+                                <input type="radio" name="bet_advanced_team" id="bet_advanced_team2" value="2">
+                                <label for="bet_advanced_team2">Team 2 scores</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="columns">
+                                <div class="column shrink mini-label">+ goals</div>
+                                <div id="bet_advanced_goals" class="slider narrow advanced column grow"></div>
+                            </div>
+                            <div class="columns">
+                                <div class="column shrink mini-label">+ yellow cards</div>
+                                <div id="bet_advanced_yellowcards" class="slider narrow advanced column grow"></div>
+                            </div>
+                            <div class="columns">
+                                <div class="column shrink mini-label">+ red cards</div>
+                                <div id="bet_advanced_redcards" class="slider narrow advanced column grow"></div>
+                            </div>
+                            <div class="columns">
+                                <div class="column shrink mini-label">+ defenses</div>
+                                <div id="bet_advanced_defenses" class="slider narrow advanced column grow"></div>
+                            </div>
+                        </div>
+                        <button v-on="click: bet_advanced">
+                            Advanced bet ($<span v-text="bet.advanced_total" v-style="font-weight: 'bold'"></span>)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comments section" v-if="is_started()">
+                <div class="title">Comments</div>
+                <input type="text" placeholder="Type your message here" maxlength="255" v-on="keyup: submit_comment | key 'enter'" v-if="is_inprogress()">
+                <div v-repeat="comments | orderBy 'created_at' -1" class="messages">
+                    <div v-text="created_at | from_now" class="time"></div>
+                    <img v-attr="src: user.avatar" width="16" height="16">
+                    <span v-text="user.name" class="name" v-attr="data-user: user_id" v-class="is_my_comment(user_id)"></span> said:
+                    <span v-text="text" class="text"></span>
+                </div>
+            </div>
         </div>
     </template>
 <!--------------------------------------------------------------------------------------------------- Teams template -->
     <template id="teams">
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
-        <div class="content" v-if="loaded">
-            <h2>Teams list</h2>
-            <div v-repeat="teams">
-                <span v-text="name"></span>
-                <div v-text="rank"></div>
+
+        <div class="submenu" v-if="loaded">
+            <span class="active">Highest ranking</span>
+        </div>
+
+        <div class="content page-teams" v-if="loaded">
+            <div v-repeat="teams" class="list-item columns">
+                <div class="column shrink position">{{$index+1}}</div>
+                <div class="column shrink crest"><img v-attr="src: crest" width="64" height="64"></div>
+                <div class="column grow name" v-text="name"></div>
+                <div class="column shrink rank"><span v-text="rank"></span> rank points</div>
             </div>
         </div>
     </template>
@@ -248,11 +345,11 @@
             <span v-on="click: submenu('shame', $event)">Hall of shame</span>
         </div>
 
-        <div class="content page-users" v-if="loaded">
-            <div v-repeat="users | orderBy 'points' order" class="list-item columns" v-on="click: go(id)">
-                <span class="column shrink">{{$index+1}}</span>
+        <div class="content page-users" v-if="loaded" v-el="global">
+            <div v-repeat="users" class="list-item columns" v-on="click: go(id)">
+                <div class="column shrink position">{{$index+1}}</div>
                 <div class="column shrink"><img v-attr="src: avatar.small" width="32" height="32" class="avatar"></div>
-                <span v-text="name" class="column shrink"></span>
+                <div class="column shrink name" v-text="name"></div>
                 <div class="column grow badges">
                     <div>
                         <div v-repeat="badge in badges"
@@ -261,8 +358,17 @@
                              v-attr="title: badge.name" class="badge"></div>
                     </div>
                 </div>
-                <div class="column shrink points">
-                    <span v-text="points"></span>
+                <div class="column shrink points"><span v-text="points"></span></div>
+            </div>
+        </div>
+
+        <div class="content page-users" v-if="loaded" v-el="shame" v-show="false">
+            <div v-repeat="users | orderBy 'bailouts' -1" class="list-item columns" v-on="click: go(id)">
+                <div class="column shrink position">{{$index+1}}</div>
+                <div class="column shrink"><img v-attr="src: avatar.small" width="32" height="32" class="avatar"></div>
+                <div class="column grow name" v-text="name"></div>
+                <div class="column shrink bailouts">
+                    $ <span v-text="bailouts*1000"></span> received in a total of <span v-text="bailouts"></span> bailouts
                 </div>
             </div>
         </div>
@@ -270,12 +376,136 @@
 <!------------------------------------------------------------------------------------------------- Profile template -->
     <template id="profile">
         <div class="loading" v-if="!loaded"><span>Loading...</span></div>
-        <div class="content" v-if="loaded">
-            <h2>Profile details</h2>
-            <img v-attr="src: user.avatar.big" width="150" height="150">
-            <span v-text="user.name"></span>
+
+        <div class="submenu" v-if="loaded">
+            <span v-on="click: submenu('info', $event)" class="active">Info</span> &diams;
+            <span v-on="click: submenu('stats', $event)">Statistics</span>
+        </div>
+
+        <div class="content page-profile" v-if="loaded" v-el="info">
+            <div class="columns section info">
+                <div class="title">Info</div>
+                <div class="column grow details">
+                    <div><div class="label">Name</div><span v-text="user.name"></span></div>
+                    <div><div class="label">User since</div><span v-text="user.created_at"></span></div>
+                    <div><div class="label">Status</div><span v-text="user.status"></span></div>
+                </div>
+                <div class="column shrink">
+                    <img v-attr="src: user.avatar.big" width="128" height="128">
+                </div>
+            </div>
+
+            <div class="section badges">
+                <div class="title">Badges</div>
+                <div v-repeat="badge in user.badges">
+                    <div v-style="background-image: 'url(' + badge.image + ')',
+                                  background-position: badge.unlocked*24 + 'px 0'" class="badge"></div>
+                    <span v-text="badge.name"></span>
+                </div>
+            </div>
+
+            <div class="section last-bets">
+                <div class="title">Bet history</div>
+                <div v-repeat="user.bets | filter_by">
+                    <span v-text="points_total" class="points"></span>
+                    on match #<span v-text="match_id" class="match" v-on="click: match_click(match_id)"></span>
+                    <span v-text="created_at | from_now" class="time"></span> -
+                    <span v-html="result | to_result_string"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content page-profile" v-if="loaded" v-el="stats" v-show="false">
+            <div class="section stats-general">
+                <div class="title">User stats</div>
+                <div><div class="label">Total of bets placed</div><span v-text="stats.total_bets_placed"></span></div>
+                <div><div class="label">Total of bets won</div><span v-text="stats.total_bets_won"></span></div>
+                <div><div class="label">Total of bets lost</div><span v-text="stats.total_bets_lost"></span></div>
+                <div><div class="label">Total amount of points won</div>$ <span v-text="stats.total_points_won"></span></div>
+                <div><div class="label">Total amount of points lost</div>$ <span v-text="stats.total_points_lost"></span></div>
+                <div><div class="label">Average bet value</div>$ <span v-text="stats.avg_bet_value"></span></div>
+            </div>
+
+            <div class="section graphs">
+                <div class="title">Wealth gap</div>
+                <div><div class="label">Poor</div> < $ <span v-text="stats.wealth_gap.q1"></span>
+                    <span v-if="parseInt(user.points) < parseInt(stats.wealth_gap.q1)" class="me"></span></div>
+                <div><div class="label">Middle class</div> < $ <span v-text="stats.wealth_gap.q2"></span>
+                    <span v-if="parseInt(user.points) >= parseInt(stats.wealth_gap.q1) && parseInt(user.points) < parseInt(stats.wealth_gap.q2)" class="me"></span></div>
+                <div><div class="label">Rich</div> < $ <span v-text="stats.wealth_gap.q3"></span>
+                    <span v-if="parseInt(user.points) >= parseInt(stats.wealth_gap.q2) && parseInt(user.points) < parseInt(stats.wealth_gap.q3)" class="me"></span></div>
+                <div><div class="label">Capitalist</div> > $ <span v-text="stats.wealth_gap.q3"></span>
+                    <span v-if="parseInt(user.points) >= parseInt(stats.wealth_gap.q3)" class="me"></span></div>
+                <div class="graph">
+                    <canvas id="chart_user_classes" width="500" height="300"></canvas>
+                </div>
+            </div>
         </div>
     </template>
+<!---------------------------------------------------------------------------------------------- Statistics template -->
+<template id="statistics">
+    <div class="loading" v-if="!loaded"><span>Loading...</span></div>
+
+    <div class="content page-stats" v-if="loaded" v-el="info">
+        <div class="section stats-general">
+            <div class="title">Global stats</div>
+            <div><div class="label">Total of bets placed</div><span v-text="stats.total_bets_placed"></span></div>
+            <div><div class="label">Total of bets won</div><span v-text="stats.total_bets_won"></span></div>
+            <div><div class="label">Total of bets lost</div><span v-text="stats.total_bets_lost"></span></div>
+            <div><div class="label">Total amount of points won</div>$ <span v-text="stats.total_points_won"></span></div>
+            <div><div class="label">Total amount of points lost</div>$ <span v-text="stats.total_points_lost"></span></div>
+            <div><div class="label">Average bet value</div>$ <span v-text="stats.avg_bet_value"></span></div>
+        </div>
+
+        <div class="section graphs">
+            <div class="title">Wealth gap</div>
+            <div><div class="label">Poor</div> < $ <span v-text="stats.wealth_gap.q1"></span>
+                <span v-if="user.points < stats.wealth_gap.q1" class="me"></span></div>
+            <div><div class="label">Middle class</div> < $ <span v-text="stats.wealth_gap.q2"></span>
+                <span v-if="user.points >= stats.wealth_gap.q1 && user.points < stats.wealth_gap.q2" class="me"></span></div>
+            <div><div class="label">Rich</div> < $ <span v-text="stats.wealth_gap.q3"></span>
+                <span v-if="user.points >= stats.wealth_gap.q2 && user.points < stats.wealth_gap.q3" class="me"></span></div>
+            <div><div class="label">Capitalist</div> > $ <span v-text="stats.wealth_gap.q3"></span>
+                <span v-if="user.points >= stats.wealth_gap.q3" class="me"></span></div>
+            <div class="graph">
+                <canvas id="chart_global_user_classes" width="500" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+</template>
+<!---------------------------------------------------------------------------------------------------- Help template -->
+<template id="help">
+    <div class="content page-help">
+        <div class="section faq">
+            <div class="title">FAQ</div>
+            <div>
+                <div class="label">How do I bet on matches?</div>
+                To bet on matches go to the <b>Matches</b> menu and search the 'Upcoming' match list. After choosing one place the appropriate section.
+            </div><br>
+            <div>
+                <div class="label">What is an advanced bet?</div>
+                An advanced bet is where you choose a team and bet on any of its attributes in favor of the other. Each attribute will have a x2 bonus multiplier.
+            </div><br>
+            <div>
+                <div class="label">How can I comment on a match?</div>
+                You can only comment on a match which is currently in progress.
+            </div><br>
+            <div>
+                <div class="label">What happens when I run out of points?</div>
+                When you run out of points you'll receive a <b>bailout</b> of $1000, which will count on your permanent record.
+            </div><br>
+            <div>
+                <div class="label">What are team rank points?</div>
+                Rank points are calculated by weighting the amount of points of bets placed on that team, each time it wins. Teams who cost users a lot of points can also have negative rank points.
+            </div><br>
+            <div>
+                <div class="label">I dont't like my profile picture. Can I change it?</div>
+                Avatars are randomly generated based on user id to fit the theme of the game. If wou want to change it you can pay the admin $10000 in game points.
+            </div>
+        </div>
+    </div>
+</template>
 
 </body>
 </html>

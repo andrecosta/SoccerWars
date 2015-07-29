@@ -6,9 +6,11 @@ class User {
     public $name;
     public $avatar;
     public $points;
+    public $bailouts;
     public $badges;
     public $status;
     public $created_at;
+    public $bets;
 
     private $token;
     private $pw_hash;
@@ -44,10 +46,11 @@ class User {
 
         $data = ["id" => $id];
 
-        if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User')) {
+        if ($user = $db->fetch("SELECT * FROM User WHERE id = :id", $data, 'User')[0]) {
             $user->token = Token::Get($id);
             $user->getAvatars();
             $user->getBadges();
+            $user->bets = Bet::GetByUser($user->id);
 
             return $user;
         } else
@@ -61,10 +64,11 @@ class User {
     static function GetAll() {
         $db = new DB();
 
-        if ($users = $db->fetch("SELECT * FROM User", null, 'User')) {
+        if ($users = $db->fetch("SELECT * FROM User ORDER BY points DESC", null, 'User')) {
             foreach ($users as &$user) {
                 $user->getAvatars();
                 $user->getBadges();
+                $user->bets = Bet::GetByUser($user->id);
             }
             return $users;
         } else
@@ -200,22 +204,32 @@ class User {
             "badge_id" => $badge_id
         ];
 
-        $db->modify("INSERT INTO UserBadge (user_id, badge_id) VALUES (:user_id, :badge_id)", $data);
+        $db->modify("INSERT IGNORE INTO UserBadge (user_id, badge_id) VALUES (:user_id, :badge_id)", $data);
 
         // Award the badge points to the user
         foreach ($this->badges as $badge)
-            if ($badge['id'] == $badge_id)
+            if ($badge['id'] == $badge_id && !isset($badge['unlocked']))
                 $this->givePoints($badge['points']);
     }
 
     function givePoints($amount) {
         $db = new DB();
 
+        $this->points += $amount;
+
         $data = [
             "user_id" => $this->id,
-            "points" => $this->points + $amount
+            "points" => $this->points
         ];
 
         $db->modify("UPDATE User SET points = :points WHERE id = :user_id", $data);
+    }
+
+    function bailout() {
+        $db = new DB();
+
+        $data = ["user_id" => $this->id];
+
+        $db->modify("UPDATE User SET points = 1000, bailouts = bailouts + 1 WHERE id = :user_id", $data);
     }
 }

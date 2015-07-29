@@ -123,6 +123,8 @@ button:hover {
     left: 0;
     right: 0;
     text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
 }
 
 button {

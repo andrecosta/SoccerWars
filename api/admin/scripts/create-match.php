@@ -1,13 +1,17 @@
 <?php
+/*
+ * CRON SCRIPT: Create Match
+ * Runs every 10 minutes
+ */
 chdir(dirname(__FILE__));
-require 'config.php';
+require '../config.php';
 
-$number_of_matches = 1;
+$number_of_matches = 5;
 
 /* Get list of existing teams
  ******************************************************************************/
 $teams = $db->fetch("SELECT id FROM Team", null, 'Team');
-var_dump($teams);
+//var_dump($teams);
 
 for ($i = 0; $i < $number_of_matches; $i++) {
 
@@ -22,7 +26,7 @@ for ($i = 0; $i < $number_of_matches; $i++) {
      ******************************************************************************/
     $format = 'Y-m-d H:i:s';
     $duration = 10; // Duration of the match (in minutes)
-    $start_time = date($format, strtotime("now +".mt_rand(10, 60)." minutes"));
+    $start_time = date($format, strtotime("now +".mt_rand(5, 25)." minutes"));
     $end_time = date($format, strtotime("$start_time +$duration minutes"));
 
     /* Create the match
@@ -33,6 +37,6 @@ for ($i = 0; $i < $number_of_matches; $i++) {
     $match->start_time = $start_time;
     $match->end_time = $end_time;
     $match->Create();
-    var_dump($match);
+    //var_dump($match);
 
 }

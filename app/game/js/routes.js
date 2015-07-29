@@ -5,12 +5,8 @@ var router = new VueRouter({
 });
 
 router.map({
-    '/dashboard': {
-        component: 'dashboard'
-    },
     '/matches': {
-        component: 'matches',
-        alwaysRefresh: true
+        component: 'matches'
     },
     '/matches/:id': {
         component: 'match-details',
@@ -20,13 +16,12 @@ router.map({
                     id: route.params.id
                 })
             })
-        },
-        alwaysRefresh: true
+        }
     },
     '/teams': {
         component: 'teams'
     },
-    '/users': {
+    '/leaderboards': {
         component: 'users'
     },
     '/users/:id': {
@@ -42,8 +37,14 @@ router.map({
     '/profile': {
         component: 'profile'
     },
+    '/statistics': {
+        component: 'statistics'
+    },
+    '/help': {
+        component: 'help'
+    },
     '*': {
-        component: 'dashboard'
+        component: 'profile'
     }
 });
 

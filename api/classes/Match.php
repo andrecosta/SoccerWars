@@ -18,7 +18,7 @@ class Match {
 
         $data = ["id" => $id];
 
-        if ($match = $db->fetch("SELECT * FROM `Match` WHERE id = :id", $data, 'Match')) {
+        if ($match = $db->fetch("SELECT * FROM `Match` WHERE id = :id", $data, 'Match')[0]) {
             $match->progress = [
                 $match->getProgress($match->team_1),
                 $match->getProgress($match->team_2)
@@ -37,7 +37,7 @@ class Match {
     static function GetAll() {
         $db = new DB();
 
-        if ($matches = $db->fetch("SELECT * FROM `Match` ORDER BY start_time DESC LIMIT 100", null, 'Match')) {
+        if ($matches = $db->fetch("SELECT * FROM `Match` ORDER BY start_time DESC", null, 'Match')) {
             foreach ($matches as &$match) {
                 $match->progress = [
                     $match->getProgress($match->team_1),
@@ -51,6 +51,11 @@ class Match {
             return false;
     }
 
+    /**
+     * Populate match progress
+     * @param int $team_id
+     * @return array|bool
+     */
     function getProgress($team_id) {
         $db = new DB();
 
@@ -59,23 +64,11 @@ class Match {
             "team_id" => $team_id,
         ];
 
-        if ($progress = $db->fetch("SELECT * FROM MatchProgress WHERE match_id = :match_id AND team_id = :team_id", $data))
+        if ($progress = $db->fetch("SELECT * FROM MatchProgress WHERE match_id = :match_id AND team_id = :team_id", $data)[0])
             return $progress;
         else
             return false;
     }
-
-    /*function GetTeams() {
-        $db = new DB();
-
-        if ($teams = $db->fetch("SELECT * FROM MatchPr WHERE", null))
-            foreach ($matches as $match) {
-                $teams = Team::Get($match->id)
-            }
-        return $matches;
-    else
-        return false;
-    }*/
 
     /**
      * Create a new match and returns its ID
@@ -106,6 +99,45 @@ class Match {
             ];
 
             return $match_id;
+        } else
+            return false;
+    }
+
+    /**
+     * Create a comment on the match
+     * @return int|bool
+     */
+    function insertComment($user_id, $text) {
+        $db = new DB();
+
+        $data = [
+            "user_id" => $user_id,
+            "match_id" => $this->id,
+            "text" => $text
+        ];
+
+        if ($comment_id = $db->modify("INSERT INTO UserComment (user_id, match_id, text) VALUES (:user_id, :match_id, :text)", $data)) {
+            return $comment_id;
+        } else
+            return false;
+    }
+
+    /**
+     * Get all the comments from the match
+     * @return array|bool
+     */
+    function getComments() {
+        $db = new DB();
+
+        $data = ['match_id' => $this->id];
+
+        if ($comments = $db->fetch("SELECT id, user_id, text, created_at FROM UserComment WHERE match_id = :match_id AND deleted = 0", $data)) {
+            foreach ($comments as &$comment) {
+                $user = User::Get($comment['user_id']);
+                $comment['user']['name'] = $user->name;
+                $comment['user']['avatar'] = $user->avatar['small'];
+            }
+            return $comments;
         } else
             return false;
     }

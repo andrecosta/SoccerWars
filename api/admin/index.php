@@ -10,6 +10,8 @@ require '../classes/DB.php';
 require '../classes/User.php';
 require '../classes/Team.php';
 require '../classes/Match.php';
+require '../classes/Bet.php';
+require '../classes/Stats.php';
 require '../classes/Token.php';
 require '../classes/Mail.php';
 
@@ -19,14 +21,13 @@ date_default_timezone_set('Europe/Lisbon');
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Admin Panel</title>
+    <title>Admin</title>
     <link href="main.css" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav>
-            <a id="nav-matches" href="#">» Matches</a>
-            <a id="nav-users" href="#">» Users</a>
+            <a id="nav-matches" href="#">» Create Match</a>
         </nav>
     </header>
 

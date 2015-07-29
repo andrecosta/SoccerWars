@@ -48,7 +48,8 @@ var app = new Vue({
             }
         },
         title: null,
-        isMaximized: false
+        isMaximized: false,
+        loaded: false
     },
 
     // Runs when the application is loaded
@@ -58,10 +59,11 @@ var app = new Vue({
         var timer = setInterval(function() {
             $.get(API_URL + '/me')
                 .done(function (response) {
+                    self.loaded = true;
                     self.user = response;
                 })
                 .fail(function (response) {
-                    console.log(response.responseJSON);
+                    humane.log(response.responseJSON['error']);
                 });
         }, 1000, true);
         this.$add('timer', timer);
@@ -72,13 +74,14 @@ var app = new Vue({
         // Watch for changes in user points balance
         'user.points': function(newVal, oldVal) {
             if (oldVal != undefined && newVal != oldVal) {
-                var change = $("<span />");
+                $('.change').remove();
+                var change = $("<span />").addClass("change");
                 var diff = newVal - oldVal;
-                if (diff > 0) {
-                    change.addClass('change positive').text('+' + diff);
-                } else if (diff < 0) {
-                    change.addClass('change negative').text('-' + diff);
-                }
+
+                if (diff > 0) change.addClass('positive');
+                else if (diff < 0) change.addClass('negative');
+
+                change.text(Math.abs(diff));
                 $("#points").prepend(change.delay(3000).fadeOut());
             }
         },
@@ -97,6 +100,15 @@ var app = new Vue({
                     });
                 });
             }
+        },
+
+        // Watch for changes in bailouts
+        'user.bailouts': function(newVal, oldVal) {
+            if (oldVal != undefined && newVal > oldVal) {
+                humane.log("<b>Ouch!</b><br><br>"
+                    + "You have received a bailout of <b>$1000</b> for spending all your points<br><br>"
+                    + "<b>TOTAL BAILOUTS: <span style='color: red'>" + newVal + "</span></b>");
+            }
         }
     },
 
@@ -111,17 +123,28 @@ var app = new Vue({
         // Maximize the central section
         maximize: function () {
             this.isMaximized = true;
-            $("#left").velocity({marginLeft: -150});
-            $("#right").velocity({marginRight: -150});
+            $("#left").velocity({marginLeft: -200});
+            $("#right").velocity({marginRight: -200});
             $("#middle").css("border-radius", "50% / 2%");
         },
 
         // Restore the central section
-        minimize: function () {
+        restore: function () {
             this.isMaximized = false;
             $("#left").velocity({marginLeft: 0});
             $("#right").velocity({marginRight: 0});
             $("#middle").css("border-radius", "50% / 3%");
+        },
+
+        // Goes to the match page of the clicked bet in 'My bets'
+        bet_click: function(id) {
+            window.location.hash = '/matches/' + id;
+        },
+
+        // Calculates a bet payout depending on its type
+        payout: function(type, points) {
+            if (type == 1) return "+$ " + parseInt(points) * 3; // Simple (x3)
+            else if (type == 2) return "+$ " + parseInt(points) * 2; // Advanced (x2)
         },
 
         // Logout and expire the token cookie
@@ -173,6 +196,14 @@ Vue.filter('from_now', function (value, nosuffix) {
     return value;
 });
 
+// Converts an integer bet result to an html string
+Vue.filter('to_result_string', function (value) {
+    if (value) {
+        if (value == 1) return "<span class='won'>won</span>";
+        else return "<span class='lost'>lost</span>";
+    } else return "in progress"
+});
+
 
 
 /* Custom functions
@@ -183,3 +214,23 @@ window.setInterval = function(fn, delay, runImmediately) {
     if(runImmediately) fn();
     return originalSetInterval(fn, delay);
 };
+
+// Setup charts
+Chart.defaults.global.animation = false;
+function setupCharts(id, stats) {
+    var ctx = document.getElementById(id).getContext("2d");
+    var user_classes = new Chart(ctx).Bar({
+        labels: ["Poor", "Middle class", "Rich", "Capitalist"],
+        datasets: [
+            {
+                fillColor: "rgba(0,255,255,0.6)",
+                data: [
+                    stats.wealth_gap.users_class1,
+                    stats.wealth_gap.users_class2,
+                    stats.wealth_gap.users_class3,
+                    stats.wealth_gap.users_class4
+                ]
+            }
+        ]
+    });
+}

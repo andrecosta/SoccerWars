@@ -16,7 +16,7 @@ class Team {
 
         $data = ["id" => $id];
 
-        if ($team = $db->fetch("SELECT * FROM Team WHERE id = :id", $data, 'Team')) {
+        if ($team = $db->fetch("SELECT * FROM Team WHERE id = :id", $data, 'Team')[0]) {
             return $team;
         } else
             return false;
@@ -29,7 +29,7 @@ class Team {
     static function GetAll() {
         $db = new DB();
 
-        if ($teams = $db->fetch("SELECT * FROM Team", null, 'Team')) {
+        if ($teams = $db->fetch("SELECT * FROM Team ORDER BY rank DESC", null, 'Team')) {
             return $teams;
         } else
             return false;
@@ -52,5 +52,20 @@ class Team {
             return $team_id;
         } else
             return false;
+    }
+
+    /**
+     * Updates a team's rank
+     * @return int|bool
+     */
+    static function UpdateRank($team_id, $points) {
+        $db = new DB();
+
+        $data = [
+            "team_id" => $team_id,
+            "points" => round($points)
+        ];
+
+        $db->modify("UPDATE Team SET rank = rank + :points WHERE id = :team_id", $data);
     }
 }

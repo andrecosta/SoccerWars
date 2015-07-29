@@ -4,8 +4,7 @@ Vue.component('users', {
     data: function() {
         return {
             loaded: false,
-            users: null,
-            order: false
+            users: null
         }
     },
 
@@ -21,7 +20,7 @@ Vue.component('users', {
                     self.users = response;
                 })
                 .fail(function (response) {
-                    console.log(response.responseJSON);
+                    humane.log(response.responseJSON['error']);
                 });
         }, 10000, true);
         this.$add('timer', timer);
@@ -32,10 +31,11 @@ Vue.component('users', {
             window.location.hash = '/users/' + id;
         },
 
-        submenu: function(value, order, e) {
+        submenu: function(value, e) {
             $(".submenu span").removeClass("active");
             $(e.target).addClass("active");
-            this.order = order;
+            $(".content").hide();
+            $(this.$$[value]).show();
         }
     },
 

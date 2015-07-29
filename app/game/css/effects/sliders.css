@@ -1,0 +1,59 @@
+.noUi-horizontal.slider {
+    padding-right: 32px;
+    border-radius: 1px;
+    border: 1px solid darkgoldenrod;
+    box-shadow: none;
+}
+.noUi-horizontal.slider.narrow {
+    height: 12px;
+}
+.noUi-horizontal.slider .noUi-background {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: none;
+    border-radius: 0;
+}
+.noUi-horizontal.slider .noUi-handle {
+    left: -1px;
+    height: 22px;
+    top: -3px;
+    box-shadow: none;
+    cursor: pointer;
+}
+.noUi-horizontal.slider.narrow .noUi-handle {
+    height: 15px;
+}
+.noUi-horizontal.slider .noUi-origin  {
+    right: -32px;
+}
+.noUi-horizontal.slider .noUi-handle:after,
+.noUi-horizontal.slider .noUi-handle:before {
+    height: 8px;
+    background: #888;
+}
+.noUi-horizontal.slider.narrow .noUi-handle:after,
+.noUi-horizontal.slider.narrow .noUi-handle:before {
+    height: 5px;
+    top: 4px;
+}
+.noUi-horizontal.slider .noUi-pips .noUi-marker {
+    background: rgba(255, 255, 255, 0.3);
+}
+.noUi-horizontal.slider .noUi-pips .noUi-marker-large {
+    height: 10px;
+}
+.noUi-horizontal.slider .noUi-pips .noUi-value {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+}
+.noUi-horizontal.slider .noUi-pips .noUi-value-large {
+    padding-top: 12px;
+}
+
+.noUi-horizontal.slider .tooltip {
+    display: block;
+    position: absolute;
+    top: -24px;
+    left: -60px;
+    text-align: center;
+    width: 150px;
+}

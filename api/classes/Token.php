@@ -2,11 +2,6 @@
 
 class Token {
 
-    /*function __construct($user_id) {
-        $this->token = uniqid(mt_rand(), true);
-        $this->user_id = $user_id;
-    }*/
-
     /**
      * Get a token instance from a user ID
      * @param int $user_id
@@ -22,19 +17,6 @@ class Token {
         else
             return false;
     }
-
-    /**
-     * Get all
-     * @return User[]|bool
-     */
-    /*static function GetAll() {
-        $db = new DB();
-
-        if ($users = $db->fetch("SELECT * FROM User", null, 'User'))
-            return $users;
-        else
-            return false;
-    }*/
 
     /**
      * Create a new token
@@ -68,7 +50,8 @@ class Token {
 
         $data = ['token' => $token];
 
-        if ($db->fetch("SELECT * FROM Token WHERE token = :token AND created_at < DATE_ADD(NOW(), INTERVAL 7 DAY)", $data))
+        if ($db->fetch("SELECT * FROM Token WHERE token = :token
+                        AND created_at < DATE_ADD(NOW(), INTERVAL 7 DAY)", $data))
             return true;
         else
             return false;

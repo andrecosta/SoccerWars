@@ -16,12 +16,11 @@ Vue.component('matches', {
         var timer = setInterval(function() {
             $.get(API_URL + '/matches')
                 .done(function (response) {
-                    console.log(response);
                     self.loaded = true;
                     self.matches = response;
                 })
                 .fail(function (response) {
-                    console.log(response.responseJSON);
+                    humane.log(response.responseJSON['error']);
                 });
         }, 10000, true);
         this.$add('timer', timer);

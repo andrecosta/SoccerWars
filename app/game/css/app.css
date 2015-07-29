@@ -1,10 +1,11 @@
 /* Imports
 ***********************************************************************************************************************/
-/*@import url(//fonts.googleapis.com/css?family=Source+Code+Pro:400);*/
 @import url(//fonts.googleapis.com/css?family=Orbitron:400,700);
-/*@import 'popup.css';*/
 @import 'effects/glitch.css';
 @import 'effects/loading.css';
+@import 'effects/sliders.css';
+@import 'effects/radiolabel.css';
+@import 'effects/scrollbar.css';
 
 
 /* Base styles & defaults
@@ -15,11 +16,6 @@ body {
     margin: 0;
     color: #fafafa;
     height: 100%;
-    /*#background: url('../img/bg.jpg') no-repeat top center fixed;
-    #background-size: cover;
-    #background: radial-gradient(#66B9DD, #05001B);
-    #background: radial-gradient(#3FB9D5, #05001B);
-    #background: radial-gradient(#1B91A0, #1B0038);*/
     background: radial-gradient(#4798DB, #10011D);
     font-family: Orbitron, monospace;
     font-weight: 400;
@@ -36,15 +32,26 @@ body {
 /* Forms */
 input[type="text"],
 input[type="email"],
-input[type="password"]
+input[type="password"],
+textarea
 {
-    border-radius: 5px;
+    border-radius: 3px;
     background: rgba(0, 0, 0, 0.8);
     color: white;
     font-family: Orbitron, monospace;
-    letter-spacing: 2px;
-    border: 2px solid rgba(200, 255, 255, 0.9);
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 10px;
+    font-size: 13px;
+    display: block;
+    width: 100%;
+    resize: none;
+    outline: none;
 }
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus { border-color: rgba(0, 255, 255, 0.8); }
 
 /* Buttons */
 button {
@@ -64,30 +71,12 @@ button:hover {
     box-shadow: 0 0 10px cyan;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.50);
-    border-radius: 8px;
-}
-::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background: rgba(0, 225, 255, 0.80);
-    box-shadow: 0 0 4px rgba(0, 255, 255, 0.80);
-}
-::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(0, 144, 173, 0.74);
-}
 
-
-/* Cosmetic effects
+/* Cosmetic
 ***********************************************************************************************************************/
-/* Blue tinted hologram screen effect */
+/* Blue tinted hologram screen */
 .hologram {
     filter: blur(5px);
-    #background-image: linear-gradient(transparent 0%, rgba(10, 20, 20, 0.5) 100%);
     background-image: linear-gradient(rgba(34, 118, 213, 0.3) 0%, rgba(10, 20, 20, 0.5) 100%);
     background-size: 100% 3px;
 }
@@ -130,10 +119,9 @@ button:hover {
 #middle {
     flex-grow: 1;
     position: relative;
-    margin: 65px 25px 20px;
+    margin: 65px 20px 20px;
     border: 2px solid rgba(0, 40, 80, 0.3);
     border-radius: 50% / 3%;
-    #border-radius: 500px / 20px;
     box-shadow: 0 -50px 5px rgba(0, 255, 255, 0.6), 0 5px 3px rgba(0, 200, 255, 0.4);
     background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
     background-size: 100% 3px;
@@ -168,14 +156,25 @@ button:hover {
     margin-right: 20px;
     font-size: 14px;
     color: gold;
+    letter-spacing: 1px;
+    position: relative;
 }
 #points .current::before {
     content: '$ ';
     color: darkgoldenrod;
 }
-#points .change { margin-right: 10px; }
+#points .change {
+    position: absolute;
+    right: 0; bottom:-20px;
+}
+#points .change:before {
+    content: '$ ';
+    right: 0; bottom:-20px;
+}
 #points .change.positive { color: limegreen; }
 #points .change.negative { color: red; }
+#points .change.positive:before { content: '+$ '; }
+#points .change.negative:before { content: '-$ '; }
 
 /* Main menu */
 #main-menu {
@@ -194,7 +193,6 @@ button:hover {
 #main-menu .menu-item > span {
     font-weight: 400;
     font-size: 16px;
-    #text-transform: uppercase;
     letter-spacing: 1px;
 }
 
@@ -216,15 +214,31 @@ button:hover {
     margin-top: -44px;
     font-size: 32px;
     line-height: 34px;
+    cursor: default;
 }
 #frame .buttons {
     position: absolute;
-    top: -26px;
-    right: 20px;
+    top: -16px;
+    right: 18px;
+    font-weight: bold;
+    font-size: 20px;
+    color: cyan;
+}
+#frame .buttons > div {
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
 }
 #frame .buttons > div:hover {
-    cursor: pointer;
-    text-shadow: 0 0 3px cyan;
+    color: deeppink;
+    border-color: deeppink;
+}
+#frame .buttons .maximize {
+    border: 1px solid cyan;
+    border-top-width: 3px;
+}
+#frame .buttons .restore {
+    border-bottom: 3px solid cyan;
 }
 
 /* Main content section in the central box */
@@ -246,7 +260,7 @@ main .content {
     padding-top: 50px;
 }
 
-/* Loading circle */
+/* Loading circle indicator */
 .loading {
     align-self: center;
     flex-grow: 1;
@@ -273,18 +287,27 @@ main .content {
     font-size: 18px;
     margin: 0 10px;
     cursor: pointer;
+    font-weight: bold;
 }
 .submenu span.active,
 .submenu span:hover {
-    font-weight: bold;
     color: rgb(130, 250, 255);
 }
 
 /* Styling for column alignment */
-.columns { display: flex; }
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .columns .column { position: relative; }
 .columns .column.grow { flex-grow: 1; flex-basis: 0; }
 .columns .column.shrink { flex-shrink: 1; }
+.rows {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 /* Styling for a list of items */
 .list-item {
@@ -304,10 +327,83 @@ main .content {
     background: rgba(0, 50, 50, 0.5);
 }
 
+/* Section */
+.section {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgb(0, 100, 118);
+    margin: 30px;
+    padding: 30px 20px 20px;
+    border-radius: 3px;
+}
+.section > .title {
+    font-size: 16px;
+    padding: 4px 10px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    position: absolute;
+    top: -14px;
+    letter-spacing: 1px;
+}
+
 
 /* Right sidebar elements
 ***********************************************************************************************************************/
-
+#right .title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px 0 5px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px cyan;
+}
+#right .bet {
+    border: 1px solid #222;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3px 10px;
+    position: relative;
+    margin-top: 5px;
+    cursor: pointer;
+}
+#right .bet:hover {
+    box-shadow: 0 0 5px cyan;
+    background: rgba(0, 50, 50, 0.5);
+}
+#right .bet .points {
+    color: gold;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+#right .bet .points:before {
+    content: '$ ';
+    color: darkgoldenrod;
+}
+#right .bet .payout {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 1px;
+}
+#right .bet .payout.won { color: lawngreen; }
+#right .bet .payout.lost { text-decoration: line-through; }
+#right .bet .time {
+    font-size: 9px;
+    line-height: 16px;
+    text-align: right;
+    color: #ddd;
+}
+#right .bet .status {
+    color: cyan;
+    font-size: 11px;
+}
+#right .bet .status .won {
+    color: lawngreen;
+    font-size: 12px;
+}
+#right .bet .status .lost {
+    color: red;
+    font-size: 12px;
+}
 
 
 /* Matches
@@ -319,54 +415,155 @@ main .content {
 .page-matches .time {
     color: gold;
     font-size: 12px;
+    width: 160px;
 }
-.page-matches .scores {
+.page-matches .score {
     font-size: 20px;
     margin-top: 10px;
-
 }
+
 
 /* Match details
 ***********************************************************************************************************************/
-.page-match-details .time {
-    color: gold;
+.page-match-details .time-remaining { color: #ccc; }
+.page-match-details .time-remaining > span { color: gold; }
+.page-match-details .team {
+    color: cyan;
+    font-size: 22px;
+    font-weight: bold;
+    height: 28px;
+    overflow: hidden;
 }
-.page-match-details .column.grow h2 {
+.page-match-details .vs {
+    font-size: 32px;
+    margin-top: 42px;
+    font-weight: bold;
+    width: 100px;
+}
+.page-match-details .scores .label { width: 190px; }
+.page-match-details .scores .column > div { line-height: 28px; }
+.page-match-details .bets .divisor {
+    border-left: 1px solid #aaa;
+    margin: 10px 0 10px 10px;
+    width: 1px;
+    height: 120px;
+}
+.page-match-details .bets .option {
+    display: inline-block;
+    margin: 10px 5px 0 5px;
+}
+.page-match-details .bets .mini-label {
+    align-self: flex-end;
+    font-size: 13px;
+    width: 110px;
+    text-align: right;
+    margin-left: 10px;
+}
+.page-match-details .bets .slider {
+    margin: 35px 30px 40px;
+    background: gold;
+}
+.page-match-details .bets .slider.narrow {
+    margin: 30px 20px 0;
+}
+.page-match-details .bets .slider .tooltip .points:before {
+    content: '$ ';
+    color: darkgoldenrod;
+}
+.page-match-details .bets .slider .tooltip .points {
+    color: gold;
+    font-size: 13px;
+}
+.page-match-details .bets .slider.narrow .tooltip .points {
+    font-size: 12px;
+}
+.page-match-details .bets button {
+    font-size: 14px;
+    margin: 0 auto;
+}
+.page-match-details .comments .messages {
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: left;
+    color: #aaa;
+}
+.page-match-details .comments .messages img { vertical-align: baseline; }
+.page-match-details .comments .time {
+    font-size: 11px;
+    text-align: right;
+    line-height: 10px;
+}
+.page-match-details .comments .name { color: cyan; }
+.page-match-details .comments .name.mine { color: gold; }
+.page-match-details .comments .text {
+    color: white;
+    letter-spacing: 1px;
+}
+
+
+/* Users
+***********************************************************************************************************************/
+.page-teams .list-item {
+    padding: 5px 20px;
+    text-align: left;
+}
+.page-teams .list-item:hover {
+    box-shadow: 0 0 5px rgb(0, 100, 118);
+    cursor: default;
+    background: rgba(0, 0, 0, 0.3);
+}
+.page-teams .crest img {
+    align-self: center;
+    vertical-align: middle;
+}
+.page-teams .position {
+    align-self: center;
+    width: 30px;
+}
+.page-teams .name {
+    align-self: center;
+    margin-left: 10px;
+    font-size: 16px;
     color: cyan;
 }
-.page-match-details .column > div {
-    margin-bottom: 10px;
+.page-teams .rank {
+    align-self: center;
+    text-align: right;
+    width: 250px;
+    color: #ddd;
+    letter-spacing: 1px;
 }
-.page-match-details .labels {
-    width: 240px;
+.page-teams .rank > span {
+    color: deeppink;
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 18px;
 }
+
 
 /* Users
 ***********************************************************************************************************************/
 .page-users .list-item {
-    text-align: left;
     padding: 5px 10px;
-    display: flex;
+    text-align: left;
 }
-.page-users img { vertical-align: middle; }
 .page-users img.avatar {
-    margin-right: 15px;
+    align-self: center;
+    vertical-align: middle;
 }
-.page-users .points { align-self: center; }
-.page-users .points > span {
-    color: gold;
+.page-users .position {
+    align-self: center;
+    width: 25px;
 }
-.page-users .points > span::before {
-    content: '$ ';
-    color: darkgoldenrod;
+.page-users .name {
+    align-self: center;
+    width: 200px;
+    margin-left: 10px;
 }
 .page-users .badges {
+    align-self: center;
     text-align: center;
-}
-.page-users .badges > div {
-    position: absolute;
-    right: 230px;
-    top: 10px;
+    white-space: nowrap;
 }
 .page-users .badges .badge {
     display: inline-block;
@@ -375,4 +572,163 @@ main .content {
     height: 24px;
     background-size: 200%;
     border-radius: 3px;
+}
+.page-users .points {
+    align-self: center;
+    width: 160px;
+    text-align: right;
+}
+.page-users .points > span { color: gold; }
+.page-users .points > span::before {
+    content: '$ ';
+    color: darkgoldenrod;
+}
+.page-users .bailouts {
+    align-self: center;
+    color: red;
+    letter-spacing: 1px;
+}
+.page-users .bailouts span { font-weight: bold; }
+
+
+/* Profile page
+***********************************************************************************************************************/
+.page-profile .info .details {
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    align-self: center;
+}
+.page-profile .info .details .label {
+    color: #aaa;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    width: 100px;
+    letter-spacing: 1px;
+}
+.page-profile .info .details > div { margin-bottom: 3px; }
+.page-profile .badges {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 255px;
+    font-size: 14px;
+    color: #eee;
+}
+.page-profile .badges > div { margin: 5px 0; }
+.page-profile .badges .badge {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    background-size: 200%;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.page-profile .last-bets {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-align: left;
+}
+.page-profile .last-bets .match {
+    color: cyan;
+    cursor: pointer;
+}
+.page-profile .last-bets .points { color: gold; }
+.page-profile .last-bets .points:before {
+    content: '$ ';
+    color: darkgoldenrod;
+}
+.page-profile .last-bets .time { color: #aaa; }
+.page-profile .last-bets .won { color: lawngreen; }
+.page-profile .last-bets .lost { color: red; }
+.page-profile .stats-general {
+     color: white;
+     text-align: left;
+     font-size: 14px;
+     align-self: center;
+     letter-spacing: 1px;
+ }
+.page-profile .stats-general .label {
+    color: #aaa;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    width: 260px;
+}
+.page-profile .graphs {
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    align-self: left;
+    letter-spacing: 1px;
+}
+.page-profile .graphs .label {
+    color: #aaa;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    width: 150px;
+}
+.page-profile .graphs .graph {
+    text-align: center;
+    margin-top: 10px;
+}
+.page-profile .graphs .me:before {
+    content: "<- I'm here";
+    color: cyan;
+}
+
+/* Statistics page
+***********************************************************************************************************************/
+.page-stats .stats-general {
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    align-self: center;
+    letter-spacing: 1px;
+}
+.page-stats .stats-general .label {
+    color: #aaa;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    width: 260px;
+}
+.page-stats .graphs {
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    align-self: left;
+    letter-spacing: 1px;
+}
+.page-stats .graphs .label {
+    color: #aaa;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    width: 150px;
+}
+.page-stats .graphs .graph {
+    text-align: center;
+    margin-top: 10px;
+}
+.page-stats .graphs .me:before {
+    content: "<- I'm here";
+    color: cyan;
+}
+
+/* Help page
+***********************************************************************************************************************/
+.page-help .faq {
+    color: #ccc;
+    text-align: left;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.page-help .faq .label {
+    color: white;
 }

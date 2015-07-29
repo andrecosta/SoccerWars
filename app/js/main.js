@@ -116,10 +116,10 @@ $("#signup-button").click(function() {
                         .fail(function(response) {
                             var message = response.responseJSON;
                             swal.showInputError(message.error);
+                            $("button.confirm").html("Create account");
                         })
                         .always(function(response){
                             console.log(response);
-                            $("button.confirm").html("Create account");
                         });
                 }
             }

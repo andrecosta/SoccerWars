@@ -35,20 +35,18 @@ class DB
             $statement = $this->connection->prepare($query);
             $statement->execute($params);
 
-            // Fetch the results
+            // Fetch the results as an object or an associative array
             if ($object_type)
                 $data = $statement->fetchAll(PDO::FETCH_CLASS, $object_type);
             else
                 $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            // Return a single value or an array depending on the result set
+            // Return a single column or an array depending on the query
             if (count($data) == 1) {
                 if (is_array($data[0]) && count($data[0]) == 1)
                     return $data[0][array_keys($data[0])[0]];
-                else
-                    return $data[0];
-            } else
-                return $data;
+            }
+            return $data;
 
         } catch (PDOException $e) {
             die($e->getMessage());
@@ -84,22 +82,5 @@ class DB
     public function lastId()
     {
         return $this->connection->lastInsertId();
-    }
-
-    /**
-     * Escapes a single value or array of values
-     *
-     * @param $value
-     * @return array|string
-     */
-    public function escape($value)
-    {
-        if(!is_array($value)) {
-            $value = $this->connection->escape_string($value);
-        }
-        else {
-            $value = array_map(array($this, 'escape'), $value);
-        }
-        return $value;
     }
 }

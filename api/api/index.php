@@ -3,8 +3,6 @@
  * INITIALIZATION
  * Imports, constants and application setup
  =============================================================================*/
-ini_set("display_errors", 1);
-error_reporting(E_WARNING);
 
 // Import libraries (Slim framework, PHPMailer, etc)
 require '../vendor/autoload.php';
@@ -14,6 +12,8 @@ require '../classes/DB.php';
 require '../classes/User.php';
 require '../classes/Team.php';
 require '../classes/Match.php';
+require '../classes/Bet.php';
+require '../classes/Stats.php';
 require '../classes/Token.php';
 require '../classes/Mail.php';
 
@@ -135,7 +135,7 @@ $app->get('/me', function() use ($app) {
         $app->render_json($user);
     }
     else
-        throw new Exception("Invalid", 404);
+        throw new Exception("Error obtaining profile", 500);
 });
 
 /* Get user by ID
@@ -151,7 +151,6 @@ $app->get('/users/:id', function($id) use ($app) {
  ******************************************************************************/
 $app->get('/users', function() use ($app) {
     $response = User::GetAll();
-
     $app->render_json($response);
 });
 
@@ -193,12 +192,6 @@ $app->post('/users', function() use ($app) {
     }
 });
 
-/* Update User
- ******************************************************************************/
-$app->put('/users/:id', function($id) use ($app) {
-    // return bool
-});
-
 /* Delete User
  ******************************************************************************/
 $app->delete('/users/:id', function($id) use ($app) {
@@ -212,11 +205,17 @@ $app->delete('/users/:id', function($id) use ($app) {
         throw new Exception("User not found", 404);
 });
 
+/* Get stats by user
+ ******************************************************************************/
+$app->get('/users/:id/stats', function($id) use ($app) {
+    $stats = Stats::GetByUser($id);
+    $app->render_json($stats);
+});
+
 /* Get all teams
  ******************************************************************************/
 $app->get('/teams', function() use ($app) {
     $response = Team::GetAll();
-
     $app->render_json($response);
 });
 
@@ -232,8 +231,7 @@ $app->get('/matches/:id', function($id) use ($app) {
 /* Get all matches
  ******************************************************************************/
 $app->get('/matches', function() use ($app) {
-    $response = Match::GetAll();
-
+    $response = array_slice(Match::GetAll(), 0, 50);
     $app->render_json($response);
 });
 
@@ -252,28 +250,85 @@ $app->post('/matches', function() use ($app) {
     $match->start_time = $start_time;
     $match->end_time = $end_time;
 
+    // Create the match
     if ($match_id = $match->Create())
         $app->render_json(["id" => $match_id]);
     else
-        return false;
+        throw new Exception("Error creating the match", 400);
 });
 
 /* Insert comment
  ******************************************************************************/
-$app->post('/matches/:id/comment', function($id) use ($app) {
+$app->post('/matches/:id/comments', function($id) use ($app) {
     $data = json_decode($app->request->getBody(), true);
-    $user_id = $data['user_id'];
     $text = $data['text'];
+    $user = User::GetByToken($app->request->headers->get('token'));
 
-    if (!$text) {
+    if (empty($text))
         throw new Exception("No text in comment", 400);
-    } else {
-        // Create comment
-        $match = Match::Get($id);
-        $match->addComment($user_id, $text);
-    }
+
+    // Insert the comment
+    $match = Match::Get($id);
+    if ($comment_id = $match->insertComment($user->id, $text)) {
+        $user->awardBadge(10);
+        $app->render_json(['id' => $comment_id]);
+    } else
+        throw new Exception("Error inserting the comment", 400);
 });
 
+/* Get comments
+ ******************************************************************************/
+$app->get('/matches/:id/comments', function($id) use ($app) {
+    $match = Match::Get($id);
+    $response = $match->getComments();
+    $app->render_json($response);
+});
+
+/* Place bet
+ ******************************************************************************/
+$app->post('/matches/:id/bet', function($id) use ($app) {
+    $data = json_decode($app->request->getBody(), true);
+
+    $type = $data['type'];
+    $team = $data['team'];
+    $user = User::GetByToken($app->request->headers->get('token'));
+
+    // Create the bet
+    $bet = new Bet();
+    $bet->user_id = $user->id;
+    $bet->match_id = $id;
+    $bet->type = $type;
+    $bet->team = $team;
+
+    if ($type === 1) {
+        $bet->points_simple = $data['points_simple'];
+    } elseif ($type === 2) {
+        $bet->points_goals = $data['points_goals'];
+        $bet->points_yellowcards = $data['points_yellowcards'];
+        $bet->points_redcards = $data['points_redcards'];
+        $bet->points_defenses = $data['points_defenses'];
+    }
+
+    if ($bet_id = $bet->Create()) {
+        $app->render_json(['id' => $bet_id]);
+    } else
+        throw new Exception("Bet not allowed", 400);
+});
+
+/* Get bets
+ ******************************************************************************/
+$app->get('/bets', function() use ($app) {
+    $user = User::GetByToken($app->request->headers->get('token'));
+    $response = Bet::GetByUser($user->id);
+    $app->render_json($response);
+});
+
+/* Get global stats
+ ******************************************************************************/
+$app->get('/stats', function() use ($app) {
+    $stats = Stats::Get();
+    $app->render_json($stats);
+});
 
 /* RUN THE APPLICATION
  ******************************************************************************/
