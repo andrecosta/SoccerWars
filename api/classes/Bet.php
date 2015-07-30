@@ -127,7 +127,6 @@ class Bet {
         $db = new DB();
 
         $user = User::Get($this->user_id);
-        $user->givePoints($this->points_total);
 
         $data = [
             'bet_id' => $this->id,

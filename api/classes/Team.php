@@ -56,7 +56,6 @@ class Team {
 
     /**
      * Updates a team's rank
-     * @return int|bool
      */
     static function UpdateRank($team_id, $points) {
         $db = new DB();

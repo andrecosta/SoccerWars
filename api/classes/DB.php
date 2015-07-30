@@ -11,6 +11,7 @@ class DB
     public function __construct()
     {
         try {
+            // NOTE: PDO MySQL was used mainly because of the support for named parameters in prepared statements
             $this->connection = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8", DB_USER, DB_PASS);
         } catch (PDOException $e) {
             die($e->getMessage());
@@ -23,11 +24,12 @@ class DB
     }
 
     /**
-     * Fetch data from the database either as an object or an array
+     * Fetch data from the database. If an object_type is supplied,
+     * map the result to the respective class and return an instance of it
      * @param string $query
      * @param array $params
      * @param string $object_type
-     * @return object|array|int|string
+     * @return object|array|string
      */
     public function fetch($query, $params = null, $object_type = null)
     {
@@ -41,7 +43,7 @@ class DB
             else
                 $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            // Return a single column or an array depending on the query
+            // Return a single field or an array depending on the query result
             if (count($data) == 1) {
                 if (is_array($data[0]) && count($data[0]) == 1)
                     return $data[0][array_keys($data[0])[0]];
@@ -53,6 +55,12 @@ class DB
         }
     }
 
+    /**
+     * Insert or update data on the database
+     * @param string $query
+     * @param array $params
+     * @return int|string
+     */
     public function modify($query, $params = null)
     {
         try {
@@ -66,19 +74,10 @@ class DB
         }
     }
 
-    public function truncate($table)
-    {
-        try {
-            $statement = $this->connection->prepare("TRUNCATE :table");
-            $statement->execute(['table' => $table]);
-
-            return true;
-
-        } catch (PDOException $e) {
-            die($e->getMessage());
-        }
-    }
-
+    /**
+     * Returns the last inserted id from the database
+     * @return int
+     */
     public function lastId()
     {
         return $this->connection->lastInsertId();

@@ -33,7 +33,8 @@ $("#login-button").click(function() {
             text: $('#login-form').html(),
             html: true,
             showCancelButton: true,
-            confirmButtonText: 'Submit'
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true
         },
         function(isConfirm){
             if (isConfirm) {
@@ -76,6 +77,7 @@ $("#login-button").click(function() {
     );
     scrambleText('h2');
     $(':input[autofocus]').focus();
+    $("#reset-link").click(reset_click);
 });
 
 $("#signup-button").click(function() {
@@ -84,7 +86,8 @@ $("#signup-button").click(function() {
             text: $("#signup-form").html(),
             html: true,
             showCancelButton: true,
-            confirmButtonText: 'Create account'
+            confirmButtonText: 'Create account',
+            showLoaderOnConfirm: true
         },
         function(isConfirm){
             if (isConfirm) {
@@ -101,7 +104,6 @@ $("#signup-button").click(function() {
                 } else if (captcha == null) {
                     swal.showInputError("Are you not a human?");
                 } else {
-                    $("button.confirm").html("Creating...");
                     $.ajax(API_URL + '/users', {
                         type: 'POST',
                         data: JSON.stringify({
@@ -111,12 +113,11 @@ $("#signup-button").click(function() {
                         })
                     })
                         .done(function() {
-                            swal("Account created!", "Check your email for your password", "success");
+                            swal("Account created!", "Check your email", "success");
                         })
                         .fail(function(response) {
                             var message = response.responseJSON;
                             swal.showInputError(message.error);
-                            $("button.confirm").html("Create account");
                         })
                         .always(function(response){
                             console.log(response);
@@ -137,6 +138,60 @@ $("#signup-button").click(function() {
         }
     });
 });
+
+function reset_click() {
+    swal({
+            title: "Reset Password",
+            text: $("#reset-form").html(),
+            html: true,
+            showCancelButton: true,
+            confirmButtonText: 'Reset',
+            showLoaderOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                var email = $.trim($("#reset-email").val());
+                var captcha = grecaptcha.getResponse();
+
+                if (email == '') {
+                    swal.showInputError("You need to enter an email address, human!");
+                } else if (!isValidEmailAddress(email)) {
+                    swal.showInputError("That's not a valid email address, human!");
+                } else if (captcha == null) {
+                    swal.showInputError("Are you not a human?");
+                } else {
+                    $.ajax(API_URL + '/login/reset', {
+                        type: 'POST',
+                        data: JSON.stringify({
+                            "email": email,
+                            "captcha": captcha
+                        })
+                    })
+                        .done(function () {
+                            swal("Password reset!", "Check your email", "success");
+                        })
+                        .fail(function (response) {
+                            var message = response.responseJSON;
+                            swal.showInputError(message.error);
+                        })
+                        .always(function (response) {
+                            console.log(response);
+                        });
+                }
+            }
+        }
+    );
+    $(':input[autofocus]').focus();
+
+    // Load Captcha widget for human validation
+    grecaptcha.render('captcha-reset', {
+        'sitekey': '6Lf1UQkTAAAAAH3BPkgcwn7yzxm_RAn_Neklgz_V',
+        'theme': 'dark',
+        'callback': function (response) {
+            console.log(response);
+        }
+    });
+}
 
 $("#play-button").click(function(){
     swal({

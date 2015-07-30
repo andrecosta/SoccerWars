@@ -3,9 +3,9 @@
 class Token {
 
     /**
-     * Get a token instance from a user ID
+     * Get a token from a user ID
      * @param int $user_id
-     * @return Token|bool
+     * @return string|bool
      */
     static function Get($user_id) {
         $db = new DB();
@@ -19,7 +19,7 @@ class Token {
     }
 
     /**
-     * Create a new token
+     * Refresh a token or create a new on if it doesn't exist
      * @param int $user_id
      * @return string|bool
      */
@@ -41,7 +41,7 @@ class Token {
     }
 
     /**
-     * Validate token
+     * Validate token date
      * @param string $token
      * @return bool
      */

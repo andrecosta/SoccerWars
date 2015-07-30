@@ -6,12 +6,11 @@
 chdir(dirname(__FILE__));
 require '../config.php';
 
-$number_of_matches = 5;
+$number_of_matches = 2;
 
 /* Get list of existing teams
  ******************************************************************************/
 $teams = $db->fetch("SELECT id FROM Team", null, 'Team');
-//var_dump($teams);
 
 for ($i = 0; $i < $number_of_matches; $i++) {
 
@@ -25,7 +24,7 @@ for ($i = 0; $i < $number_of_matches; $i++) {
     /* Generate match start dates in the near future and duration
      ******************************************************************************/
     $format = 'Y-m-d H:i:s';
-    $duration = 10; // Duration of the match (in minutes)
+    $duration = 5; // Duration of the match (in minutes)
     $start_time = date($format, strtotime("now +".mt_rand(5, 25)." minutes"));
     $end_time = date($format, strtotime("$start_time +$duration minutes"));
 
@@ -37,6 +36,4 @@ for ($i = 0; $i < $number_of_matches; $i++) {
     $match->start_time = $start_time;
     $match->end_time = $end_time;
     $match->Create();
-    //var_dump($match);
-
 }

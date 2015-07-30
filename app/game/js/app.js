@@ -12,7 +12,7 @@ if (Cookies.get('token')) {
     // If the cookie is set, login was successful and the user is redirected
     TOKEN = Cookies.get('token');
     if (!window.location.hash)
-        window.location.hash = '#!/dashboard';
+        window.location.hash = '#!/profile';
 } else {
     // If not, redirect him back to login page
     window.location.href = '/';
@@ -112,7 +112,7 @@ var app = new Vue({
         }
     },
 
-    // Custom methods for the root application
+    // Custom methods for the application
     methods: {
         // Set new title with animation
         setTitle: function (title) {

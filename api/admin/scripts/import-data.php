@@ -1,13 +1,13 @@
 <?php
 /*
- * CRON SCRIPT: Import Data
+ * CRON SCRIPT: Import Real World Data
  * Runs when needed
+ *
+ * NOTE: Be careful when running this script because of the remote API hourly request limit.
+ * A more efficient method of importing the data should be considered
  */
 chdir(dirname(__FILE__));
-require 'config.php';
-
-// Truncate tables
-$db->truncate('Team');
+require '../config.php';
 
 // Determine existing teams in the database
 $current_teams = $db->fetch("SELECT id FROM Team", null, 'Team');
@@ -37,7 +37,7 @@ foreach ($teamLinks as $teamLink) {
             $image = file_get_contents($team_crestUrl);
             $ext = end(explode('.', $team_crestUrl));
             $filename = uniqid().".$ext";
-            file_put_contents("../static/crests/$filename", $image);
+            file_put_contents("../../static/crests/$filename", $image);
 
             // Crete the team
             $t = new Team();
@@ -58,8 +58,8 @@ foreach ($teamLinks as $teamLink) {
                     $position = $players["players"][$j]["position"];
 
                     // Create the players and team composition
-                    mysqli_query($connection, "INSERT INTO Player (Name, BirthDate, Country) VALUES ('$name', '$birthdate', '$nationality')");
-                    mysqli_query($connection, "INSERT INTO TeamComposition (TeamID, PlayerID, ShirtNumber, Position) VALUES ($team_id, $player_id, $shirtnumber, '$position')");
+                    $db->modify("INSERT INTO Player (Name, BirthDate, Country) VALUES ('$name', '$birthdate', '$nationality')");
+                    $db->modify("INSERT INTO TeamComposition (TeamID, PlayerID, ShirtNumber, Position) VALUES ($team_id, $player_id, $shirtnumber, '$position')");
                 }
             }
         }

@@ -89,16 +89,17 @@ foreach ($matches as $match) {
                 }
             }
         }
-        // Update team ranks
+
+        // Update team rankings
         if ($team1_rank != 0) Team::UpdateRank($team1_id, $team1_rank / 100);
         if ($team2_rank != 0) Team::UpdateRank($team2_id, $team2_rank / 100);
     }
 }
 
 function resolveBet($result, $bet, $user, $points = null) {
-    if ($result == 1) {
+    if ($result === 1) {
         $user->givePoints($points);
-        $user->awardBadge(2);
+        $user->awardBadge(2); // First win badge. Will have no effect if it is already unlocked
     }
     $bet->setResult($result);
 }

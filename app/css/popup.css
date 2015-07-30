@@ -61,3 +61,6 @@
 .popup .sa-icon.sa-success .sa-fix {
     background-color: rgba(10, 10, 40, 0.6);
 }
+.popup .la-ball-fall {
+    margin-top: -8px;
+}

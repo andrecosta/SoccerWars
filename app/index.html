@@ -6,7 +6,7 @@
     <title>[ SoccerWars ] > Welcome</title>
 
     <!-- Styles -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
+    <link href="/css/sweetalert.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -25,20 +25,29 @@
         </div>
 
         <div id="info">
-            <a href="#">Made with &hearts; by Fábio Costa &copy; 2015</a>
+            <a href="#">Made with &hearts; by Fábio Costa &copy; 2015</a><br>
+            <a href="mailto:admin@soccerwars.xyz">admin@soccerwars.xyz</a>
         </div>
 
     </div><!-- .screen -->
 
     <template id="login-form">
         <div><input id="login-email" type="text" title="Email" placeholder="Email" tabindex="1" required autofocus></div>
-        <div><input id="login-password" type="password" title="Password" placeholder="Password" tabindex="2" required></div>
+        <div>
+            <input id="login-password" type="password" title="Password" placeholder="Password" tabindex="2" required>
+            <div id="reset-link"><a href="#">Forgot?</a></div>
+        </div>
     </template>
 
     <template id="signup-form">
         <div><input id="signup-email" type="email" title="Email" placeholder="Your email address" tabindex="1" required autofocus></div>
         <div><input id="signup-name" type="text" title="Character's Name" placeholder="Your character's name" tabindex="2" required></div>
         <div id="captcha" align="center"></div><br>
+    </template>
+
+    <template id="reset-form">
+        <div><input id="reset-email" type="email" title="Email" placeholder="Your email address" tabindex="1" required autofocus></div>
+        <div id="captcha-reset" align="center"></div><br>
     </template>
 
     <!-- Plugins & Frameworks -->

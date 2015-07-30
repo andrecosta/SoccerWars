@@ -1,5 +1,5 @@
 var API_URL = 'https://api.soccerwars.xyz';
-var TOKEN = 'superadmin';
+var TOKEN = '#superadmin2015';
 
 $.ajaxSetup({
     beforeSend: function(xhr) {

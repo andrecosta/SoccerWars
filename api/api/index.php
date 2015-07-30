@@ -1,13 +1,13 @@
 <?php
-/*=============================================================================
+/*======================================================================================================================
  * INITIALIZATION
  * Imports, constants and application setup
- =============================================================================*/
+ =====================================================================================================================*/
 
-// Import libraries (Slim framework, PHPMailer, etc)
+// Autoload libraries (Slim framework, PHPMailer, etc). This was created by the Composer PHP package manager
 require '../vendor/autoload.php';
 
-// Import models
+// Import classes
 require '../classes/DB.php';
 require '../classes/User.php';
 require '../classes/Team.php';
@@ -17,16 +17,15 @@ require '../classes/Stats.php';
 require '../classes/Token.php';
 require '../classes/Mail.php';
 
+// Set default timezone
 date_default_timezone_set('Europe/Lisbon');
 
-/* Constants
- ******************************************************************************/
+// Constants
 define('GOOGLE_RECAPTCHA_PRIVATE_KEY', '6Lf1UQkTAAAAANW3fDFp0JHdanyXxUxG_rIhqedd');
 define('STATIC_URL', 'https://static.soccerwars.xyz');
-define('ADMIN_TOKEN', 'superadmin');
+define('ADMIN_TOKEN', '#superadmin2015');
 
-/* Extend Slim class to always return JSON encoded responses
- ******************************************************************************/
+// Extend the Slim class to always return JSON encoded responses
 class API extends \Slim\Slim {
     function render_json($data) {
         $this->response->headers->set('Content-Type', 'application/json');
@@ -34,28 +33,30 @@ class API extends \Slim\Slim {
     }
 }
 
-/* Initialize the framework and its options
- ******************************************************************************/
+// Initialize the framework and its options
 $app = new API(['debug' => false]);
 $app->add(new \CorsSlim\CorsSlim());
 
 
 
-/*=============================================================================
+/*======================================================================================================================
  * HOOKS
  * Actions or checks to be performed before each request
- =============================================================================*/
+ =====================================================================================================================*/
 
 $app->hook('slim.before.dispatch', function() use ($app) {
-    // Check if the request was performed with the json content type header
+
+    // Check if the request was performed with the JSON content type header
     if ($app->request->getContentType() != 'application/json')
         throw new Exception("Invalid content type", 400);
 
-    // Check the validity of a token sent by the user
-    if (!(in_array($app->request->getResourceUri(), ['/login', '/users']) && $app->request->getMethod() == 'POST')) {
+    // Check the validity of the token in the request
+    if (!(in_array($app->request->getResourceUri(), ['/login', '/users', '/login/reset']) && $app->request->getMethod() == 'POST')) {
+        // Check if the token header is present
         if (!$app->request->headers->get('Token'))
             throw new Exception("Missing token", 400);
         else {
+            // Validate the token and throw error if expired or inexistent
             $token = $app->request->headers->get('Token');
             if (!Token::Validate($token) && $token != ADMIN_TOKEN)
                 throw new Exception("Invalid token", 400);
@@ -65,13 +66,13 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 
 
 
-/*=============================================================================
+/*======================================================================================================================
  * ERROR HANDLERS
- * Wraps the response creation of any specified error, includes message and code
- =============================================================================*/
+ * Wraps the response of any raised exception into a friendly JSON encoded error message readable by the client
+ =====================================================================================================================*/
 
-/* Render a custom JSON message whenever any exception is thrown
- ******************************************************************************/
+/* Render a custom JSON message whenever an exception is thrown
+ **********************************************************************************************************************/
 $app->error(function(Exception $e) use ($app) {
     if ($e->getCode() !== 0)
         $app->response->setStatus($e->getCode());
@@ -79,25 +80,31 @@ $app->error(function(Exception $e) use ($app) {
     $app->render_json(["error" => $e->getMessage()]);
 });
 
+// Default message for inexistent api paths
 $app->notFound(function() {
     throw new Exception("This endpoint does not exist", 404);
 });
 
 
 
-/*=============================================================================
+/*======================================================================================================================
  * ROUTES
  * Main endpoints of the API
- =============================================================================*/
+ * The HTTP method is determined by the method called by the $app object (ie. "$app->post()")
+ * The first parameter is the url path from the api
+ *
+ * EXAMLPE: GET https://api.soccerwars.xyz/users/2 will map to the route
+ *   $app->get('/users/:id', function($id) ... Where $id will have the value '2'
+ =====================================================================================================================*/
 
 /* API root
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/', function() use ($app) {
     $app->render_json(["message" => "SoccerWars API v0.1"]);
 });
 
 /* Check login credentials
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->post('/login', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
 
@@ -120,8 +127,39 @@ $app->post('/login', function() use ($app) {
         throw new Exception("Invalid credentials", 401);
 });
 
-/* Get current user info via his token
- ******************************************************************************/
+/* Password reset
+ **********************************************************************************************************************/
+$app->post('/login/reset', function() use ($app) {
+    $data = json_decode($app->request->getBody(), true);
+    $email = $data['email'];
+    $captcha = $data['captcha'];
+
+    if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception("No valid email address was supplied", 400);
+    } elseif (!$captcha) {
+        throw new Exception("Captcha was not provided", 400);
+    } else {
+        // Validate Captcha
+        //$recaptcha = new \ReCaptcha\ReCaptcha(GOOGLE_RECAPTCHA_PRIVATE_KEY);
+        //$verify = $recaptcha->verify($captcha, $app->request->getIp());
+        //if (!$verify->isSuccess())
+        //    throw new Exception("Humanity not confirmed", 400);
+
+        // Update user password
+        if ($password = User::ResetPassword($email)) {
+            echo $password;
+            $message = "Your password has been reset by your request:\n\n" . $password . "\n\nDon't lose it this time!";
+            if (!Mail::send($email, 'Forgetful user', "Password reset", $message))
+                throw new Exception("Error sending email", 500);
+            $app->render_json(["message" => 'ok']);
+        } else {
+            throw new Exception("Something went wrong!", 500);
+        }
+    }
+});
+
+/* Get the current authenticated user info
+ **********************************************************************************************************************/
 $app->get('/me', function() use ($app) {
     $token = $app->request->headers->get('Token');
     if ($user = User::GetByToken($token)) {
@@ -139,7 +177,7 @@ $app->get('/me', function() use ($app) {
 });
 
 /* Get user by ID
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/users/:id', function($id) use ($app) {
     if ($user = User::Get($id))
         $app->render_json($user);
@@ -148,14 +186,14 @@ $app->get('/users/:id', function($id) use ($app) {
 });
 
 /* Get all users
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/users', function() use ($app) {
     $response = User::GetAll();
     $app->render_json($response);
 });
 
 /* Create user
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->post('/users', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
     $email = $data['email'];
@@ -164,7 +202,7 @@ $app->post('/users', function() use ($app) {
 
     if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("No valid email address was supplied", 400);
-    } else if (!$name /* +other restrictions */) {
+    } else if (!$name) {
         throw new Exception("Invalid character name", 400);
     } elseif (!$captcha) {
         throw new Exception("Captcha was not provided", 400);
@@ -193,7 +231,7 @@ $app->post('/users', function() use ($app) {
 });
 
 /* Delete User
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->delete('/users/:id', function($id) use ($app) {
     if ($user = User::Get($id)) {
 
@@ -206,21 +244,21 @@ $app->delete('/users/:id', function($id) use ($app) {
 });
 
 /* Get stats by user
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/users/:id/stats', function($id) use ($app) {
     $stats = Stats::GetByUser($id);
     $app->render_json($stats);
 });
 
 /* Get all teams
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/teams', function() use ($app) {
     $response = Team::GetAll();
     $app->render_json($response);
 });
 
 /* Get match by ID
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/matches/:id', function($id) use ($app) {
     if ($match = Match::Get($id))
         $app->render_json($match);
@@ -229,14 +267,14 @@ $app->get('/matches/:id', function($id) use ($app) {
 });
 
 /* Get all matches
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/matches', function() use ($app) {
     $response = array_slice(Match::GetAll(), 0, 50);
     $app->render_json($response);
 });
 
 /* Create match
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->post('/matches', function() use ($app) {
     $data = json_decode($app->request->getBody(), true);
     $team_1 = $data['team_1'];
@@ -258,7 +296,7 @@ $app->post('/matches', function() use ($app) {
 });
 
 /* Insert comment
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->post('/matches/:id/comments', function($id) use ($app) {
     $data = json_decode($app->request->getBody(), true);
     $text = $data['text'];
@@ -277,7 +315,7 @@ $app->post('/matches/:id/comments', function($id) use ($app) {
 });
 
 /* Get comments
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/matches/:id/comments', function($id) use ($app) {
     $match = Match::Get($id);
     $response = $match->getComments();
@@ -285,7 +323,7 @@ $app->get('/matches/:id/comments', function($id) use ($app) {
 });
 
 /* Place bet
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->post('/matches/:id/bet', function($id) use ($app) {
     $data = json_decode($app->request->getBody(), true);
 
@@ -316,7 +354,7 @@ $app->post('/matches/:id/bet', function($id) use ($app) {
 });
 
 /* Get bets
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/bets', function() use ($app) {
     $user = User::GetByToken($app->request->headers->get('token'));
     $response = Bet::GetByUser($user->id);
@@ -324,12 +362,14 @@ $app->get('/bets', function() use ($app) {
 });
 
 /* Get global stats
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->get('/stats', function() use ($app) {
     $stats = Stats::Get();
     $app->render_json($stats);
 });
 
+
+
 /* RUN THE APPLICATION
- ******************************************************************************/
+ **********************************************************************************************************************/
 $app->run();

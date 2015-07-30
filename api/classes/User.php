@@ -138,7 +138,11 @@ class User {
         return json_encode($this->toArray($this));
     }
 
-
+    /**
+     * Generates a random password. It returns its unencrypted value only once
+     * @param int $length
+     * @return string
+     */
     function createRandomPassword($length) {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $password = substr(str_shuffle($chars), 0, $length);
@@ -147,6 +151,10 @@ class User {
         return $password;
     }
 
+    /**
+     * Set the user instance's status
+     * @param string $status
+     */
     function setStatus($status) {
         $db = new DB();
 
@@ -158,10 +166,17 @@ class User {
         $db->modify("UPDATE User SET status = :status WHERE id = :id", $data);
     }
 
+    /**
+     * Returns the current user instance's access token
+     * @return string
+     */
     function getToken() {
         return $this->token;
     }
 
+    /**
+     * Converts the user instance's avatar property to its big and small counterparts
+     */
     function getAvatars() {
         $avatar = $this->avatar;
         $this->avatar = [
@@ -170,6 +185,9 @@ class User {
         ];
     }
 
+    /**
+     * Populates the user instance's badges property with his current badge status
+     */
     function getBadges() {
         $db = new DB();
 
@@ -196,6 +214,10 @@ class User {
         $this->badges = $badges;
     }
 
+    /**
+     * Awards a badge with the specified id to the user. Ignores if already unlocked
+     * @param int $badge_id
+     */
     function awardBadge($badge_id) {
         $db = new DB();
 
@@ -212,6 +234,10 @@ class User {
                 $this->givePoints($badge['points']);
     }
 
+    /**
+     * Give a set amount of points to the user, and if negative, takes away
+     * @param int $amount
+     */
     function givePoints($amount) {
         $db = new DB();
 
@@ -225,11 +251,38 @@ class User {
         $db->modify("UPDATE User SET points = :points WHERE id = :user_id", $data);
     }
 
+    /**
+     * Bails out the user giving him points and increasing his bailout count
+     */
     function bailout() {
         $db = new DB();
 
         $data = ["user_id" => $this->id];
 
         $db->modify("UPDATE User SET points = 1000, bailouts = bailouts + 1 WHERE id = :user_id", $data);
+    }
+
+    /**
+     * Reset the password of the user with the specified email
+     * @param string $email
+     * @return string|bool
+     */
+    static function ResetPassword($email) {
+        $db = new DB();
+
+        $data = ["email" => $email];
+
+        if ($user = $db->fetch("SELECT * FROM User WHERE email = :email", $data, 'User')[0]) {
+            $password = $user->createRandomPassword(6);
+
+            $data = [
+                "user_id" => $user->id,
+                "pw_hash" => $user->pw_hash
+            ];
+            $db->modify("UPDATE User SET pw_hash = :pw_hash WHERE id = :user_id", $data);
+            $user->setStatus('pending');
+            return $password;
+        } else
+            return false;
     }
 }

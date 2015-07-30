@@ -15,7 +15,6 @@ Vue.component('users', {
         var timer = setInterval(function() {
             $.get(API_URL + '/users')
                 .done(function (response) {
-                    //console.log(response);
                     self.loaded = true;
                     self.users = response;
                 })
