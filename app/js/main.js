@@ -77,7 +77,7 @@ $("#login-button").click(function() {
     );
     scrambleText('h2');
     $(':input[autofocus]').focus();
-    $("#reset-link").click(reset_click);
+    $("#reset-link a").click(reset_click);
 });
 
 $("#signup-button").click(function() {

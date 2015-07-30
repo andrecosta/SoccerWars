@@ -82,7 +82,7 @@ var app = new Vue({
                 else if (diff < 0) change.addClass('negative');
 
                 change.text(Math.abs(diff));
-                $("#points").prepend(change.delay(3000).fadeOut());
+                $("#points").prepend(change.delay(5000).fadeOut());
             }
         },
 

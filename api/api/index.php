@@ -115,7 +115,7 @@ $app->post('/login', function() use ($app) {
         if ($user->status == 'pending') {
             $user->setStatus('active');
         } else if ($user->status != 'active')
-            throw new Exception("This account is not active", 401);
+        throw new Exception("This account is not active", 401);
 
         // Return data
         $app->render_json([
@@ -140,14 +140,13 @@ $app->post('/login/reset', function() use ($app) {
         throw new Exception("Captcha was not provided", 400);
     } else {
         // Validate Captcha
-        //$recaptcha = new \ReCaptcha\ReCaptcha(GOOGLE_RECAPTCHA_PRIVATE_KEY);
-        //$verify = $recaptcha->verify($captcha, $app->request->getIp());
-        //if (!$verify->isSuccess())
-        //    throw new Exception("Humanity not confirmed", 400);
+        $recaptcha = new \ReCaptcha\ReCaptcha(GOOGLE_RECAPTCHA_PRIVATE_KEY);
+        $verify = $recaptcha->verify($captcha, $app->request->getIp());
+        if (!$verify->isSuccess())
+            throw new Exception("Humanity not confirmed", 400);
 
         // Update user password
         if ($password = User::ResetPassword($email)) {
-            echo $password;
             $message = "Your password has been reset by your request:\n\n" . $password . "\n\nDon't lose it this time!";
             if (!Mail::send($email, 'Forgetful user', "Password reset", $message))
                 throw new Exception("Error sending email", 500);
@@ -220,10 +219,14 @@ $app->post('/users', function() use ($app) {
         $user->avatar = '';
         $password = $user->createRandomPassword(6);
         if ($user_id = $user->Create()) {
+            // Send email
             $message = "Greetings $name!\n\nYour password:\n\n" . $password;
             if (!Mail::send($email, $name, "Account created", $message))
                 throw new Exception("Error sending email", 500);
             $app->render_json(["id" => $user_id]);
+
+            // Create the user token for the first time
+            Token::Update($user_id);
         } else {
             throw new Exception("Something went wrong!", 500);
         }
@@ -282,6 +285,7 @@ $app->post('/matches', function() use ($app) {
     $start_time = $data['start_time'];
     $end_time = $data['end_time'];
 
+    // Setup the match
     $match = new Match();
     $match->team_1 = $team_1;
     $match->team_2 = $team_2;

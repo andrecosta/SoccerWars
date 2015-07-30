@@ -11,9 +11,9 @@ class Stats
     // Charts
     public $wealth_gap;
 
-
     /**
-     * Get all stats
+     * Get all statistics
+     * @param int $user_id
      * @return mixed|bool
      */
     static function Get($user_id = null)
@@ -52,6 +52,7 @@ class Stats
 
     /**
      * Get all stats by user
+     * @param int $user_id
      * @return mixed|bool
      */
     static function GetByUser($user_id)
@@ -114,8 +115,6 @@ function wealthGap() {
         elseif ($user->points >= $q3) $users_class4++;
     }
 
-    //$range = mmmr($user_balance, 'range');
-
     return [
         'q1' => $q1,
         'q2' => $q2,
@@ -127,6 +126,7 @@ function wealthGap() {
     ];
 }
 
+// Mean, Median, Mode, Range and first and second quartiles
 function mmmr($array, $output = 'mean'){
     if(!is_array($array)){
         return FALSE;

@@ -63,6 +63,9 @@ class Bet {
             return false;
     }
 
+    /**
+     * Aggregates all the bet values into a single total
+     */
     function calculateTotal() {
         $this->points_total =
             $this->points_simple +
@@ -122,6 +125,7 @@ class Bet {
 
     /**
      * Set the bet result to won or lost
+     * @param int $result
      */
     function setResult($result) {
         $db = new DB();

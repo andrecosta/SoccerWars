@@ -3,7 +3,15 @@
 class Player {
     public $id;
     public $name;
-    public $rank;
+    public $birth_date;
+    public $country;
+    public $avatar;
+    public $stamina;
+    public $catch;
+    public $kick_power;
+    public $speed;
+    public $decay;
+    public $dash_rate;
 
     /**
      * Get a player instance from an ID

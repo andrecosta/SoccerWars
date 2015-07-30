@@ -8,21 +8,22 @@ require '../config.php';
 
 /* Get list of matches in progress
  ******************************************************************************/
+
 $matches = Match::GetAll();
 
 foreach ($matches as $match) {
     if (strtotime($match->start_time) < strtotime('now') && strtotime($match->end_time) > strtotime('now')) { // Live
         echo $match->id;
         $team1_id = $match->progress[0]['team_id'];
-        $team1_goals = mt_rand(0, 1);
-        $team1_yellowcards = mt_rand(0, 1);
-        $team1_redcards = mt_rand(0, 1);
-        $team1_defenses = mt_rand(0, 1);
+        $team1_goals = mt_rand(0, 99) < 50 ? 1 : 0;
+        $team1_yellowcards = mt_rand(0, 99) < 25 ? 1 : 0;
+        $team1_redcards = mt_rand(0, 99) < 15 ? 1 : 0;
+        $team1_defenses = mt_rand(0, 99) < 50 ? 1 : 0;
         $team2_id = $match->progress[1]['team_id'];
-        $team2_goals = mt_rand(0, 1);
-        $team2_yellowcards = mt_rand(0, 1);
-        $team2_redcards = mt_rand(0, 1);
-        $team2_defenses = mt_rand(0, 1);
+        $team2_goals = mt_rand(0, 99) < 50 ? 1 : 0;
+        $team2_yellowcards = mt_rand(0, 99) < 25 ? 1 : 0;
+        $team2_redcards = mt_rand(0, 99) < 15 ? 1 : 0;
+        $team2_defenses = mt_rand(0, 99) < 50 ? 1 : 0;
 
         $data = [
             'team_id' => $team1_id,
